@@ -2,6 +2,7 @@
 #include "viking/Event.hpp"
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 
 namespace vik
 {

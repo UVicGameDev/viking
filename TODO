@@ -1,11 +1,18 @@
 Developer: Nicolas
 	Actor:
 	-Implement Actor input for Player derivative
-	-Implement Actor visuals
+	-Implement rotating sprite view for actors
+
+	Graphics:
+	-Make it possible to rotate actors like being flipped around (they always face you right now)
 
 	RTTI:
 	-Find way to reflect functions/member functions for scripts
 	-Find way to construct concrete classes from Class objects
+
+	Memory:
+	-consider overloading operator new/delete to track allocations
+	-or find some other memory leak tracker
 	
 Future ideas:
 	Island survival theme

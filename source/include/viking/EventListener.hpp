@@ -12,7 +12,7 @@ class EventListener
 public:
 	virtual ~EventListener(){}
 	// return true if event is handled
-	bool onEvent(const Event& e){ return false; }
+	virtual bool onEvent(const Event& e){ return false; }
 };
 
 } // end namespace vik

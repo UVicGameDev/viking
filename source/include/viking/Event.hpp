@@ -16,7 +16,7 @@ public:
 	// return creation time of event 
 	irr::u32 getTimeStamp() const;
 	// return type name of event as a hashed string
-	inline HashedString getType() const;
+	virtual inline HashedString getType() const;
 private:
 	irr::u32 timeStamp;
 };

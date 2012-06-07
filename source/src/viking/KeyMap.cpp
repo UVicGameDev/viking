@@ -1,5 +1,6 @@
 #include "viking/KeyMap.hpp"
 #include "viking/IrrlichtEvent.hpp"
+#include <iostream>
 
 namespace vik
 {

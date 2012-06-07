@@ -28,6 +28,37 @@ GameApp::~GameApp()
 	device->drop();
 }
 
+static void update_camera(scene::ICameraSceneNode* cam, const KeyMap& keys)
+{
+	core::vector3df oldpos = cam->getPosition();
+	core::vector3df	oldrot = cam->getRotation();
+
+	if (keys.isKeyDown(KEY_UP))
+	{
+		--oldpos.Z;
+	}
+
+	if(keys.isKeyDown(KEY_DOWN))
+	{
+		++oldpos.Z;
+	}
+
+	// The effect of rotation is not apparent because the sprite always faces you
+	// Need to get a background in before we see a difference
+	if(keys.isKeyDown(KEY_LEFT))
+	{
+		--oldrot.X;
+	}
+
+	if(keys.isKeyDown(KEY_RIGHT))
+	{
+		++oldrot.X;
+	}
+
+	cam->setPosition(oldpos);
+	cam->setRotation(oldrot);
+}
+
 void GameApp::main()
 {
 	// hook up keymap with event source -- must remove at end of scope
@@ -50,11 +81,15 @@ void GameApp::main()
 
 		objectEngine.update(rootTime);
 
+		// temporary function to demo camera movement
+		update_camera(getSceneManager()->getActiveCamera(), keyMap);
+
 		if (getDevice()->isWindowActive())
 		{
 			getVideoDriver()->beginScene(true, true, video::SColor(255,100,149,237));
 
 			getSceneManager()->drawAll();
+
 			getGUIEnvironment()->drawAll();
 
 			getVideoDriver()->endScene();

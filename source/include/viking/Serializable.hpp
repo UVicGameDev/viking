@@ -8,7 +8,8 @@ namespace vik
 
 // interface for serializable classes
 // follows the exact same interface as Irrlicht's serializable class.
-// Read its documentation or find uses of it for more information on how to use this.
+// Its documentation is here: http://irrlicht.sourceforge.net/docu/classirr_1_1io_1_1_i_attribute_exchanging_object.html
+// For an example, see lines 713 and 736 of http://irrlicht.sourceforge.net/docu/_i_g_u_i_element_8h_source.html
 class Serializable
 {
 public:

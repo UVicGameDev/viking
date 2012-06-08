@@ -26,7 +26,7 @@ Building this project requires:
 		On ubuntu, download it with "sudo apt-get install scons"
 		otherwise: http://www.scons.org/
 
-	3) C++ compiler with good C++11 support (g++ recommended)
+	3) C++ compiler with good C++11 support (g++ 4.6+ recommended)
 		I think Scons somehow detects which compiler you should use?
 
 	4) You should have python installed whether or not you decide to build this project. Python is just awesome.

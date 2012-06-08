@@ -30,4 +30,13 @@ void EventSource::removeListener(EventListener* listener)
 	listeners.erase(it);
 }
 
+void EventSource::printListeners() const
+{
+	std::cout << "EventSource::printListeners" << std::endl;
+	for (std::list<EventListener*>::const_iterator it = listeners.cbegin(); it != listeners.cend(); ++it)
+	{
+		std::cout << *it << std::endl;
+	}
+}
+
 } // end namespace vik

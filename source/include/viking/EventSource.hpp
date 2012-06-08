@@ -19,6 +19,8 @@ public:
 	void addListener(EventListener* listener);
 	// removes listener. Will assert in debug builds if the listener is not in the list.
 	void removeListener(EventListener* listener);
+	// debugging
+	void printListeners() const;
 private:
 	std::list<EventListener*> listeners;
 };

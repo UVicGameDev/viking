@@ -1,9 +1,9 @@
-#include "viking/ControllerControlPanel.hpp"
+#include "viking/ControllerPanel.hpp"
 
 namespace vik
 {
 
-ControllerControlPanel::~ControllerControlPanel()
+ControllerPanel::~ControllerPanel()
 {
 	for (int i = static_cast<int>(controllers.size()) - 1; i >= 0; --i)
 	{
@@ -12,7 +12,7 @@ ControllerControlPanel::~ControllerControlPanel()
 	}
 }
 
-void ControllerControlPanel::update(const KeyMap& keyMap)
+void ControllerPanel::update(const KeyMap& keyMap)
 {
 	for (int i = static_cast<int>(controllers.size()) - 1; i >= 0; --i)
 	{
@@ -20,13 +20,13 @@ void ControllerControlPanel::update(const KeyMap& keyMap)
 	}
 }
 
-Controller* ControllerControlPanel::addController(const ControlScheme& scheme)
+Controller* ControllerPanel::addController(const ControlScheme& scheme)
 {
 	controllers.push_back(new Controller(scheme));
 	return controllers.back();
 }
 
-unsigned ControllerControlPanel::getPlayerNumberFromController(Controller* controller) const
+unsigned ControllerPanel::getPlayerNumberFromController(Controller* controller) const
 {
 	for (int i = static_cast<int>(controllers.size()) - 1; i >= 0; --i)
 	{
@@ -39,7 +39,7 @@ unsigned ControllerControlPanel::getPlayerNumberFromController(Controller* contr
 	return 0;
 }
 
-Controller* ControllerControlPanel::getControllerByPlayer(unsigned playerNumber) const
+Controller* ControllerPanel::getControllerByPlayer(unsigned playerNumber) const
 {
 	if (playerNumber > controllers.size() || playerNumber == 0)
 	{

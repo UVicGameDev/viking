@@ -6,7 +6,7 @@
 #include "viking/GameObjectEngine.hpp"
 #include "viking/GameTime.hpp"
 #include "viking/KeyMap.hpp"
-#include "viking/ControllerControlPanel.hpp"
+#include "viking/ControllerPanel.hpp"
 
 namespace vik
 {
@@ -49,7 +49,7 @@ private:
 	KeyMap keyMap;
 
 	// Manages controllers
-	ControllerControlPanel controllerPanel;
+	ControllerPanel controllerPanel;
 
 	// timer which delivers delta time at the highest level
 	GameTime rootTime;

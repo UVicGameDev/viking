@@ -1,5 +1,5 @@
-#ifndef CONTROLLERCONTROLPANEL_HPP_INCLUDED
-#define CONTROLLERCONTROLPANEL_HPP_INCLUDED
+#ifndef CONTROLLERPANEL_HPP_INCLUDED
+#define CONTROLLERPANEL_HPP_INCLUDED
 
 #include "viking/Controller.hpp"
 #include <vector>
@@ -9,10 +9,11 @@ namespace vik
 
 // Manages the set of controllers acting on the game
 // This class is a metaphor for the front panel of an arcade cabinet: http://en.wikipedia.org/wiki/Video_game_arcade_cabinet#Parts_of_an_arcade_cabinet
-class ControllerControlPanel
+// TODO: Refine the interface for this
+class ControllerPanel
 {
 public:
-	~ControllerControlPanel();
+	~ControllerPanel();
 	// updates state of controllers
 	void update(const KeyMap& keyMap);
 	// add a controller to the end of the list and return it
@@ -30,4 +31,4 @@ private:
 
 } // end namespace vik
 
-#endif // CONTROLLERCONTROLPANEL_HPP_INCLUDED
+#endif // CONTROLLERPANEL_HPP_INCLUDED

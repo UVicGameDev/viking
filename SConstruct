@@ -44,8 +44,8 @@ env = Environment()
 # add common compiler flags
 env.Append(CXXFLAGS = viking_flags['common'])
 
-# add include directory
-env.Append(CPPPATH = path.abspath(viking_dirs['include']))
+# add include directories: include folder AND src folder
+env.Append(CPPPATH = [ path.abspath(viking_dirs['include']), path.abspath(viking_dirs['src']) ] )
 
 configuration_path = ''
 

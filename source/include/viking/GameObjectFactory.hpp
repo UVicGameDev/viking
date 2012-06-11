@@ -2,7 +2,7 @@
 #define GAMEOBJECTFACTORY_HPP_INCLUDED
 
 #include "viking/HashedString.hpp"
-#include "viking/ReferenceCounted.hpp"
+#include <memory>
 
 namespace vik
 {
@@ -10,7 +10,7 @@ namespace vik
 class GameObject;
 
 // interface for defining how game objects are created
-class GameObjectFactory : public ReferenceCounted
+class GameObjectFactory
 {
 public:
 	// factoryID is used to make calls to this factory at runtime
@@ -19,7 +19,7 @@ public:
 	virtual ~GameObjectFactory(){}
 
 	// allocate and construct new instance of a GameObject subclass
-	virtual GameObject* create() = 0;
+	virtual std::shared_ptr<GameObject> create() = 0;
 
 	HashedString getFactoryID() const; 
 private:

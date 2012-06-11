@@ -1,13 +1,11 @@
 #include "viking/Actor.hpp"
 #include "viking/GameTime.hpp"
-#include "viking/ActorFactory.hpp"
 #include <cassert>
 
 namespace vik
 {
 
-Actor::Actor(ActorFactory* manufacturer):
-manufacturer(manufacturer),
+Actor::Actor():
 currentState(0)
 {
 }
@@ -23,8 +21,6 @@ Actor::~Actor()
 	{
 		delete states[i];
 	}
-
-	manufacturer->destroy(this);
 }
 
 void Actor::startStateMachine(HashedString initialStateName)

@@ -5,6 +5,7 @@
 #include "viking/IrrlichtEvent.hpp"
 #include <iostream>
 #include <sstream>
+#include <memory>
 
 using namespace irr;
 
@@ -14,7 +15,8 @@ namespace vik
 GameApp* GameApp::instance;
 
 GameApp::GameApp():
-device(0)
+device(0),
+keyMap(new KeyMap())
 {
 	initDevice();
 
@@ -61,28 +63,26 @@ static void update_camera(scene::ICameraSceneNode* cam, const KeyMap& keys)
 
 void GameApp::main()
 {
-	// hook up keymap with event source -- must remove at end of scope
-	rootEventSource.addListener(&keyMap);
+	rootEventSource.addListener(keyMap);
 
 	GameObjectEngine objectEngine;
 
-	PlayerFactory* pf = new PlayerFactory(HashedString("TestPlayer"), &rootEventSource);
+	auto pf = std::make_shared<PlayerFactory>(HashedString("TestPlayer"), &rootEventSource);
 
 	// give away ownership to the objectEngine
 	objectEngine.addFactory(pf);
-	pf->dropReference();
 	
 	// create one player for testing
-	GameObject* player = objectEngine.create(HashedString("TestPlayer"));
+	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("TestPlayer"));
 
 	while (getDevice()->run())
 	{
-		controllerPanel.update(keyMap);
+		controllerPanel.update(*keyMap.get());
 
 		objectEngine.update(rootTime);
 
 		// temporary function to demo camera movement
-		update_camera(getSceneManager()->getActiveCamera(), keyMap);
+		update_camera(getSceneManager()->getActiveCamera(), *keyMap.get());
 
 		if (getDevice()->isWindowActive())
 		{
@@ -100,7 +100,7 @@ void GameApp::main()
 		}
 	}
 
-	rootEventSource.removeListener(&keyMap);
+	rootEventSource.removeListener(keyMap);
 }
 
 bool GameApp::OnEvent(const irr::SEvent& event)

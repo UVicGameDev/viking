@@ -10,33 +10,46 @@ namespace vik
 bool EventSource::onEvent(const Event& event)
 {
 	bool handled = false;
-	for (std::list<EventListener*>::iterator it = listeners.begin(); it != listeners.end() && !handled; ++it)
+	for (std::list<std::weak_ptr<EventListener>>::iterator it = listeners.begin(); it != listeners.end() && !handled; )
 	{
-		handled = (*it)->onEvent(event);
+		// remove listeners lazily if their reference count is 0
+		if (std::shared_ptr<EventListener> p = (*it).lock())
+		{
+			handled = p->onEvent(event);
+			++it;
+		}
+		else
+		{
+			auto next = it;
+			++next;
+			listeners.erase(it);
+			it = next;
+		}
 	}
 	return handled;
 }
 
-void EventSource::addListener(EventListener* listener)
+void EventSource::addListener(const std::weak_ptr<EventListener>& listener)
 {
 	listeners.push_back(listener);
 }
 
-void EventSource::removeListener(EventListener* listener)
+void EventSource::removeListener(const std::weak_ptr<EventListener>& listener)
 {
-	std::list<EventListener*>::iterator it;
-	it = std::find(listeners.begin(), listeners.end(), listener);
+	assert(listener.lock());
+
+	auto it = listeners.begin();
+	while (it != listeners.end())
+	{
+		// check if they both are weak pointers to the same shared pointer
+		if ((*it).lock() == listener.lock())
+		{
+			break;
+		}
+		++it;
+	}
 	assert(it != listeners.end());
 	listeners.erase(it);
-}
-
-void EventSource::printListeners() const
-{
-	std::cout << "EventSource::printListeners" << std::endl;
-	for (std::list<EventListener*>::const_iterator it = listeners.cbegin(); it != listeners.cend(); ++it)
-	{
-		std::cout << *it << std::endl;
-	}
 }
 
 } // end namespace vik

@@ -8,71 +8,54 @@ namespace vik
 
 GameObjectEngine::~GameObjectEngine()
 {
-	for (std::set<GameObject*>::iterator it = objectList.begin(); it != objectList.end(); ++it)
-	{
-		(*it)->dropReference();
-	}
-	
 }
 
 void GameObjectEngine::update(GameTime& time)
 {
-	for (std::set<GameObject*>::iterator it = objectList.begin(); it != objectList.end(); ++it)
+	for (std::set<std::shared_ptr<GameObject>>::iterator it = objectList.begin(); it != objectList.end(); ++it)
 	{
 		(*it)->update(time);
 	}
 }
 
-void GameObjectEngine::addObject(GameObject* object)
+void GameObjectEngine::addObject(const std::shared_ptr<GameObject>& object)
 {
 	assert(objectList.find(object) == objectList.end());
-	object->grabReference();
 	objectList.insert(object);
 }
 
-void GameObjectEngine::removeObject(GameObject* object)
+void GameObjectEngine::removeObject(const std::shared_ptr<GameObject>& object)
 {
-	object->dropReference();
-	std::set<GameObject*>::iterator it = objectList.find(object);
+	std::set<std::shared_ptr<GameObject>>::iterator it = objectList.find(object);
 	assert(it != objectList.end());
 	objectList.erase(it);
 }
 
-void GameObjectEngine::addFactory(GameObjectFactory* factory)
+void GameObjectEngine::addFactory(const std::shared_ptr<GameObjectFactory>& factory)
 {
-	factory->grabReference();
 	assert(factoryList.find(factory) == factoryList.end());
 	factoryList.insert(factory);
 }
 
-void GameObjectEngine::removeFactory(GameObjectFactory* factory)
+void GameObjectEngine::removeFactory(const std::shared_ptr<GameObjectFactory>& factory)
 {
-	std::set<GameObjectFactory*>::iterator it = factoryList.find(factory);
+	std::set<std::shared_ptr<GameObjectFactory>>::iterator it = factoryList.find(factory);
 	assert(it != factoryList.end());
-	factory->dropReference();
 	factoryList.erase(it);
 }
 
-GameObject* GameObjectEngine::create(HashedString factoryID)
+std::shared_ptr<GameObject> GameObjectEngine::create(HashedString factoryID)
 {
-	for (std::set<GameObjectFactory*>::iterator it = factoryList.begin(); it != factoryList.end(); ++it)
+	for (std::set<std::shared_ptr<GameObjectFactory>>::iterator it = factoryList.begin(); it != factoryList.end(); ++it)
 	{
 		if ((*it)->getFactoryID() == factoryID)
 		{
-			GameObject* newObject = (*it)->create();
-			// don't need to increment reference count because it was set to 1 when the factory call was made
-			addObjectWithoutIncrRefCnt(newObject);
+			std::shared_ptr<GameObject> newObject = (*it)->create();
 			return newObject;
 		}
 	}
-	assert(false);
-	return 0;
-}
 
-void GameObjectEngine::addObjectWithoutIncrRefCnt(GameObject* object)
-{
-	assert(objectList.find(object) == objectList.end());
-	objectList.insert(object);
+	return std::shared_ptr<GameObject>();
 }
 
 } // end namespace vik

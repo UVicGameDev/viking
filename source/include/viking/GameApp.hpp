@@ -46,7 +46,7 @@ private:
 	EventSource rootEventSource;
 
 	// remembers the current state of all keys
-	KeyMap keyMap;
+	std::shared_ptr<KeyMap> keyMap;
 
 	// Manages controllers
 	ControllerPanel controllerPanel;

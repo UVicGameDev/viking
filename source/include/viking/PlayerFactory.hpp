@@ -1,7 +1,7 @@
 #ifndef PLAYERFACTORY_HPP_INCLUDED
 #define PLAYERFACTORY_HPP_INCLUDED
 
-#include "viking/ActorFactory.hpp"
+#include "viking/GameObjectFactory.hpp"
 
 namespace vik
 {
@@ -9,12 +9,11 @@ namespace vik
 class EventSource;
 
 // Creates actor decorated to be players
-class PlayerFactory : public ActorFactory
+class PlayerFactory : public GameObjectFactory
 {
 public:
 	PlayerFactory(HashedString factoryID, EventSource* playerEventSource);
-	GameObject* create();
-	void destroy(Actor* destroyMe);
+	std::shared_ptr<GameObject> create();
 private:
 	EventSource* playerEventSource;
 };

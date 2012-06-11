@@ -15,7 +15,7 @@ class Actor : public GameObject, public EventListener
 {
 public:
 	// Takes reference to manufacturer in order to give the manufacturer a hook while deleting
-	Actor(ActorFactory* manufacturer);
+	Actor();
 	~Actor();
 	
 	// sets the current state to the given state and enters it
@@ -31,8 +31,6 @@ public:
 	// Passes on events to the current state
 	bool onEvent(const Event& e);
 private:
-	ActorFactory* manufacturer;
-
 	ActorState* currentState;
 	std::vector<ActorState*> states;
 

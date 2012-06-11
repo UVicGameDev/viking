@@ -3,6 +3,7 @@
 
 #include "viking/HashedString.hpp"
 #include "viking/EventListener.hpp"
+#include <memory>
 
 namespace vik
 {
@@ -14,7 +15,7 @@ class Actor;
 class ActorState : public EventListener
 {
 public:
-	ActorState(HashedString stateName, Actor* context);
+	ActorState(HashedString stateName, const std::weak_ptr<Actor>& context);
 	virtual ~ActorState(){}
 
 	// Called when the state is entered
@@ -28,9 +29,9 @@ public:
 	HashedString getName() const;
 protected:
 	// returns reference to actor this state modifies
-	Actor* getContext();
+	std::weak_ptr<Actor> getContext();
 private:
-	Actor* context;
+	std::weak_ptr<Actor> context;
 	HashedString stateName;
 };
 

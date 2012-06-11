@@ -4,7 +4,7 @@
 namespace vik
 {
 
-PlayerIdleState::PlayerIdleState(HashedString stateName, Actor* context):
+PlayerIdleState::PlayerIdleState(HashedString stateName, const std::weak_ptr<Actor>& context):
 ActorState(stateName, context)
 {
 }

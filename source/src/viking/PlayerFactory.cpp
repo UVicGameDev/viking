@@ -8,14 +8,14 @@ namespace vik
 {
 
 PlayerFactory::PlayerFactory(HashedString factoryID, EventSource* playerEventSource):
-ActorFactory(factoryID),
+GameObjectFactory(factoryID),
 playerEventSource(playerEventSource)
 {
 }
 
-GameObject* PlayerFactory::create()
+std::shared_ptr<GameObject> PlayerFactory::create()
 {
-	Actor* player = new Actor(this);
+	std::shared_ptr<Actor> player = std::make_shared<Actor>();
 
 	playerEventSource->addListener(player);
 
@@ -27,9 +27,4 @@ GameObject* PlayerFactory::create()
 	return player;
 }
 
-void PlayerFactory::destroy(Actor* destroyMe)
-{
-	playerEventSource->removeListener(destroyMe);
-}
-
-}
+} // end namespace vik

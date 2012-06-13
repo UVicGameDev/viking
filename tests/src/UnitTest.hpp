@@ -32,7 +32,14 @@ static void assertTrue(const std::string& msg, bool cond)
 
 void generateReport()
 {
-	std::cout << "Passed " << _numSuccesses << "/" << (_numSuccesses+_numFailures) << " (" << static_cast<float>(100*_numSuccesses)/(_numFailures+_numSuccesses) << "%) of tests." << std::endl;
+    if (_numSuccesses == 0 && _numFailures == 0)
+    {
+        std::cout << "No tests were performed." << std::endl;
+    }
+    else
+    {
+        std::cout << "Passed " << _numSuccesses << "/" << (_numSuccesses+_numFailures) << " (" << static_cast<float>(100*_numSuccesses)/(_numFailures+_numSuccesses) << "%) of tests." << std::endl;
+    }
 }
 
 void _addFailure()

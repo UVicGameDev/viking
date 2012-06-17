@@ -226,34 +226,34 @@ class UnitTest
 		const Class fruitType("Fruit", {});
 
 		// class name
-		TESTASSERT(std::string(vehicleType.getName()) == "Vehicle");
+		test_assert(std::string(vehicleType.getName()) == "Vehicle");
 
 		// single inheritance valid upcast
-		TESTASSERT(landVehicleType.derivesFrom(vehicleType));
+		test_assert(landVehicleType.derivesFrom(vehicleType));
 
 		// single inheritance invalid upcast
-		TESTASSERT(landVehicleType.derivesFrom(fruitType) == false);
+		test_assert(landVehicleType.derivesFrom(fruitType) == false);
 
 		// single inheritance invalid cross-cast
-		TESTASSERT(landVehicleType.derivesFrom(waterVehicleType) == false);
+		test_assert(landVehicleType.derivesFrom(waterVehicleType) == false);
 
 		// multiple inheritance 1 level valid upcast
-		TESTASSERT(amphibiousVehicleType.derivesFrom(landVehicleType));
+		test_assert(amphibiousVehicleType.derivesFrom(landVehicleType));
 
 		// multiple inheritance 2 level valid upcast
-		TESTASSERT(amphibiousVehicleType.derivesFrom(vehicleType));
+		test_assert(amphibiousVehicleType.derivesFrom(vehicleType));
 
 		// multiple inheritance 1 level invalid upcast
-		TESTASSERT(amphibiousVehicleType.derivesFrom(fruitType) == false);
+		test_assert(amphibiousVehicleType.derivesFrom(fruitType) == false);
 
 		// getting valid grandparent class by name
-		TESTASSERT(amphibiousVehicleType.getBase("Vehicle") == &vehicleType);
+		test_assert(amphibiousVehicleType.getBase("Vehicle") == &vehicleType);
 
 		// getting valid parent class by name
-		TESTASSERT(amphibiousVehicleType.getBase("WaterVehicle") == &waterVehicleType);
+		test_assert(amphibiousVehicleType.getBase("WaterVehicle") == &waterVehicleType);
 
 		// getting valid self class by name
-		TESTASSERT(waterVehicleType.getBase("WaterVehicle") == &waterVehicleType);
+		test_assert(waterVehicleType.getBase("WaterVehicle") == &waterVehicleType);
 
 		std::cout << "Classless tests successful" << std::endl;
 	}
@@ -267,28 +267,28 @@ class UnitTest
 		Sailboat* sailboat = new Sailboat();
 
 		// class name
-		TESTASSERT(std::string(staff->getInstanceClass().getName()) == "StaffMember");
+		test_assert(std::string(staff->getInstanceClass().getName()) == "StaffMember");
 
 		// single inheritance valid upcast
-		TESTASSERT(librarian->getInstanceClass().derivesFrom(staff->getInstanceClass()));
+		test_assert(librarian->getInstanceClass().derivesFrom(staff->getInstanceClass()));
 
 		// single inheritance valid upcast through static member
-		TESTASSERT(librarian->getInstanceClass().derivesFrom(StaffMember::getClass()));
+		test_assert(librarian->getInstanceClass().derivesFrom(StaffMember::getClass()));
 
 		// single inheritance invalid upcast
-		TESTASSERT(librarian->getInstanceClass().derivesFrom(sailboat->getInstanceClass()) == false);
+		test_assert(librarian->getInstanceClass().derivesFrom(sailboat->getInstanceClass()) == false);
 
 		// single inheritance invalid cross-cast
-		TESTASSERT(librarian->getInstanceClass().derivesFrom(teacher->getInstanceClass()) == false);
+		test_assert(librarian->getInstanceClass().derivesFrom(teacher->getInstanceClass()) == false);
 
 		// multiple inheritance 1 level valid upcast
-		TESTASSERT(teachingLibrarian->getInstanceClass().derivesFrom(librarian->getInstanceClass()));
+		test_assert(teachingLibrarian->getInstanceClass().derivesFrom(librarian->getInstanceClass()));
 
 		// multiple inheritance 2 level valid upcast
-		TESTASSERT(teachingLibrarian->getInstanceClass().derivesFrom(staff->getInstanceClass()));
+		test_assert(teachingLibrarian->getInstanceClass().derivesFrom(staff->getInstanceClass()));
 
 		// multiple inheritance 1 level invalid upcast
-		TESTASSERT(teachingLibrarian->getInstanceClass().derivesFrom(sailboat->getInstanceClass()) == false);
+		test_assert(teachingLibrarian->getInstanceClass().derivesFrom(sailboat->getInstanceClass()) == false);
 
 		delete staff;
 		delete librarian;
@@ -303,19 +303,19 @@ class UnitTest
 	void reflectionTest()
 	{
 		// getting existing class by name
-		TESTASSERT(Reflection::getSingleton().findClass("Sailboat") == &Sailboat::getClass());
+		test_assert(Reflection::getSingleton().findClass("Sailboat") == &Sailboat::getClass());
 
 		// getting nonexistant class by name
-		TESTASSERT(Reflection::getSingleton().findClass("ASFJasdf") == 0);
+		test_assert(Reflection::getSingleton().findClass("ASFJasdf") == 0);
 
 		// getting existing class by hashed name
-		TESTASSERT(Reflection::getSingleton().findClass(HashedString("Sailboat")) == &Sailboat::getClass());
+		test_assert(Reflection::getSingleton().findClass(HashedString("Sailboat")) == &Sailboat::getClass());
 
 		// getting nonexistant class by hashed name
-		TESTASSERT(Reflection::getSingleton().findClass(HashedString("ASFJasdf")) == 0);
+		test_assert(Reflection::getSingleton().findClass(HashedString("ASFJasdf")) == 0);
 
 		// getting class that exists but was not used previously
-		TESTASSERT(Reflection::getSingleton().findClass("Dog") != 0);
+		test_assert(Reflection::getSingleton().findClass("Dog") != 0);
 
 		// print all classes for sanity check
 		std::cout << "reflection debug information:" << std::endl;

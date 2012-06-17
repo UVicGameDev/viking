@@ -47,7 +47,7 @@ int main()
 	// test no events
 	l->resetEventCount();
 	s.onEvent(*bogusEvent);
-	TESTASSERT(l->getEventCount() == 0);
+	test_assert(l->getEventCount() == 0);
 
 	l->resetEventCount();
 	// test adding listener
@@ -56,12 +56,12 @@ int main()
 	s.onEvent(*bogusEvent);
 	s.onEvent(*bogusEvent);
 	s.onEvent(*bogusEvent);
-	TESTASSERT(l->getEventCount() == 3);
+	test_assert(l->getEventCount() == 3);
 	// test removing listener
 	l->resetEventCount();
 	s.removeListener(l);
 	s.onEvent(*bogusEvent);
-	TESTASSERT(l->getEventCount() == 0);
+	test_assert(l->getEventCount() == 0);
 
 	// test listener being removed by being destroyed
 	{

@@ -5,7 +5,7 @@
 #include <iostream>
 
 // public stuff of this module
-#define TESTASSERT(cond) \
+#define test_assert(cond) \
 	assertTrue("Failed assert: ##cond at line ##__LINE__ in file ##__FILE__", cond)
 
 static void generateReport();

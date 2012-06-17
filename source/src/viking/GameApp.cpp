@@ -77,8 +77,6 @@ void GameApp::main()
 
 	while (getDevice()->run())
 	{
-		controllerPanel.update(*keyMap.get());
-
 		objectEngine.update(rootTime);
 
 		// temporary function to demo camera movement

@@ -37,7 +37,7 @@ int main()
 {
 {
 	vik::EventSource s;
-	EventListenerTester l;
+	auto l = std::make_shared<EventListenerTester>();
 
 	// intentionally not using the vik::Event constructor
 	// because it requires GameApp to be defined, which means
@@ -45,28 +45,28 @@ int main()
 	vik::Event* bogusEvent = reinterpret_cast<vik::Event*>(new char[sizeof(vik::Event)]);
 
 	// test no events
-	l.resetEventCount();
+	l->resetEventCount();
 	s.onEvent(*bogusEvent);
-	TESTASSERT(l.getEventCount() == 0);
+	TESTASSERT(l->getEventCount() == 0);
 
-	l.resetEventCount();
+	l->resetEventCount();
 	// test adding listener
-	s.addListener(&l);
+	s.addListener(l);
 	// test sending events
 	s.onEvent(*bogusEvent);
 	s.onEvent(*bogusEvent);
 	s.onEvent(*bogusEvent);
-	TESTASSERT(l.getEventCount() == 3);
+	TESTASSERT(l->getEventCount() == 3);
 	// test removing listener
-	l.resetEventCount();
-	s.removeListener(&l);
+	l->resetEventCount();
+	s.removeListener(l);
 	s.onEvent(*bogusEvent);
-	TESTASSERT(l.getEventCount() == 0);
+	TESTASSERT(l->getEventCount() == 0);
 
 	// test listener being removed by being destroyed
 	{
-	EventListenerTester l2;
-	s.addListener(&l2);
+	auto l2 = std::make_shared<EventListenerTester>();
+	s.addListener(l2);
 	}
 	s.onEvent(*bogusEvent);
 }

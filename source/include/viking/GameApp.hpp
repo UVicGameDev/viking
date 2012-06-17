@@ -6,7 +6,6 @@
 #include "viking/GameObjectEngine.hpp"
 #include "viking/GameTime.hpp"
 #include "viking/KeyMap.hpp"
-#include "viking/ControllerPanel.hpp"
 
 namespace vik
 {
@@ -47,9 +46,6 @@ private:
 
 	// remembers the current state of all keys
 	std::shared_ptr<KeyMap> keyMap;
-
-	// Manages controllers
-	ControllerPanel controllerPanel;
 
 	// timer which delivers delta time at the highest level
 	GameTime rootTime;

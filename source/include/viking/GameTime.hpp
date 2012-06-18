@@ -20,7 +20,8 @@ public:
 	// get virtual time of last tick
 	irr::u32 getLastTime() const;
 	// get difference in virtual time from current to last tick
-	irr::u32 getDeltaTime() const;
+	irr::u32 getDeltaTimeMilliSeconds() const;
+	irr::f32 getDeltaTimeSeconds() const;
 
 	// current speed of time relative to system time flow
 	irr::f32 getSpeed() const;

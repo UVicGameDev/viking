@@ -1,5 +1,4 @@
 #include "viking/PlayerIdleState.hpp"
-#include "viking/GameApp.hpp"
 
 namespace vik
 {

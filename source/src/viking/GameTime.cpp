@@ -35,9 +35,14 @@ irr::u32 GameTime::getLastTime() const
 	return lastTime;
 }
 
-irr::u32 GameTime::getDeltaTime() const
+irr::u32 GameTime::getDeltaTimeMilliSeconds() const
 {
 	return deltaTime;
+}
+
+irr::f32 GameTime::getDeltaTimeSeconds() const
+{
+	return deltaTime/1000.0f;
 }
 
 bool GameTime::isStopped() const

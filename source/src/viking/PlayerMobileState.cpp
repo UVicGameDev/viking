@@ -18,7 +18,7 @@ void PlayerMobileState::onEnter()
 
 void PlayerMobileState::onUpdate(GameTime& time)
 {
-	GameApp::getLogger()->log("void PlayerMobileState::onUpdate()");
+	// GameApp::getLogger()->log("void PlayerMobileState::onUpdate()");
 
 	movementAnimator.update(time);
 

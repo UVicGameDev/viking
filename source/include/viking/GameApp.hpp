@@ -32,6 +32,7 @@ public:
 	static inline irr::gui::IGUIEnvironment* getGUIEnvironment();
 	static inline irr::ILogger* getLogger();
 	static inline irr::ITimer* getTimer();
+	static inline KeyMap& getKeyMap();
 private:
 	// pointer to most recently created instance of GameApp. Not exactly a static singleton.
 	static GameApp* instance;
@@ -47,7 +48,7 @@ private:
 	// remembers the current state of all keys
 	std::shared_ptr<KeyMap> keyMap;
 
-	// timer which delivers delta time at the highest level
+	// wrapper timer which keeps track of the time for the irrlicht engine
 	GameTime rootTime;
 };
 
@@ -84,6 +85,11 @@ irr::ILogger* GameApp::getLogger()
 irr::ITimer* GameApp::getTimer()
 {
 	return getDevice()->getTimer();
+}
+
+KeyMap& GameApp::getKeyMap()
+{
+	return *(getInstance()->keyMap.get());
 }
 
 } // end namespace vik

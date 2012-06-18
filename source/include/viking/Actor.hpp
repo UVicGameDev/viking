@@ -2,19 +2,22 @@
 #define ACTOR_HPP_INCLUDED
 
 #include "viking/GameObject.hpp"
-#include "viking/ActorState.hpp"
 #include "viking/AnimatedSprite.hpp"
+#include "viking/Particle.hpp"
+#include "viking/HashedString.hpp"
+#include "viking/Event.hpp"
+#include "viking/EventListener.hpp"
 #include <vector>
 
 namespace vik
 {
 
-class ActorFactory;
+class ActorState;
+class ActorAnimator;
 
 class Actor : public GameObject, public EventListener
 {
 public:
-	// Takes reference to manufacturer in order to give the manufacturer a hook while deleting
 	Actor();
 	~Actor();
 	
@@ -30,10 +33,14 @@ public:
 
 	// Passes on events to the current state
 	bool onEvent(const Event& e);
+
+	Particle& getParticle();
 private:
 	ActorState* currentState;
 	std::vector<ActorState*> states;
+	std::vector<ActorAnimator*> animators;
 
+	Particle particle;
 	AnimatedSprite sprite;
 };
 

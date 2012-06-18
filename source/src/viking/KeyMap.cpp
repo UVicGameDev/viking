@@ -16,7 +16,7 @@ bool KeyMap::onEvent(const Event& e)
 		if (se.EventType == irr::EET_KEY_INPUT_EVENT)
 		{
 			keyDownMap[se.KeyInput.Key] = se.KeyInput.PressedDown;
-			return true;
+			std::cout << "Key " << se.KeyInput.Key << " set to " << se.KeyInput.PressedDown << std::endl;
 		}
 	}
 

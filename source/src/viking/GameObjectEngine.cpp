@@ -2,6 +2,7 @@
 #include "viking/GameApp.hpp"
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 namespace vik
 {
@@ -51,6 +52,7 @@ std::shared_ptr<GameObject> GameObjectEngine::create(HashedString factoryID)
 		if ((*it)->getFactoryID() == factoryID)
 		{
 			std::shared_ptr<GameObject> newObject = (*it)->create();
+			addObject(newObject);
 			return newObject;
 		}
 	}

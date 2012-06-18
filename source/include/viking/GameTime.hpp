@@ -19,6 +19,7 @@ public:
 	irr::u32 getTime() const;
 	// get virtual time of last tick
 	irr::u32 getLastTime() const;
+
 	// get difference in virtual time from current to last tick
 	irr::u32 getDeltaTimeMilliSeconds() const;
 	irr::f32 getDeltaTimeSeconds() const;
@@ -38,8 +39,16 @@ public:
 	void stop();
 
 	// updates virtual time based on real time
-	void tick();
+	// wrapped clock may or may not be ticked with this update
+	// this accomodates the use case where an irrlicht clock is
+	// being ticked by something else, but you want to wrap it
+	// to get delta time information.
+	void updateWithTick();
+	void updateWithoutTick();
 private:
+	void preTickUpdate();
+	void postTickUpdate();
+
 	irr::ITimer* timer;
 
 	// virtual timer's last tick time.

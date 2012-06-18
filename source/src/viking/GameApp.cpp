@@ -61,6 +61,29 @@ static void update_camera(scene::ICameraSceneNode* cam, const KeyMap& keys)
 	cam->setRotation(oldrot);
 }
 
+// draws red green blue arrows to help know how the X Y Z coordinates work
+static void draw_axis(video::IVideoDriver* driver)
+{
+	const float axisLength = 100.0f;
+	const core::vector3df center(0.0f);
+	const core::vector3df arrows[] = {
+		center + core::vector3df(axisLength, 0.0f, 0.0f),
+		center + core::vector3df(0.0f, axisLength, 0.0f),
+		center + core::vector3df(0.0f, 0.0f, axisLength)
+	};
+	const video::SColor arrow_colors[] = {
+		video::SColor(255, 255,   0,   0),
+		video::SColor(255,   0, 255,   0),
+		video::SColor(255,   0,   0, 255)
+	};
+	
+	driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+	for (unsigned i = 0; i < sizeof(arrows)/sizeof(*arrows); ++i)
+	{
+		driver->draw3DLine(center, arrows[i], arrow_colors[i % (sizeof(arrow_colors)/(sizeof(*arrow_colors)))]);
+	}
+}
+
 void GameApp::main()
 {
 	rootEventSource.addListener(keyMap);
@@ -75,8 +98,14 @@ void GameApp::main()
 	// create one player for testing
 	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("TestPlayer"));
 
+	// start root clock for duration of main loop
+	rootTime.start();
+
 	while (getDevice()->run())
 	{
+		// update clock without tick, because getDevice->run() does a tick.
+		rootTime.updateWithoutTick();
+
 		objectEngine.update(rootTime);
 
 		// temporary function to demo camera movement
@@ -90,6 +119,8 @@ void GameApp::main()
 
 			getGUIEnvironment()->drawAll();
 
+			draw_axis(getVideoDriver());
+
 			getVideoDriver()->endScene();
 		}
 		else
@@ -98,11 +129,23 @@ void GameApp::main()
 		}
 	}
 
+	rootTime.stop();
+
 	rootEventSource.removeListener(keyMap);
 }
 
 bool GameApp::OnEvent(const irr::SEvent& event)
 {
+	// there is a bug in X11 where key input events are repeated. This code ensures that this case cannot happen.
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+	{
+		if (keyMap->isKeyDown(event.KeyInput.Key) == event.KeyInput.PressedDown)
+		{
+			return false;
+		}
+	}
+
+	// distribute event to all listeners
 	return rootEventSource.onEvent(IrrlichtEvent(event));
 }
 
@@ -125,8 +168,8 @@ void GameApp::initDevice()
 
 	// init camera 
 	scene::ICameraSceneNode* cam = getSceneManager()->addCameraSceneNode();
-	cam->setTarget(core::vector3df(0,0,0));
-	cam->setPosition(core::vector3df(0,0,200));
+	cam->setTarget(core::vector3df(0.0f,0.0f,0.0f));
+	cam->setPosition(core::vector3df(0.0f,-100.0f,200.0f));
 }
 
 } // end namespace vik

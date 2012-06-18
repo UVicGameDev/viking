@@ -3,13 +3,13 @@
 
 #include "viking/HashedString.hpp"
 #include "viking/EventListener.hpp"
+#include "viking/Actor.hpp"
 #include <memory>
 
 namespace vik
 {
 
 class GameTime;
-class Actor;
 
 // modifies state of Actors as a function of time and events.
 class ActorState : public EventListener

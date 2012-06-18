@@ -1,6 +1,8 @@
 #include "viking/Actor.hpp"
 #include "viking/GameTime.hpp"
+#include "viking/ActorState.hpp"
 #include <cassert>
+#include <iostream>
 
 namespace vik
 {
@@ -64,12 +66,23 @@ void Actor::switchToState(HashedString nextState)
 
 void Actor::update(GameTime& time)
 {
+	// std::cout << "Actor::update()" << std::endl;
+
 	currentState->onUpdate(time);
+
+	particle.update(time);
+
+	sprite.setPosition(particle.getPosition());
 }
 
 bool Actor::onEvent(const Event& e)
 {
 	return currentState->onEvent(e);
+}
+
+Particle& Actor::getParticle()
+{
+	return particle;
 }
 
 } // end namespace vik

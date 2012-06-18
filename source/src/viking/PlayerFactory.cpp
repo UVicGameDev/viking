@@ -1,8 +1,10 @@
 #include "viking/PlayerFactory.hpp"
 #include "viking/Actor.hpp"
 #include "viking/EventSource.hpp"
+#include "viking/ControlScheme.hpp"
 
 #include "viking/PlayerIdleState.hpp"
+#include "viking/PlayerMobileState.hpp"
 
 namespace vik
 {
@@ -19,8 +21,11 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 
 	playerEventSource->addListener(player);
 
-	PlayerIdleState* idleState = new PlayerIdleState(HashedString("Idle"), player);
+	PlayerIdleState* idleState = new PlayerIdleState(HashedString("Idle"), player, ControlScheme());
+	PlayerMobileState* mobileState = new PlayerMobileState(HashedString("Mobile"), player, ControlScheme());
+
 	player->addState(idleState);
+	player->addState(mobileState);
 
 	player->startStateMachine(HashedString("Idle"));
 

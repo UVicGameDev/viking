@@ -1,4 +1,6 @@
 #include "viking/GameTime.hpp"
+#include <iostream>
+#include <cassert>
 
 namespace vik
 {
@@ -69,16 +71,37 @@ void GameTime::start()
 
 void GameTime::stop()
 {
-	lastTime = timer->getTime();
+	assert(!timer->isStopped());
+
 	timer->stop();
-	deltaTime = 0;
+	if (timer->isStopped())
+	{
+		lastTime = timer->getTime();
+		deltaTime = 0;
+	}
 }
 
-void GameTime::tick()
+void GameTime::updateWithoutTick()
+{
+	preTickUpdate();
+	postTickUpdate();
+}
+
+void GameTime::updateWithTick()
+{
+	preTickUpdate();
+	timer->tick();
+	postTickUpdate();
+}
+
+void GameTime::preTickUpdate()
+{
+	deltaTime = timer->getTime() - lastTime;
+}
+
+void GameTime::postTickUpdate()
 {
 	lastTime = getTime();
-	timer->tick();
-	deltaTime = timer->getTime() - lastTime;
 }
 
 } // end namespace vik

@@ -21,22 +21,18 @@ void PlayerMovementAnimator::update(GameTime& time)
 	if (k.isKeyDown(scheme.up))
 	{
 		currVel.Y += movementModifier.Y;
-		std::cout << "Y" << currVel.Y << std::endl;
 	}
 	if (k.isKeyDown(scheme.down))
 	{
 		currVel.Y -= movementModifier.Y;
-		std::cout << "Y" << currVel.Y << std::endl;
 	}
 	if (k.isKeyDown(scheme.left))
 	{
 		currVel.X -= movementModifier.X;
-		std::cout << "X" << currVel.X << std::endl;
 	}
 	if (k.isKeyDown(scheme.right))
 	{
 		currVel.X += movementModifier.X;
-		std::cout << "X" << currVel.X << std::endl;
 	}
 
 	// if velocity is 0, set flag that movement is done.

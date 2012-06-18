@@ -13,7 +13,6 @@ namespace vik
 {
 
 class ActorState;
-class ActorAnimator;
 
 class Actor : public GameObject, public EventListener
 {
@@ -38,7 +37,6 @@ public:
 private:
 	ActorState* currentState;
 	std::vector<ActorState*> states;
-	std::vector<ActorAnimator*> animators;
 
 	Particle particle;
 	AnimatedSprite sprite;

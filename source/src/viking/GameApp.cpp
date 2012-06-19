@@ -33,32 +33,28 @@ GameApp::~GameApp()
 static void update_camera(scene::ICameraSceneNode* cam, const KeyMap& keys)
 {
 	core::vector3df oldpos = cam->getPosition();
-	core::vector3df	oldrot = cam->getRotation();
 
 	if (keys.isKeyDown(KEY_UP))
 	{
 		--oldpos.Z;
 	}
 
-	if(keys.isKeyDown(KEY_DOWN))
+	if (keys.isKeyDown(KEY_DOWN))
 	{
 		++oldpos.Z;
 	}
 
-	// The effect of rotation is not apparent because the sprite always faces you
-	// Need to get a background in before we see a difference
-	if(keys.isKeyDown(KEY_LEFT))
+	if (keys.isKeyDown(KEY_LEFT))
 	{
-		--oldrot.X;
+		--oldpos.X;
 	}
 
-	if(keys.isKeyDown(KEY_RIGHT))
+	if (keys.isKeyDown(KEY_RIGHT))
 	{
-		++oldrot.X;
+		++oldpos.X;
 	}
 
 	cam->setPosition(oldpos);
-	cam->setRotation(oldrot);
 }
 
 // draws red green blue arrows to help know how the X Y Z coordinates work
@@ -77,7 +73,12 @@ static void draw_axis(video::IVideoDriver* driver)
 		video::SColor(255,   0,   0, 255)
 	};
 	
+	video::SMaterial material;
+	material.Lighting = false;
+	driver->setMaterial(material);
 	driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+
+	driver->draw3DBox( core::aabbox3df(0.0f,0.0f,0.0f,20.0f,20.0f,20.0f) , video::SColor(255, 255, 255, 255) );
 	for (unsigned i = 0; i < sizeof(arrows)/sizeof(*arrows); ++i)
 	{
 		driver->draw3DLine(center, arrows[i], arrow_colors[i % (sizeof(arrow_colors)/(sizeof(*arrow_colors)))]);
@@ -115,11 +116,11 @@ void GameApp::main()
 		{
 			getVideoDriver()->beginScene(true, true, video::SColor(255,100,149,237));
 
+			draw_axis(getVideoDriver());
+
 			getSceneManager()->drawAll();
 
 			getGUIEnvironment()->drawAll();
-
-			draw_axis(getVideoDriver());
 
 			getVideoDriver()->endScene();
 		}
@@ -169,7 +170,8 @@ void GameApp::initDevice()
 	// init camera 
 	scene::ICameraSceneNode* cam = getSceneManager()->addCameraSceneNode();
 	cam->setTarget(core::vector3df(0.0f,0.0f,0.0f));
-	cam->setPosition(core::vector3df(0.0f,-100.0f,200.0f));
+	cam->setPosition(core::vector3df(0.0f,100.0f,100.0f));
+	cam->setUpVector(core::vector3df(0.0f, 0.0f, 1.0f));
 }
 
 } // end namespace vik

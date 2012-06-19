@@ -38,7 +38,7 @@ private:
 	ControlScheme scheme;
 	bool doneMovingFlag;
 
-	// this vector is added to the speed of the particle
+	// the speed of the particle is set to this vector
 	irr::core::vector3df movementModifier;
 };
 

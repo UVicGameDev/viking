@@ -10,7 +10,7 @@ namespace vik
 void PlayerMovementAnimator::reset()
 {
 	doneMovingFlag = false;
-	movementModifier.set(50.0f, 50.0f, 50.0f);
+	movementModifier.set(100.0f, 100.0f, 100.0f);
 }
 
 void PlayerMovementAnimator::update(GameTime& time)
@@ -20,11 +20,11 @@ void PlayerMovementAnimator::update(GameTime& time)
 
 	if (k.isKeyDown(scheme.up))
 	{
-		currVel.Y += movementModifier.Y;
+		currVel.Y -= movementModifier.Y;
 	}
 	if (k.isKeyDown(scheme.down))
 	{
-		currVel.Y -= movementModifier.Y;
+		currVel.Y += movementModifier.Y;
 	}
 	if (k.isKeyDown(scheme.left))
 	{

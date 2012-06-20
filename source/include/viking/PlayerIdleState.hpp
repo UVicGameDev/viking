@@ -11,7 +11,7 @@ namespace vik
 class PlayerIdleState : public ActorState
 {
 public:
-	PlayerIdleState(HashedString stateName, const std::weak_ptr<Actor>& context, const ControlScheme& scheme);
+	PlayerIdleState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme);
 
 	void onEnter();
 	void onUpdate(GameTime& time);

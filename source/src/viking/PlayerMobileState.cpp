@@ -5,8 +5,8 @@
 namespace vik
 {
 
-PlayerMobileState::PlayerMobileState(HashedString stateName, const std::weak_ptr<Actor>& context, const ControlScheme& scheme):
-ActorState(stateName, context),
+PlayerMobileState::PlayerMobileState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme):
+ActorState(context),
 movementAnimator(*context.lock(), scheme)
 {
 }

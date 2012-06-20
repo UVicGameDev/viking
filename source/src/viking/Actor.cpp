@@ -21,7 +21,7 @@ Actor::~Actor()
 
 	for (int i = static_cast<int>(states.size()) - 1; i >= 0; --i)
 	{
-		delete states[i];
+		delete states[i].second;
 	}
 }
 
@@ -30,9 +30,9 @@ void Actor::startStateMachine(HashedString initialStateName)
 	unsigned i;
 	for (i = 0; i < states.size(); ++i)
 	{
-		if (states[i]->getName() == initialStateName)
+		if (states[i].first == initialStateName)
 		{
-			currentState = states[i];
+			currentState = states[i].second;
 			break;
 		}
 	}
@@ -41,9 +41,9 @@ void Actor::startStateMachine(HashedString initialStateName)
 	currentState->onEnter();
 }
 
-void Actor::addState(ActorState* state)
+void Actor::addState(HashedString stateName, ActorState* state)
 {
-	states.push_back(state);
+	states.push_back(std::pair<HashedString,ActorState*>(stateName,state));
 }
 
 void Actor::switchToState(HashedString nextState)
@@ -53,9 +53,9 @@ void Actor::switchToState(HashedString nextState)
 	unsigned i;
 	for (i = 0; i < states.size(); ++i)
 	{
-		if (states[i]->getName() == nextState)
+		if (states[i].first == nextState)
 		{
-			currentState = states[i];
+			currentState = states[i].second;
 			break;
 		}
 	}

@@ -21,11 +21,11 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 
 	playerEventSource->addListener(player);
 
-	PlayerIdleState* idleState = new PlayerIdleState(HashedString("Idle"), player, ControlScheme());
-	PlayerMobileState* mobileState = new PlayerMobileState(HashedString("Mobile"), player, ControlScheme());
+	PlayerIdleState* idleState = new PlayerIdleState(player, ControlScheme());
+	PlayerMobileState* mobileState = new PlayerMobileState(player, ControlScheme());
 
-	player->addState(idleState);
-	player->addState(mobileState);
+	player->addState(HashedString("Idle"), idleState);
+	player->addState(HashedString("Mobile"), mobileState);
 
 	player->startStateMachine(HashedString("Idle"));
 

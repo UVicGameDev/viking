@@ -7,8 +7,8 @@
 namespace vik
 {
 
-PlayerIdleState::PlayerIdleState(HashedString stateName, const std::weak_ptr<Actor>& context, const ControlScheme& scheme):
-ActorState(stateName, context),
+PlayerIdleState::PlayerIdleState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme):
+ActorState(context),
 scheme(scheme)
 {
 }

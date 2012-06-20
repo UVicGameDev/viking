@@ -47,7 +47,7 @@ private:
 #ifdef _DEBUG
 	const char* debugReverseHash;
 #endif
-	const HashType hash;
+	HashType hash;
 };
 
 HASHEDSTRING_CONSTEXPR_IMPL HashedString::HashedString(const char* str):

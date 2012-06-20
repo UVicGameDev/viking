@@ -11,7 +11,7 @@ namespace vik
 class PlayerMobileState : public ActorState
 {
 public:
-	PlayerMobileState(HashedString stateName, const std::weak_ptr<Actor>& context, const ControlScheme& scheme);
+	PlayerMobileState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme);
 
 	void onEnter();
 	void onUpdate(GameTime& time);

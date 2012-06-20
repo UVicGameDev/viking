@@ -1,7 +1,6 @@
 #ifndef ACTORSTATE_HPP_INCLUDED
 #define ACTORSTATE_HPP_INCLUDED
 
-#include "viking/HashedString.hpp"
 #include "viking/EventListener.hpp"
 #include "viking/Actor.hpp"
 #include <memory>
@@ -15,7 +14,7 @@ class GameTime;
 class ActorState : public EventListener
 {
 public:
-	ActorState(HashedString stateName, const std::weak_ptr<Actor>& context);
+	ActorState(const std::weak_ptr<Actor>& context);
 	virtual ~ActorState(){}
 
 	// Called when the state is entered
@@ -24,15 +23,11 @@ public:
 	virtual void onUpdate(GameTime& time){}
 	// Called when the state is switched or the object is destroyed
 	virtual void onLeave(){}
-	
-	// returns the name used to construct the state
-	HashedString getName() const;
 protected:
 	// returns reference to actor this state modifies
 	std::weak_ptr<Actor> getContext();
 private:
 	std::weak_ptr<Actor> context;
-	HashedString stateName;
 };
 
 } // end namespace vik

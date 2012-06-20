@@ -4,20 +4,14 @@
 namespace vik
 {
 
-ActorState::ActorState(HashedString stateName, const std::weak_ptr<Actor>& context):
-context(context),
-stateName(stateName)
+ActorState::ActorState(const std::weak_ptr<Actor>& context):
+context(context)
 {
 }
 
 std::weak_ptr<Actor> ActorState::getContext()
 {
 	return context;
-}
-
-HashedString ActorState::getName() const
-{
-	return stateName;
 }
 
 } // end namespace vik

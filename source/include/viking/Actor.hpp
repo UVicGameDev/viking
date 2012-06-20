@@ -8,6 +8,7 @@
 #include "viking/Event.hpp"
 #include "viking/EventListener.hpp"
 #include <vector>
+#include <utility>
 
 namespace vik
 {
@@ -22,8 +23,11 @@ public:
 	
 	// sets the current state to the given state and enters it
 	void startStateMachine(HashedString initialStateName);
+
 	// Adds a state to the list of possible states.
-	void addState(ActorState* state);
+	// Actor claims ownership of state, always.
+	void addState(HashedString stateName, ActorState* state);
+
 	// leaves the current state and enters the next state
 	void switchToState(HashedString nextState);
 
@@ -36,7 +40,7 @@ public:
 	Particle& getParticle();
 private:
 	ActorState* currentState;
-	std::vector<ActorState*> states;
+	std::vector<std::pair<HashedString,ActorState*>> states;
 
 	Particle particle;
 	AnimatedSprite sprite;

@@ -1,35 +1,43 @@
 #include "viking/AnimatedSprite.hpp"
 #include "viking/GameApp.hpp"
+#include <iostream>
 
 using namespace irr;
 
 namespace vik
 {
 
+// hard coded test for now
 AnimatedSprite::AnimatedSprite()
 {
-	// just a test
+	originNode = GameApp::getSceneManager()->addEmptySceneNode();
+
 	video::ITexture* t = GameApp::getVideoDriver()->getTexture("../../../art/sketch1.png");
-	node = GameApp::getSceneManager()->addBillboardSceneNode(0, core::dimension2df(t->getSize()));
-	node->setMaterialFlag(video::EMF_LIGHTING, false);
-	node->setMaterialFlag(video::EMF_BILINEAR_FILTER, false);
-	node->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
-	node->setMaterialTexture(0, t);
+
+	spriteNode = GameApp::getSceneManager()->addBillboardSceneNode(
+		originNode,
+		core::dimension2df(t->getSize()),
+		core::vector3df(0.0f, 0.0f, t->getSize().Height/2));
+
+	spriteNode->setMaterialFlag(video::EMF_LIGHTING, false);
+	spriteNode->setMaterialFlag(video::EMF_BILINEAR_FILTER, false);
+	spriteNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
+	spriteNode->setMaterialTexture(0, t);
 }
 
 AnimatedSprite::~AnimatedSprite()
 {
-	node->remove();
+	originNode->removeAll();
 }
 
 void AnimatedSprite::setPosition(const core::vector3df& pos)
 {
-	node->setPosition(pos);
+	originNode->setPosition(pos);
 }
 
 core::vector3df AnimatedSprite::getPosition() const
 {
-	return node->getPosition();
+	return originNode->getPosition();
 }
 
 } // end namespace vik

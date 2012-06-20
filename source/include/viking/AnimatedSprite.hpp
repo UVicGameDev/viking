@@ -16,7 +16,8 @@ public:
 	void setPosition(const irr::core::vector3df& pos);
 	irr::core::vector3df getPosition() const;
 private:
-	irr::scene::IBillboardSceneNode* node;
+	irr::scene::ISceneNode* originNode;
+	irr::scene::IBillboardSceneNode* spriteNode;
 };
 
 } // end namespace vik

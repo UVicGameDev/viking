@@ -1,14 +1,14 @@
-VIKING
+Viking
 =================
 
 Codename Viking game project. Work in progress by UVic GameDev club.
 
-TODO LIST
+TODO list
 =================
 
 See github's issue tracker.
 
-THE WIKI
+The wiki
 =================
 
 Read it

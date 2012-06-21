@@ -6,6 +6,7 @@
 #include "viking/GameObjectEngine.hpp"
 #include "viking/GameTime.hpp"
 #include "viking/KeyMap.hpp"
+#include "viking/GameStateMachine.hpp"
 
 namespace vik
 {
@@ -42,6 +43,7 @@ private:
 
 	void initDevice();
 
+	std::shared_ptr<GameStateMachine> gameStateMachine;
 	// distributes events to event listeners at the highest level
 	EventSource rootEventSource;
 

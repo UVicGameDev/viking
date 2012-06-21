@@ -1,8 +1,8 @@
 #include "viking/GameApp.hpp"
 #include "viking/Actor.hpp"
-#include "viking/PlayerFactory.hpp"
 #include <irrlicht/irrlicht.h>
 #include "viking/IrrlichtEvent.hpp"
+#include "viking/CombatScene.hpp"
 #include <iostream>
 #include <sstream>
 #include <memory>
@@ -23,6 +23,13 @@ keyMap(new KeyMap())
 	std::wstringstream ss;
 	ss << L"Viking alpha. built on " << __DATE__;
 	getGUIEnvironment()->addStaticText(ss.str().c_str(), core::recti(0,0,200,100));
+
+	rootEventSource.addListener(keyMap);
+
+	gameStateMachine = std::make_shared<GameStateMachine>();
+	rootEventSource.addListener(gameStateMachine);
+
+	gameStateMachine->startWithScene(std::make_shared<CombatScene>());
 }
 
 GameApp::~GameApp()
@@ -87,17 +94,6 @@ static void draw_axis(video::IVideoDriver* driver)
 
 void GameApp::main()
 {
-	rootEventSource.addListener(keyMap);
-
-	GameObjectEngine objectEngine;
-
-	auto pf = std::make_shared<PlayerFactory>(HashedString("TestPlayer"), &rootEventSource);
-
-	// give away ownership to the objectEngine
-	objectEngine.addFactory(pf);
-	
-	// create one player for testing
-	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("TestPlayer"));
 
 	// start root clock for duration of main loop
 	rootTime.start();
@@ -107,7 +103,7 @@ void GameApp::main()
 		// update clock without tick, because getDevice->run() does a tick.
 		rootTime.updateWithoutTick();
 
-		objectEngine.update(rootTime);
+		gameStateMachine->update(rootTime);
 
 		// temporary function to demo camera movement
 		update_camera(getSceneManager()->getActiveCamera(), *keyMap.get());
@@ -132,7 +128,7 @@ void GameApp::main()
 
 	rootTime.stop();
 
-	rootEventSource.removeListener(keyMap);
+	gameStateMachine->endStateMachine();
 }
 
 bool GameApp::OnEvent(const irr::SEvent& event)
@@ -144,6 +140,13 @@ bool GameApp::OnEvent(const irr::SEvent& event)
 		{
 			return false;
 		}
+	}
+	// ignore logging events because it crashes too often in the following ways:
+	// 1) stack overflows from events logging events logging events logging events
+	// 2) logging information while destroying things causing events to be sent to them
+	else if (event.EventType == irr::EET_LOG_TEXT_EVENT)
+	{
+		return false;
 	}
 
 	// distribute event to all listeners

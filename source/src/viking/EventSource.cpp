@@ -9,6 +9,11 @@ namespace vik
 
 bool EventSource::onEvent(const Event& event)
 {
+	return distributeEvent(event);
+}
+
+bool EventSource::distributeEvent(const Event& event)
+{
 	bool handled = false;
 	for (std::list<std::weak_ptr<EventListener>>::iterator it = listeners.begin(); it != listeners.end() && !handled; )
 	{

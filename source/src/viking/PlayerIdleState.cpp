@@ -15,17 +15,17 @@ scheme(scheme)
 
 void PlayerIdleState::onEnter()
 {
-	GameApp::getLogger()->log("void PlayerIdleState::onEnter()");
+	GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onEnter()");
 }
 
 void PlayerIdleState::onUpdate(GameTime& time)
 {
-	// GameApp::getLogger()->log("void PlayerIdleState::onUpdate()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onUpdate()");
 }
 
 void PlayerIdleState::onLeave()
 {
-	GameApp::getLogger()->log("void PlayerIdleState::onLeave()");
+	GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onLeave()");
 }
 
 bool PlayerIdleState::onEvent(const Event& e)

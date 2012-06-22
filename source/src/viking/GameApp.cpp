@@ -12,33 +12,11 @@ using namespace irr;
 namespace vik
 {
 
-GameApp* GameApp::instance;
-
-GameApp::GameApp():
-device(0),
-keyMap(new KeyMap())
-{
-	initDevice();
-
-	std::wstringstream ss;
-	ss << L"Viking alpha. built on " << __DATE__;
-	getGUIEnvironment()->addStaticText(ss.str().c_str(), core::recti(0,0,200,100));
-
-	rootEventSource.addListener(keyMap);
-
-	gameStateMachine = std::make_shared<GameStateMachine>();
-	rootEventSource.addListener(gameStateMachine);
-
-	gameStateMachine->startWithScene(std::make_shared<CombatScene>());
-}
-
-GameApp::~GameApp()
-{
-	device->drop();
-}
+GameApp* GameApp::singleton;
 
 void GameApp::main()
 {
+	onInit();
 
 	// start root clock for duration of main loop
 	rootTime.start();
@@ -70,6 +48,8 @@ void GameApp::main()
 	rootTime.stop();
 
 	gameStateMachine->endStateMachine();
+
+	onDestroy();
 }
 
 bool GameApp::OnEvent(const irr::SEvent& event)
@@ -94,11 +74,8 @@ bool GameApp::OnEvent(const irr::SEvent& event)
 	return rootEventSource.onEvent(IrrlichtEvent(event));
 }
 
-void GameApp::initDevice()
+void GameApp::onInit()
 {
-	// init instance
-	instance = this;
-
 	// init device
 	device = createDevice(video::EDT_OPENGL, core::dimension2du(640, 480), 32, false, false, true);
 
@@ -109,13 +86,80 @@ void GameApp::initDevice()
 	// the device's timer while creating event time stamps.
 	device->setEventReceiver(this);
 
-	getDevice()->setWindowCaption(L"Viking");
+	device->setWindowCaption(L"Viking");
 
 	// init camera 
-	scene::ICameraSceneNode* cam = getSceneManager()->addCameraSceneNode();
+	scene::ICameraSceneNode* cam = device->getSceneManager()->addCameraSceneNode();
 	cam->setTarget(core::vector3df(0.0f,0.0f,0.0f));
 	cam->setPosition(core::vector3df(0.0f,100.0f,100.0f));
 	cam->setUpVector(core::vector3df(0.0f, 0.0f, 1.0f));
+
+	// init keymap
+	keyMap = std::make_shared<KeyMap>();
+
+	// draw a header with build creation date
+	std::wstringstream ss;
+	ss << L"Viking alpha. built on " << __DATE__;
+	getGUIEnvironment()->addStaticText(ss.str().c_str(), core::recti(0,0,200,100));
+
+	// hook up keyMap to its source of keyboard press events
+	rootEventSource.addListener(keyMap);
+
+	// create the game state machine and hook it up for events
+	gameStateMachine = std::make_shared<GameStateMachine>();
+	rootEventSource.addListener(gameStateMachine);
+
+	// define initial scene of game
+	gameStateMachine->startWithScene(std::make_shared<CombatScene>());
+}
+
+void GameApp::onDestroy()
+{
+	device->drop();
+}
+
+GameApp& GameApp::getSingleton()
+{
+	if (!singleton)
+	{
+		singleton = new GameApp();
+	}
+	return *singleton;
+}
+
+irr::IrrlichtDevice* GameApp::getDevice()
+{
+	return device;
+}
+
+irr::video::IVideoDriver* GameApp::getVideoDriver()
+{
+	return getDevice()->getVideoDriver();
+}
+
+irr::scene::ISceneManager* GameApp::getSceneManager()
+{
+	return getDevice()->getSceneManager();
+}
+
+irr::gui::IGUIEnvironment* GameApp::getGUIEnvironment()
+{
+	return getDevice()->getGUIEnvironment();
+}
+
+irr::ILogger* GameApp::getLogger()
+{
+	return getDevice()->getLogger();
+}
+
+irr::ITimer* GameApp::getTimer()
+{
+	return getDevice()->getTimer();
+}
+
+KeyMap& GameApp::getKeyMap()
+{
+	return *(keyMap.get());
 }
 
 } // end namespace vik

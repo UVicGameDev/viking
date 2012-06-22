@@ -5,7 +5,7 @@ namespace vik
 {
 
 Event::Event():
-timeStamp(GameApp::getTimer()->getRealTime())
+timeStamp(GameApp::getSingleton().getTimer()->getRealTime())
 {
 }
 

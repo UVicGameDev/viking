@@ -81,7 +81,7 @@ void CombatScene::onUpdate(GameTime& time)
 	objectEngine.update(time);
 
 	// temporary function to demo camera movement
-	update_camera(GameApp::getSceneManager()->getActiveCamera(), GameApp::getKeyMap());
+	update_camera(GameApp::getSingleton().getSceneManager()->getActiveCamera(), GameApp::getSingleton().getKeyMap());
 }
 
 void CombatScene::onLeave()
@@ -90,7 +90,7 @@ void CombatScene::onLeave()
 
 void CombatScene::onRedraw()
 {
-	draw_axis(GameApp::getVideoDriver());
+	draw_axis(GameApp::getSingleton().getVideoDriver());
 }
 
 bool CombatScene::onEvent(const Event& e)

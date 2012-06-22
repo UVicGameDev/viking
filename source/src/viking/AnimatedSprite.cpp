@@ -10,11 +10,11 @@ namespace vik
 // hard coded test for now
 AnimatedSprite::AnimatedSprite()
 {
-	originNode = GameApp::getSceneManager()->addEmptySceneNode();
+	originNode = GameApp::getSingleton().getSceneManager()->addEmptySceneNode();
 
-	video::ITexture* t = GameApp::getVideoDriver()->getTexture("../../../art/sketch1.png");
+	video::ITexture* t = GameApp::getSingleton().getVideoDriver()->getTexture("../../../art/sketch1.png");
 
-	spriteNode = GameApp::getSceneManager()->addBillboardSceneNode(
+	spriteNode = GameApp::getSingleton().getSceneManager()->addBillboardSceneNode(
 		originNode,
 		core::dimension2df(t->getSize()),
 		core::vector3df(0.0f, 0.0f, t->getSize().Height/2));

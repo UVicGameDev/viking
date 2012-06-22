@@ -17,33 +17,41 @@ namespace vik
 class GameApp : public irr::IEventReceiver
 {
 public:
-	GameApp();
-	~GameApp();
+	// forced trivial constructor because it's a singleton.
+	// Put code in onInit() instead.
+	GameApp() = default;
+
+	// forced trivial destructor because it's a singleton.
+	// Put code in onDestroy() instead.
+	~GameApp() = default;
 
 	// main loop of game
 	void main();
 	// distributes irrlicht callback for events
 	bool OnEvent(const irr::SEvent& event);
 
-	// returns last created instance of GameApp. All the following getters just forward calls to the IrrlichtDevice belonging to this instance.
-	static inline GameApp* getInstance();
-	static inline irr::IrrlichtDevice* getDevice();
-	static inline irr::video::IVideoDriver* getVideoDriver();
-	static inline irr::scene::ISceneManager* getSceneManager();
-	static inline irr::gui::IGUIEnvironment* getGUIEnvironment();
-	static inline irr::ILogger* getLogger();
-	static inline irr::ITimer* getTimer();
-	static inline KeyMap& getKeyMap();
+	static GameApp& getSingleton();
+
+	irr::IrrlichtDevice* getDevice();
+	irr::video::IVideoDriver* getVideoDriver();
+	irr::scene::ISceneManager* getSceneManager();
+	irr::gui::IGUIEnvironment* getGUIEnvironment();
+	irr::ILogger* getLogger();
+	irr::ITimer* getTimer();
+	KeyMap& getKeyMap();
 private:
 	// pointer to most recently created instance of GameApp. Not exactly a static singleton.
-	static GameApp* instance;
+	static GameApp* singleton;
 
 	// interface for the irrlicht library
 	irr::IrrlichtDevice* device;
 
-	void initDevice();
+	void onInit();
+	void onDestroy();
 
+	// manages the current scene of the game
 	std::shared_ptr<GameStateMachine> gameStateMachine;
+
 	// distributes events to event listeners at the highest level
 	EventSource rootEventSource;
 
@@ -53,46 +61,6 @@ private:
 	// wrapper timer which keeps track of the time for the irrlicht engine
 	GameTime rootTime;
 };
-
-GameApp* GameApp::getInstance()
-{
-	return instance;
-}
-
-irr::IrrlichtDevice* GameApp::getDevice()
-{
-	return getInstance()->device;
-}
-
-irr::video::IVideoDriver* GameApp::getVideoDriver()
-{
-	return getDevice()->getVideoDriver();
-}
-
-irr::scene::ISceneManager* GameApp::getSceneManager()
-{
-	return getDevice()->getSceneManager();
-}
-
-irr::gui::IGUIEnvironment* GameApp::getGUIEnvironment()
-{
-	return getDevice()->getGUIEnvironment();
-}
-
-irr::ILogger* GameApp::getLogger()
-{
-	return getDevice()->getLogger();
-}
-
-irr::ITimer* GameApp::getTimer()
-{
-	return getDevice()->getTimer();
-}
-
-KeyMap& GameApp::getKeyMap()
-{
-	return *(getInstance()->keyMap.get());
-}
 
 } // end namespace vik
 

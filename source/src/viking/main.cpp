@@ -2,6 +2,5 @@
 
 int main(int argc, char* argv[])
 {
-	vik::GameApp app;
-	app.main();
+	vik::GameApp::getSingleton().main();
 }

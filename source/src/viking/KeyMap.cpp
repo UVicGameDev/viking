@@ -1,6 +1,5 @@
 #include "viking/KeyMap.hpp"
 #include "viking/IrrlichtEvent.hpp"
-#include <iostream>
 
 namespace vik
 {
@@ -16,7 +15,6 @@ bool KeyMap::onEvent(const Event& e)
 		if (se.EventType == irr::EET_KEY_INPUT_EVENT)
 		{
 			keyDownMap[se.KeyInput.Key] = se.KeyInput.PressedDown;
-			std::cout << "Key " << se.KeyInput.Key << " set to " << se.KeyInput.PressedDown << std::endl;
 		}
 	}
 

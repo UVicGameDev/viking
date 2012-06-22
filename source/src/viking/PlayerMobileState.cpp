@@ -12,15 +12,15 @@ scheme(scheme)
 
 void PlayerMobileState::onEnter()
 {
-	GameApp::getLogger()->log("void PlayerMobileState::onEnter()");
+	GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onEnter()");
 }
 
 void PlayerMobileState::onUpdate(GameTime& time)
 {
-	// GameApp::getLogger()->log("void PlayerMobileState::onUpdate()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onUpdate()");
 
 	const irr::core::vector3df movementModifier(100.0f, 100.0f, 100.0f);
-	const KeyMap& k = GameApp::getKeyMap();
+	const KeyMap& k = GameApp::getSingleton().getKeyMap();
 	irr::core::vector3df currVel;
 
 	if (k.isKeyDown(scheme.up))
@@ -53,7 +53,7 @@ void PlayerMobileState::onUpdate(GameTime& time)
 
 void PlayerMobileState::onLeave()
 {
-	GameApp::getLogger()->log("void PlayerMobileState::onLeave()");
+	GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onLeave()");
 	getContext().lock()->getParticle().setVelocity(irr::core::vector3df());
 }
 

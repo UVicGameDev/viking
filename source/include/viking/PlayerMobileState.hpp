@@ -3,7 +3,6 @@
 
 #include "viking/ActorState.hpp"
 #include "viking/ControlScheme.hpp"
-#include "viking/PlayerMovementAnimator.hpp"
 
 namespace vik
 {
@@ -18,7 +17,7 @@ public:
 	void onLeave();
 	bool onEvent(const Event& e);
 private:
-	PlayerMovementAnimator movementAnimator;
+	ControlScheme scheme;
 };
 
 } // end namespace vik

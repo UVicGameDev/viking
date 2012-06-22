@@ -26,6 +26,11 @@ void GameStateMachine::update(GameTime& time)
 	currentScene->onUpdate(time);
 }
 
+void GameStateMachine::onRedraw()
+{
+	currentScene->onRedraw();
+}
+
 bool GameStateMachine::onEvent(const Event& e)
 {
 	return currentScene->onEvent(e);

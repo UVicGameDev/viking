@@ -1,5 +1,4 @@
 #include "viking/PlayerMobileState.hpp"
-#include "viking/PlayerMovementAnimator.hpp"
 #include "viking/GameApp.hpp"
 
 namespace vik
@@ -7,7 +6,7 @@ namespace vik
 
 PlayerMobileState::PlayerMobileState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme):
 ActorState(context),
-movementAnimator(*context.lock(), scheme)
+scheme(scheme)
 {
 }
 
@@ -20,15 +19,35 @@ void PlayerMobileState::onUpdate(GameTime& time)
 {
 	// GameApp::getLogger()->log("void PlayerMobileState::onUpdate()");
 
-	movementAnimator.update(time);
+	const irr::core::vector3df movementModifier(100.0f, 100.0f, 100.0f);
+	const KeyMap& k = GameApp::getKeyMap();
+	irr::core::vector3df currVel;
 
-	// TODO: Consider that may stop moving because of other external cause such as being hurt
-	// Probably not a bad idea to handle through onEvent?
-	// In fact, maybe doneMoving should be handled through an event...
-	if (movementAnimator.doneMoving())
+	if (k.isKeyDown(scheme.up))
 	{
-		movementAnimator.reset();
+		currVel.Y -= movementModifier.Y;
+	}
+	if (k.isKeyDown(scheme.down))
+	{
+		currVel.Y += movementModifier.Y;
+	}
+	if (k.isKeyDown(scheme.left))
+	{
+		currVel.X -= movementModifier.X;
+	}
+	if (k.isKeyDown(scheme.right))
+	{
+		currVel.X += movementModifier.X;
+	}
+
+	// if velocity is 0, set flag that movement is done.
+	if (currVel == irr::core::vector3df())
+	{
 		getContext().lock()->switchToState(HashedString("Idle"));
+	}
+	else
+	{
+		getContext().lock()->getParticle().setVelocity( currVel );
 	}
 }
 

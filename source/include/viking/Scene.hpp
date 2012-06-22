@@ -15,6 +15,7 @@ public:
 	virtual void onEnter() = 0;
 	virtual void onUpdate(GameTime& time) = 0;
 	virtual void onLeave() = 0;
+	virtual void onRedraw(){}
 };
 
 } // end namespace vik

@@ -14,6 +14,7 @@ public:
 	void onUpdate(GameTime& time);
 	void onLeave();
 	bool onEvent(const Event& e);
+	void onRedraw();
 private:
 	GameObjectEngine objectEngine;
 };

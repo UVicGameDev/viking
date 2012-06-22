@@ -24,6 +24,9 @@ public:
 	// update current scene
 	void update(GameTime& time);
 
+	// called at the start of each draw
+	void onRedraw();
+
 	bool onEvent(const Event& e);
 private:
 	std::shared_ptr<Scene> currentScene;

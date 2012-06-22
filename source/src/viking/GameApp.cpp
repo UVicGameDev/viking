@@ -37,61 +37,6 @@ GameApp::~GameApp()
 	device->drop();
 }
 
-static void update_camera(scene::ICameraSceneNode* cam, const KeyMap& keys)
-{
-	core::vector3df oldpos = cam->getPosition();
-
-	if (keys.isKeyDown(KEY_UP))
-	{
-		--oldpos.Z;
-	}
-
-	if (keys.isKeyDown(KEY_DOWN))
-	{
-		++oldpos.Z;
-	}
-
-	if (keys.isKeyDown(KEY_LEFT))
-	{
-		--oldpos.X;
-	}
-
-	if (keys.isKeyDown(KEY_RIGHT))
-	{
-		++oldpos.X;
-	}
-
-	cam->setPosition(oldpos);
-}
-
-// draws red green blue arrows to help know how the X Y Z coordinates work
-static void draw_axis(video::IVideoDriver* driver)
-{
-	const float axisLength = 100.0f;
-	const core::vector3df center(0.0f);
-	const core::vector3df arrows[] = {
-		center + core::vector3df(axisLength, 0.0f, 0.0f),
-		center + core::vector3df(0.0f, axisLength, 0.0f),
-		center + core::vector3df(0.0f, 0.0f, axisLength)
-	};
-	const video::SColor arrow_colors[] = {
-		video::SColor(255, 255,   0,   0),
-		video::SColor(255,   0, 255,   0),
-		video::SColor(255,   0,   0, 255)
-	};
-	
-	video::SMaterial material;
-	material.Lighting = false;
-	driver->setMaterial(material);
-	driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
-
-	driver->draw3DBox( core::aabbox3df(0.0f,0.0f,0.0f,20.0f,20.0f,20.0f) , video::SColor(255, 255, 255, 255) );
-	for (unsigned i = 0; i < sizeof(arrows)/sizeof(*arrows); ++i)
-	{
-		driver->draw3DLine(center, arrows[i], arrow_colors[i % (sizeof(arrow_colors)/(sizeof(*arrow_colors)))]);
-	}
-}
-
 void GameApp::main()
 {
 
@@ -105,14 +50,10 @@ void GameApp::main()
 
 		gameStateMachine->update(rootTime);
 
-		// temporary function to demo camera movement
-		update_camera(getSceneManager()->getActiveCamera(), *keyMap.get());
-
 		if (getDevice()->isWindowActive())
 		{
 			getVideoDriver()->beginScene(true, true, video::SColor(255,100,149,237));
-
-			draw_axis(getVideoDriver());
+			gameStateMachine->onRedraw();
 
 			getSceneManager()->drawAll();
 

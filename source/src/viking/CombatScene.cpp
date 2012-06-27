@@ -4,6 +4,7 @@
 #include "viking/PaperSceneNodeFactory.hpp"
 #include "viking/GameObjectEngineActorQuery.hpp"
 #include "viking/Actor.hpp"
+#include "viking/IrrlichtStream.hpp"
 #include <irrlicht/irrlicht.h>
 #include <iostream>
 
@@ -56,7 +57,10 @@ void CombatScene::onEnter()
 	video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();
 
 	PaperSceneNodeFactory paperFactory(smgr);
-	paperFactory.create(driver->getTexture("../../../art/ground.png"));
+	scene::ISceneNode* floor = paperFactory.create(driver->getTexture("../../../art/ground.png"));
+	core::aabbox3df bbox = floor->getTransformedBoundingBox();
+
+	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setPosition(core::vector3df(bbox.getExtent().X/2, bbox.getExtent().Y , bbox.getExtent().Y));
 }
 
 void CombatScene::onUpdate(GameTime& time)
@@ -80,12 +84,40 @@ bool CombatScene::onEvent(const Event& e)
 	return distributeEvent(e);
 }
 
+/*
+static core::aabbox3df getSceneNodeCompositeBounds(scene::ISceneNode* root)
+{
+	core::aabbox3df boundaries;
+	if (root != GameApp::getSingleton().getSceneManager()->getRootSceneNode())
+	{
+		boundaries.addInternalBox(root->getTransformedBoundingBox());
+	}
+	for (auto it = root->getChildren().begin(); it != root->getChildren().end(); ++it)
+	{
+		std::cout << *it << std::endl;
+		if ((*it)->isVisible())
+		{
+			boundaries.addInternalBox(getSceneNodeCompositeBounds(*it));
+		}
+	}
+	return boundaries;
+}
+*/
+
 void CombatScene::updateCamera()
 {
+	core::vector3df averagePosition;
+
+	/*
+	scene::ISceneNode* rootNode = GameApp::getSingleton().getSceneManager()->getRootSceneNode();
+
+	core::aabbox3df sceneBounds = getSceneNodeCompositeBounds(rootNode);
+	std::cout << "Scene bounds: { { " << sceneBounds.MinEdge.X << ", " << sceneBounds.MinEdge.Y << " } , { " << sceneBounds.MaxEdge.X << ", " << sceneBounds.MaxEdge.Y << " } }" << std::endl;
+	*/
+
 	GameObjectEngineActorQuery actorQuery(&objectEngine);
 	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getActors();
 
-	core::vector3df averagePosition;
 	for (auto it = actorList.begin(); it != actorList.end(); ++it)
 	{
 		averagePosition += (*it)->getParticle().getPosition();
@@ -94,9 +126,9 @@ void CombatScene::updateCamera()
 	if (actorList.size() != 0)
 	{
 		averagePosition /= actorList.size();
+		GameApp::getSingleton().getSceneManager()->getActiveCamera()->setTarget(averagePosition);
 	}
 
-	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setTarget(averagePosition);
 }
 
 } // end namespace vik

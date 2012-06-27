@@ -2,6 +2,7 @@
 #include <irrlicht/CMeshBuffer.h>
 #include <irrlicht/SMesh.h>
 #include <irrlicht/IMeshSceneNode.h>
+#include "viking/IrrlichtStream.hpp"
 
 using namespace irr;
 
@@ -35,6 +36,7 @@ scene::ISceneNode* PaperSceneNodeFactory::create(video::ITexture* tex)
 
 	scene::SMesh* paperMesh = new scene::SMesh();
 	paperMesh->addMeshBuffer(paperBuffer);
+	paperMesh->setBoundingBox(paperBuffer->getBoundingBox());
 
 	scene::IMeshSceneNode* createdNode = smgr->addMeshSceneNode(paperMesh);
 	createdNode->setMaterialFlag(video::EMF_BACK_FACE_CULLING, false);

@@ -5,6 +5,7 @@
 #include "viking/GameObjectEngineActorQuery.hpp"
 #include "viking/Actor.hpp"
 #include "viking/IrrlichtStream.hpp"
+#include "viking/FPSCounter.hpp"
 #include <irrlicht/irrlicht.h>
 #include <iostream>
 
@@ -52,6 +53,10 @@ void CombatScene::onEnter()
 	
 	// create one player for testing
 	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("TestPlayer"));
+
+	// create FPS display thingy
+	auto fpsDisplay = std::make_shared<FPSCounter>();
+	objectEngine.addObject(fpsDisplay);
 
 	scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
 	video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();

@@ -100,7 +100,8 @@ void GameApp::onInit()
 	// draw a header with build creation date
 	std::wstringstream ss;
 	ss << L"Viking alpha. built on " << __DATE__;
-	getGUIEnvironment()->addStaticText(ss.str().c_str(), core::recti(0,0,200,100));
+	gui::IGUIStaticText* buildText = getGUIEnvironment()->addStaticText(ss.str().c_str(), core::recti(0,0,200,100));
+	buildText->setOverrideColor(video::SColor(255,255,255,255));
 
 	// hook up keyMap to its source of keyboard press events
 	rootEventSource.addListener(keyMap);

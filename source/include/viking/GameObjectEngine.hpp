@@ -1,8 +1,7 @@
 #ifndef GAMEOBJECTENGINE_HPP_INCLUDED
 #define GAMEOBJECTENGINE_HPP_INCLUDED
 
-#include <set>
-#include <vector>
+#include <list>
 #include <memory>
 #include "viking/GameTime.hpp"
 #include "viking/GameObject.hpp"
@@ -18,8 +17,7 @@ class GameTime;
 class GameObjectEngine
 {
 public:
-	// drops 
-	~GameObjectEngine();
+	friend class GameObjectEngineIterator;
 
 	// updates all objects
 	void update(GameTime& time);
@@ -47,8 +45,8 @@ public:
 	// will return a null pointer if the factory is not found 
 	std::shared_ptr<GameObject> create(HashedString factoryID);
 private:
-	std::set<std::shared_ptr<GameObject>> objectList;
-	std::set<std::shared_ptr<GameObjectFactory>> factoryList;
+	std::list<std::shared_ptr<GameObject>> objectList;
+	std::list<std::shared_ptr<GameObjectFactory>> factoryList;
 };
 
 } // end namespace vik

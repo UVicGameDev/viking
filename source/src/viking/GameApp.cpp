@@ -30,7 +30,7 @@ void GameApp::main()
 
 		if (getDevice()->isWindowActive())
 		{
-			getVideoDriver()->beginScene(true, true, video::SColor(255,100,149,237));
+			getVideoDriver()->beginScene(true, true, video::SColor(255,0,0,0));
 			gameStateMachine->onRedraw();
 
 			getSceneManager()->drawAll();

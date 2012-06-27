@@ -16,6 +16,7 @@ public:
 	bool onEvent(const Event& e);
 	void onRedraw();
 private:
+	void updateCamera();
 	GameObjectEngine objectEngine;
 };
 

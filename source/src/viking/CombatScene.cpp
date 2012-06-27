@@ -1,39 +1,16 @@
 #include "viking/CombatScene.hpp"
 #include "viking/PlayerFactory.hpp"
 #include "viking/GameApp.hpp"
+#include "viking/PaperSceneNodeFactory.hpp"
+#include "viking/GameObjectEngineActorQuery.hpp"
+#include "viking/Actor.hpp"
 #include <irrlicht/irrlicht.h>
+#include <iostream>
+
+using namespace irr;
 
 namespace vik
 {
-
-static void update_camera(irr::scene::ICameraSceneNode* cam, const KeyMap& keys)
-{
-	using namespace irr;
-
-	core::vector3df oldpos = cam->getPosition();
-
-	if (keys.isKeyDown(KEY_UP))
-	{
-		--oldpos.Z;
-	}
-
-	if (keys.isKeyDown(KEY_DOWN))
-	{
-		++oldpos.Z;
-	}
-
-	if (keys.isKeyDown(KEY_LEFT))
-	{
-		--oldpos.X;
-	}
-
-	if (keys.isKeyDown(KEY_RIGHT))
-	{
-		++oldpos.X;
-	}
-
-	cam->setPosition(oldpos);
-}
 
 // draws red green blue arrows to help know how the X Y Z coordinates work
 static void draw_axis(irr::video::IVideoDriver* driver)
@@ -74,14 +51,19 @@ void CombatScene::onEnter()
 	
 	// create one player for testing
 	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("TestPlayer"));
+
+	scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
+	video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();
+
+	PaperSceneNodeFactory paperFactory(smgr);
+	paperFactory.create(driver->getTexture("../../../art/ground.png"));
 }
 
 void CombatScene::onUpdate(GameTime& time)
 {
 	objectEngine.update(time);
 
-	// temporary function to demo camera movement
-	update_camera(GameApp::getSingleton().getSceneManager()->getActiveCamera(), GameApp::getSingleton().getKeyMap());
+	updateCamera();
 }
 
 void CombatScene::onLeave()
@@ -96,6 +78,25 @@ void CombatScene::onRedraw()
 bool CombatScene::onEvent(const Event& e)
 {
 	return distributeEvent(e);
+}
+
+void CombatScene::updateCamera()
+{
+	GameObjectEngineActorQuery actorQuery(&objectEngine);
+	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getActors();
+
+	core::vector3df averagePosition;
+	for (auto it = actorList.begin(); it != actorList.end(); ++it)
+	{
+		averagePosition += (*it)->getParticle().getPosition();
+	}
+
+	if (actorList.size() != 0)
+	{
+		averagePosition /= actorList.size();
+	}
+
+	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setTarget(averagePosition);
 }
 
 } // end namespace vik

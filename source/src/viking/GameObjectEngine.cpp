@@ -7,13 +7,9 @@
 namespace vik
 {
 
-GameObjectEngine::~GameObjectEngine()
-{
-}
-
 void GameObjectEngine::update(GameTime& time)
 {
-	for (std::set<std::shared_ptr<GameObject>>::iterator it = objectList.begin(); it != objectList.end(); ++it)
+	for (std::list<std::shared_ptr<GameObject>>::iterator it = objectList.begin(); it != objectList.end(); ++it)
 	{
 		(*it)->update(time);
 	}
@@ -21,33 +17,35 @@ void GameObjectEngine::update(GameTime& time)
 
 void GameObjectEngine::addObject(const std::shared_ptr<GameObject>& object)
 {
-	assert(objectList.find(object) == objectList.end());
-	objectList.insert(object);
+	assert(std::find(objectList.begin(), objectList.end(), object) == objectList.end());
+	objectList.push_back(object);
 }
 
 void GameObjectEngine::removeObject(const std::shared_ptr<GameObject>& object)
 {
-	std::set<std::shared_ptr<GameObject>>::iterator it = objectList.find(object);
+	std::list<std::shared_ptr<GameObject>>::iterator it = std::find(objectList.begin(), objectList.end(), object);
+
 	assert(it != objectList.end());
 	objectList.erase(it);
 }
 
 void GameObjectEngine::addFactory(const std::shared_ptr<GameObjectFactory>& factory)
 {
-	assert(factoryList.find(factory) == factoryList.end());
-	factoryList.insert(factory);
+	assert(std::find(factoryList.begin(), factoryList.end(), factory) == factoryList.end());
+	factoryList.push_back(factory);
 }
 
 void GameObjectEngine::removeFactory(const std::shared_ptr<GameObjectFactory>& factory)
 {
-	std::set<std::shared_ptr<GameObjectFactory>>::iterator it = factoryList.find(factory);
+	std::list<std::shared_ptr<GameObjectFactory>>::iterator it = std::find(factoryList.begin(), factoryList.end(), factory);
+
 	assert(it != factoryList.end());
 	factoryList.erase(it);
 }
 
 std::shared_ptr<GameObject> GameObjectEngine::create(HashedString factoryID)
 {
-	for (std::set<std::shared_ptr<GameObjectFactory>>::iterator it = factoryList.begin(); it != factoryList.end(); ++it)
+	for (std::list<std::shared_ptr<GameObjectFactory>>::iterator it = factoryList.begin(); it != factoryList.end(); ++it)
 	{
 		if ((*it)->getFactoryID() == factoryID)
 		{

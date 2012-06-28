@@ -2,7 +2,7 @@
 #include "viking/PlayerFactory.hpp"
 #include "viking/GameApp.hpp"
 #include "viking/PaperSceneNodeFactory.hpp"
-#include "viking/GameObjectEngineActorQuery.hpp"
+#include "viking/GameObjectEngineTypeQuery.hpp"
 #include "viking/Actor.hpp"
 #include "viking/IrrlichtStream.hpp"
 #include "viking/FPSDisplay.hpp"
@@ -120,8 +120,8 @@ void CombatScene::updateCamera()
 	std::cout << "Scene bounds: { { " << sceneBounds.MinEdge.X << ", " << sceneBounds.MinEdge.Y << " } , { " << sceneBounds.MaxEdge.X << ", " << sceneBounds.MaxEdge.Y << " } }" << std::endl;
 	*/
 
-	GameObjectEngineActorQuery actorQuery(&objectEngine);
-	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getActors();
+	GameObjectEngineTypeQuery actorQuery(&objectEngine);
+	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getGameObjectsOfType<Actor>();
 
 	for (auto it = actorList.begin(); it != actorList.end(); ++it)
 	{

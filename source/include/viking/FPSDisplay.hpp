@@ -1,5 +1,5 @@
-#ifndef FPS_COUNTER_HPP_INCLUDED
-#define FPS_COUNTER_HPP_INCLUDED
+#ifndef FPS_DISPLAY_HPP_INCLUDED
+#define FPS_DISPLAY_HPP_INCLUDED
 
 #include "viking/GameObject.hpp"
 #include <irrlicht/IGUIStaticText.h>
@@ -7,10 +7,10 @@
 namespace vik
 {
 
-class FPSCounter : public GameObject
+class FPSDisplay : public GameObject
 {
 public:
-	FPSCounter();
+	FPSDisplay();
 	void update(GameTime& time);
 private:
 	void updateFPS();
@@ -20,4 +20,4 @@ private:
 
 } // end namespace vik
 
-#endif // FPS_COUNTER_HPP_INCLUDED
+#endif // FPS_DISPLAY_HPP_INCLUDED

@@ -1,4 +1,4 @@
-#include "viking/FPSCounter.hpp"
+#include "viking/FPSDisplay.hpp"
 #include "viking/GameApp.hpp"
 #include <sstream>
 
@@ -9,7 +9,7 @@ namespace vik
 
 static const wchar_t* FPSString = L"FPS: ";
 
-FPSCounter::FPSCounter():
+FPSDisplay::FPSDisplay():
 currFPS(0),
 fpsText(0)
 {
@@ -20,12 +20,12 @@ fpsText(0)
 	updateFPS();
 }
 
-void FPSCounter::update(GameTime& time)
+void FPSDisplay::update(GameTime& time)
 {
 	updateFPS();
 }
 
-void FPSCounter::updateFPS()
+void FPSDisplay::updateFPS()
 {
 	int lastFPS = currFPS;
 	currFPS = GameApp::getSingleton().getVideoDriver()->getFPS();

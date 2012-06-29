@@ -1,6 +1,7 @@
 #include "viking/Actor.hpp"
 #include "viking/GameTime.hpp"
 #include "viking/ActorState.hpp"
+#include "viking/GameApp.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -8,7 +9,8 @@ namespace vik
 {
 
 Actor::Actor():
-currentState(0)
+currentState(0),
+sprite(GameApp::getSingleton().getVideoDriver()->getTexture("../../../art/sketch1.png"))
 {
 }
 

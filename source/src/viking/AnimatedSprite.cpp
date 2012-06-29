@@ -8,21 +8,19 @@ namespace vik
 {
 
 // hard coded test for now
-AnimatedSprite::AnimatedSprite()
+AnimatedSprite::AnimatedSprite(video::ITexture* spriteTex)
 {
 	originNode = GameApp::getSingleton().getSceneManager()->addEmptySceneNode();
 
-	video::ITexture* t = GameApp::getSingleton().getVideoDriver()->getTexture("../../../art/sketch1.png");
-
 	spriteNode = GameApp::getSingleton().getSceneManager()->addBillboardSceneNode(
 		originNode,
-		core::dimension2df(t->getSize()),
-		core::vector3df(0.0f, 0.0f, t->getSize().Height/2));
+		core::dimension2df(spriteTex->getSize()),
+		core::vector3df(0.0f, 0.0f, spriteTex->getSize().Height/2));
 
 	spriteNode->setMaterialFlag(video::EMF_LIGHTING, false);
 	spriteNode->setMaterialFlag(video::EMF_BILINEAR_FILTER, false);
 	spriteNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
-	spriteNode->setMaterialTexture(0, t);
+	spriteNode->setMaterialTexture(0, spriteTex);
 }
 
 AnimatedSprite::~AnimatedSprite()

@@ -1,7 +1,9 @@
 #ifndef ANIMATEDSPRITE_HPP_INCLUDED
 #define ANIMATEDSPRITE_HPP_INCLUDED
 
-#include <irrlicht/irrlicht.h>
+#include <irrlicht/ITexture.h>
+#include <irrlicht/IBillboardSceneNode.h>
+#include <irrlicht/vector3d.h>
 
 namespace vik
 {
@@ -11,7 +13,7 @@ namespace vik
 class AnimatedSprite
 {
 public:
-	AnimatedSprite();
+	AnimatedSprite(irr::video::ITexture* spriteTex);
 	~AnimatedSprite();
 	void setPosition(const irr::core::vector3df& pos);
 	irr::core::vector3df getPosition() const;

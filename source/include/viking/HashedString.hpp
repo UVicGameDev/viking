@@ -111,6 +111,11 @@ bool constexpr HashedString::operator<(const HashedString& other) const
 	return hash < other.hash;
 }
 
+// unit tests
+static_assert(HashedString("foo") != HashedString("bar"), "compare different hashed string by key");
+static_assert(HashedString("foo") == HashedString("foo"), "compare identical strings by key");
+static_assert(HashedString("bar") < HashedString("foo"), "compare strings by key ordering");
+
 } // end namespace vik
 
 #endif // HASHEDSTRING_HPP_INCLUDED

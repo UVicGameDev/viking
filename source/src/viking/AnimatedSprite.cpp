@@ -8,7 +8,9 @@ namespace vik
 {
 
 // hard coded test for now
-AnimatedSprite::AnimatedSprite(video::ITexture* spriteTex)
+AnimatedSprite::AnimatedSprite(video::ITexture* spriteTex):
+originNode(0),
+spriteNode(0)
 {
 	originNode = GameApp::getSingleton().getSceneManager()->addEmptySceneNode();
 

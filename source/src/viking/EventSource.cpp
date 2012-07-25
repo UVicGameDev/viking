@@ -18,7 +18,7 @@ bool EventSource::distributeEvent(const Event& event)
 	for (std::list<std::weak_ptr<EventListener>>::iterator it = listeners.begin(); it != listeners.end() && !handled; )
 	{
 		// remove listeners lazily if their reference count is 0
-		if (std::shared_ptr<EventListener> p = (*it).lock())
+		if (std::shared_ptr<EventListener> p = it->lock())
 		{
 			handled = p->onEvent(event);
 			++it;

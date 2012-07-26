@@ -15,7 +15,7 @@ const irr::SEvent& IrrlichtEvent::getEvent() const
 
 HashedString IrrlichtEvent::getType() const
 {
-	return HashedString("IrrlichtEvent");
+	return hashString("IrrlichtEvent");
 }
 
 } // end namespace vik

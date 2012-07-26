@@ -4,7 +4,7 @@
 #include "viking/GameObject.hpp"
 #include "viking/AnimatedSprite.hpp"
 #include "viking/Particle.hpp"
-#include "viking/HashedString.hpp"
+#include "viking/HashString.hpp"
 #include "viking/Event.hpp"
 #include "viking/EventListener.hpp"
 #include <vector>

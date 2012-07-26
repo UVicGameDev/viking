@@ -43,7 +43,7 @@ void PlayerMobileState::onUpdate(GameTime& time)
 	// if velocity is 0, set flag that movement is done.
 	if (currVel == irr::core::vector3df())
 	{
-		getContext().lock()->switchToState(HashedString("Idle"));
+		getContext().lock()->switchToState(hashString("Idle"));
 	}
 	else
 	{

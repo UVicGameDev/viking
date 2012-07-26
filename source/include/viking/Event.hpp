@@ -2,7 +2,7 @@
 #define EVENT_HPP_INCLUDED
 
 #include <irrlicht/irrTypes.h>
-#include "viking/HashedString.hpp"
+#include "viking/HashString.hpp"
 
 namespace vik
 {
@@ -23,7 +23,7 @@ private:
 
 HashedString Event::getType() const
 {
-	return HashedString("Event");
+	return hashString("Event");
 }
 
 } // end namespace vik

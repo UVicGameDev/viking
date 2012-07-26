@@ -8,10 +8,12 @@ namespace vik
 {
 
 // hard coded test for now
-AnimatedSprite::AnimatedSprite(video::ITexture* spriteTex):
+AnimatedSprite::AnimatedSprite(AnimatedSpriteData* spriteData):
 originNode(0),
 spriteNode(0)
 {
+	video::ITexture* spriteTex = GameApp::getSingleton().getVideoDriver()->getTexture("../../../art/sketch1.png");
+
 	originNode = GameApp::getSingleton().getSceneManager()->addEmptySceneNode();
 
 	spriteNode = GameApp::getSingleton().getSceneManager()->addBillboardSceneNode(

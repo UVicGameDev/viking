@@ -16,7 +16,10 @@ GameApp* GameApp::singleton;
 
 void GameApp::main()
 {
-	onInit();
+	if(!onInit())
+	{
+		return;
+	}
 
 	// start root clock for duration of main loop
 	rootTime.start();
@@ -74,10 +77,26 @@ bool GameApp::OnEvent(const irr::SEvent& event)
 	return rootEventSource.onEvent(IrrlichtEvent(event));
 }
 
-void GameApp::onInit()
+bool GameApp::onInit()
 {
+	const std::vector<video::E_DRIVER_TYPE> supportedDrivers = {
+		video::EDT_DIRECT3D9,
+		video::EDT_DIRECT3D8,
+		video::EDT_OPENGL,
+		video::EDT_BURNINGSVIDEO,
+		video::EDT_SOFTWARE
+	};
+
 	// init device
-	device = createDevice(video::EDT_OPENGL, core::dimension2du(640, 480), 32, false, false, true);
+	for (unsigned i = 0; (!device) && i < supportedDrivers.size(); ++i)
+	{
+		device = createDevice(video::EDT_OPENGL, core::dimension2du(640, 480), 32, false, false, true);
+	}
+	if (!device)
+	{
+		return false;
+		std::cout << "Failed to create device." << std::endl;
+	}
 
 	rootTime.setTimer(getTimer());
 
@@ -112,6 +131,8 @@ void GameApp::onInit()
 
 	// define initial scene of game
 	gameStateMachine->startWithScene(std::make_shared<CombatScene>());
+
+	return true;
 }
 
 void GameApp::onDestroy()

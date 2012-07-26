@@ -46,7 +46,7 @@ private:
 	// interface for the irrlicht library
 	irr::IrrlichtDevice* device;
 
-	void onInit();
+	bool onInit();
 	void onDestroy();
 
 	// manages the current scene of the game

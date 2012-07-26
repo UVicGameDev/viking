@@ -39,10 +39,10 @@ public:
 	inline const char* getReverseHash() const;
 
 	// compares hash by equality
-	inline constexpr bool operator==(const HashedString& other) const;
-	inline constexpr bool operator!=(const HashedString& other) const;
+	inline HASHEDSTRING_CONSTEXPR_IMPL bool operator==(const HashedString& other) const;
+	inline HASHEDSTRING_CONSTEXPR_IMPL bool operator!=(const HashedString& other) const;
 	// compares hash in terms of order to allow efficient use with std::less<T> as a Compare function in std::maps
-	inline constexpr bool operator<(const HashedString& other) const;
+	inline HASHEDSTRING_CONSTEXPR_IMPL bool operator<(const HashedString& other) const;
 	// add more comparison operators as they are needed. Always compare with the hash, not the reverse hash.
 private:
 	// reverse hash only exists in debug build
@@ -96,17 +96,17 @@ const char* HashedString::getReverseHash() const
 #endif
 }
 
-bool constexpr HashedString::operator==(const HashedString& other) const
+bool HASHEDSTRING_CONSTEXPR_IMPL HashedString::operator==(const HashedString& other) const
 {
 	return hash == other.hash;
 }
 
-bool constexpr HashedString::operator!=(const HashedString& other) const
+bool HASHEDSTRING_CONSTEXPR_IMPL HashedString::operator!=(const HashedString& other) const
 {
 	return hash != other.hash;
 }
 
-bool constexpr HashedString::operator<(const HashedString& other) const
+bool HASHEDSTRING_CONSTEXPR_IMPL HashedString::operator<(const HashedString& other) const
 {
 	return hash < other.hash;
 }

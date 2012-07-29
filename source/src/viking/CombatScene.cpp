@@ -46,13 +46,13 @@ static void draw_axis(irr::video::IVideoDriver* driver)
 
 void CombatScene::onEnter()
 {
-	auto pf = std::make_shared<PlayerFactory>(HashedString("TestPlayer"), this);
+	auto pf = std::make_shared<PlayerFactory>(hashString("TestPlayer"), this);
 
 	// give away ownership to the objectEngine
 	objectEngine.addFactory(pf);
 	
 	// create one player for testing
-	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("TestPlayer"));
+	std::shared_ptr<GameObject> player = objectEngine.create(hashString("TestPlayer"));
 
 	// create FPS display thingy
 	auto fpsDisplay = std::make_shared<FPSDisplay>();

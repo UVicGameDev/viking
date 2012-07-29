@@ -24,10 +24,10 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 	PlayerIdleState* idleState = new PlayerIdleState(player, ControlScheme());
 	PlayerMobileState* mobileState = new PlayerMobileState(player, ControlScheme());
 
-	player->addState(HashedString("Idle"), idleState);
-	player->addState(HashedString("Mobile"), mobileState);
+	player->addState(hashString("Idle"), idleState);
+	player->addState(hashString("Mobile"), mobileState);
 
-	player->startStateMachine(HashedString("Idle"));
+	player->startStateMachine(hashString("Idle"));
 
 	return player;
 }

@@ -10,7 +10,7 @@ namespace vik
 
 Actor::Actor():
 currentState(0),
-sprite(GameApp::getSingleton().getVideoDriver()->getTexture("../../../art/sketch1.png"))
+sprite(0)
 {
 }
 

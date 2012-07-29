@@ -30,7 +30,7 @@ void PlayerIdleState::onLeave()
 
 bool PlayerIdleState::onEvent(const Event& e)
 {
-	if (e.getType() == HashedString("IrrlichtEvent"))
+	if (e.getType() == hashString("IrrlichtEvent"))
 	{
 		const irr::SEvent& se = static_cast<const IrrlichtEvent&>(e).getEvent();
 
@@ -38,7 +38,7 @@ bool PlayerIdleState::onEvent(const Event& e)
 		{
 			if (scheme.isDirectionalKey(se.KeyInput.Key) && se.KeyInput.PressedDown)
 			{
-				getContext().lock()->switchToState(HashedString("Mobile"));
+				getContext().lock()->switchToState(hashString("Mobile"));
 				return true;
 			}
 		}

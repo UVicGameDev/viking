@@ -17,10 +17,6 @@ namespace vik
 class GameApp : public irr::IEventReceiver
 {
 public:
-	// forced trivial constructor because it's a singleton.
-	// Put code in onInit() instead.
-	GameApp() = default;
-
 	// forced trivial destructor because it's a singleton.
 	// Put code in onDestroy() instead.
 	~GameApp() = default;
@@ -40,6 +36,10 @@ public:
 	irr::ITimer* getTimer();
 	KeyMap& getKeyMap();
 private:
+	// forced trivial constructor because it's a singleton.
+	// Put code in onInit() instead.
+	GameApp() = default;
+
 	// pointer to most recently created instance of GameApp. Not exactly a static singleton.
 	static GameApp* singleton;
 

@@ -1,5 +1,5 @@
-#ifndef GAMEAPP_HPP_INCLUDED
-#define GAMEAPP_HPP_INCLUDED
+#ifndef VIK_GAMEAPP_HPP_INCLUDED
+#define VIK_GAMEAPP_HPP_INCLUDED
 
 #include <irrlicht/irrlicht.h>
 #include "viking/EventSource.hpp"

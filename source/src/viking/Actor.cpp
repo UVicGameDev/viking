@@ -9,8 +9,7 @@ namespace vik
 {
 
 Actor::Actor():
-currentState(0),
-sprite(0)
+currentState(0)
 {
 }
 
@@ -74,7 +73,10 @@ void Actor::update(GameTime& time)
 
 	particle.update(time);
 
-	sprite.setPosition(particle.getPosition());
+	if (sprite)
+	{
+		sprite->setPosition(particle.getPosition());
+	}
 }
 
 bool Actor::onEvent(const Event& e)
@@ -85,6 +87,21 @@ bool Actor::onEvent(const Event& e)
 Particle& Actor::getParticle()
 {
 	return particle;
+}
+
+void Actor::setSprite(std::shared_ptr<AnimatedSprite>& sprite)
+{
+	this->sprite = sprite;
+}
+
+std::shared_ptr<AnimatedSprite>& Actor::getSprite()
+{
+	return sprite;
+}
+
+const std::shared_ptr<AnimatedSprite>& Actor::getSprite() const
+{
+	return sprite;
 }
 
 } // end namespace vik

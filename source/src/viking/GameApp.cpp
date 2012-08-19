@@ -109,8 +109,6 @@ bool GameApp::onInit()
 
 	// init camera 
 	scene::ICameraSceneNode* cam = device->getSceneManager()->addCameraSceneNode();
-	cam->setTarget(core::vector3df(0.0f,0.0f,0.0f));
-	cam->setPosition(core::vector3df(0.0f,100.0f,100.0f));
 	cam->setUpVector(core::vector3df(0.0f, 0.0f, 1.0f));
 
 	// init keymap

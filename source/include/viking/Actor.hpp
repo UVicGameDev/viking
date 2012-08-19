@@ -38,12 +38,16 @@ public:
 	bool onEvent(const Event& e);
 
 	Particle& getParticle();
+
+	void setSprite(std::shared_ptr<AnimatedSprite>& sprite);
+	std::shared_ptr<AnimatedSprite>& getSprite();
+	const std::shared_ptr<AnimatedSprite>& getSprite() const;
 private:
 	ActorState* currentState;
 	std::vector<std::pair<HashedString,ActorState*>> states;
 
 	Particle particle;
-	AnimatedSprite sprite;
+	std::shared_ptr<AnimatedSprite> sprite;
 };
 
 } // end namespace vik

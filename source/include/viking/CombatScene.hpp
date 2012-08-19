@@ -3,6 +3,7 @@
 
 #include "viking/Scene.hpp"
 #include "viking/GameObjectEngine.hpp"
+#include "viking/AnimationEngine.hpp"
 
 namespace vik
 {
@@ -18,6 +19,7 @@ public:
 private:
 	void updateCamera();
 	GameObjectEngine objectEngine;
+	AnimationEngine animationEngine;
 };
 
 } // end namespace vik

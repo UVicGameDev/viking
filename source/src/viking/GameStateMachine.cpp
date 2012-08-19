@@ -18,6 +18,7 @@ void GameStateMachine::switchToScene(const std::shared_ptr<Scene>& nextScene)
 
 void GameStateMachine::endStateMachine()
 {
+	currentScene->onLeave();
 	currentScene.reset();
 }
 

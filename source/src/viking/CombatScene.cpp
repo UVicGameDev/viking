@@ -46,7 +46,7 @@ static void draw_axis(irr::video::IVideoDriver* driver)
 
 void CombatScene::onEnter()
 {
-	auto pf = std::make_shared<PlayerFactory>(hashString("TestPlayer"), this);
+	auto pf = std::make_shared<PlayerFactory>(hashString("TestPlayer"), this, animationEngine);
 
 	// give away ownership to the objectEngine
 	objectEngine.addFactory(pf);
@@ -65,18 +65,21 @@ void CombatScene::onEnter()
 	scene::ISceneNode* floor = paperFactory.create(driver->getTexture("../../../art/ground.png"));
 	core::aabbox3df bbox = floor->getTransformedBoundingBox();
 
-	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setPosition(core::vector3df(bbox.getExtent().X/2, bbox.getExtent().Y , bbox.getExtent().Y));
+	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setPosition(core::vector3df(bbox.getExtent().X/2, 1.2 * bbox.getExtent().Y , bbox.getExtent().Y));
 }
 
 void CombatScene::onUpdate(GameTime& time)
 {
 	objectEngine.update(time);
 
+	animationEngine.update(time);
+
 	updateCamera();
 }
 
 void CombatScene::onLeave()
 {
+	GameApp::getSingleton().getSceneManager()->clear();
 }
 
 void CombatScene::onRedraw()
@@ -131,9 +134,12 @@ void CombatScene::updateCamera()
 	if (actorList.size() != 0)
 	{
 		averagePosition /= actorList.size();
-		GameApp::getSingleton().getSceneManager()->getActiveCamera()->setTarget(averagePosition);
+		//GameApp::getSingleton().getSceneManager()->getActiveCamera()->setTarget(averagePosition);
+		scene::ICameraSceneNode* cam = GameApp::getSingleton().getSceneManager()->getActiveCamera();
+		const core::vector3df& oldpos(cam->getPosition());
+		cam->setPosition(core::vector3df(averagePosition.X, oldpos.Y, oldpos.Z));
+		cam->setTarget(cam->getPosition() + core::vector3df(0,-1,-1));
 	}
-
 }
 
 } // end namespace vik

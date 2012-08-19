@@ -1,0 +1,4 @@
+<player>
+<animSequence name="walk" start="0" length="6" fps="12"/>
+<tileSet texture="../../../art/player.png" width="2" height="3"/>
+</player>

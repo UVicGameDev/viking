@@ -1,7 +1,8 @@
-#ifndef ANIMATEDSPRITESEQUENCE_HPP_INCLUDED
-#define ANIMATEDSPRITESEQUENCE_HPP_INCLUDED
+#ifndef VIK_ANIMATEDSPRITESEQUENCE_HPP_INCLUDED
+#define VIK_ANIMATEDSPRITESEQUENCE_HPP_INCLUDED
 
-#include <irrlicht/vector2d.h>
+#include "viking/HashString.hpp"
+#include <string>
 
 namespace vik
 {
@@ -9,17 +10,23 @@ namespace vik
 class AnimatedSpriteSequence
 {
 public:
-	AnimatedSpriteSequence(const irr::core::vector2di& startingTile = irr::core::vector2di(), int length = 0);
-
-	void setLength(int length);
+	AnimatedSpriteSequence(const std::string& name, int start, int length, int FPS);
+	const std::string& getName() const;
+	HashedString getHashedName() const;
+	int getStartIndex() const;
 	int getLength() const;
-	void setStartingTile(const irr::core::vector2di& startingTile);
-	const irr::core::vector2di& getStartingTile() const;
+	int getFPS() const;
 private:
-	irr::core::vector2di startingTile;
+	// name used to refer to this sequence
+	std::string name;
+	HashedString hashedName;
+	// tile index at which this sequence starts
+	int start;
+	// number of tiles this sequence lasts
 	int length;
+	int FPS;
 };
 
 } // end namesapce vik
 
-#endif // ANIMATEDSPRITESEQUENCE_HPP_INCLUDED
+#endif // VIK_ANIMATEDSPRITESEQUENCE_HPP_INCLUDED

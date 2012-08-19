@@ -1,5 +1,5 @@
-#ifndef GAMETIME_HPP_INCLUDED
-#define GAMETIME_HPP_INCLUDED
+#ifndef VIK_GAMETIME_HPP_INCLUDED
+#define VIK_GAMETIME_HPP_INCLUDED
 
 #include <irrlicht/ITimer.h>
 
@@ -59,4 +59,4 @@ private:
 
 } // end namespace vik
 
-#endif // GAMETIME_HPP_INCLUDED
+#endif // VIK_GAMETIME_HPP_INCLUDED

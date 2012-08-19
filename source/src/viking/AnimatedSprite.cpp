@@ -123,6 +123,11 @@ void AnimatedSprite::render()
 	// make billboard look to camera
 
 	core::vector3df pos = getAbsolutePosition();
+	
+	if (anchor == ESA_FEET)
+	{
+		pos += core::vector3df(0.0f, 0.0f, size.Height/2);
+	}
 
 	core::vector3df campos = camera->getAbsolutePosition();
 	core::vector3df target = camera->getTarget();

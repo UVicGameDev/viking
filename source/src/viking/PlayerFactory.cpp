@@ -50,10 +50,10 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 
 	auto sprData = animationEngine.load("../../../art/player.xml");
 	auto spr = std::make_shared<AnimatedSprite>(sprData, smgr->getRootSceneNode(), smgr);
+	spr->setAnchor(ESA_FEET);
 	animationEngine.addSprite(spr);
 	player->setSprite(spr);
 	player->getSprite()->play(hashString("walk"));
-	std::cout << spr->getReferenceCount() << std::endl;
 
 	// std::cout << "After creating sprite: " << nodeTreeSize(smgr->getRootSceneNode()) << std::endl;;
 

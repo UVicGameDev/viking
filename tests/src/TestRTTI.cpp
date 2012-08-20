@@ -96,7 +96,7 @@ public:
 		}
 
 		Class* newClass = new Class(className, { &Parents::getClass()... });
-		classTable[hashString(className)] = newClass;
+		classTable[HashedString(className)] = newClass;
 
 		return newClass;
 	}
@@ -117,7 +117,7 @@ public:
 	// lookup class definition from name
 	const Class* findClass(const char* className)
 	{
-		return findClass(hashString(className));
+		return findClass(HashedString(className));
 	}
 
 	// for debugging the RTTI system
@@ -131,7 +131,7 @@ public:
 		{
 			std::cout << "<" << (*it).first << ", " << (*it).second << "> : "
 			<< (*it).second->getName() << " : "
-			<< hashString((*it).second->getName()) << std::endl;
+			<< HashedString((*it).second->getName()) << std::endl;
 		}
 	}
 
@@ -314,10 +314,10 @@ class UnitTest
 		test_assert(Reflection::getSingleton().findClass("ASFJasdf") == 0);
 
 		// getting existing class by hashed name
-		test_assert(Reflection::getSingleton().findClass(hashString("Sailboat")) == &Sailboat::getClass());
+		test_assert(Reflection::getSingleton().findClass(HashedString("Sailboat")) == &Sailboat::getClass());
 
 		// getting nonexistant class by hashed name
-		test_assert(Reflection::getSingleton().findClass(hashString("ASFJasdf")) == 0);
+		test_assert(Reflection::getSingleton().findClass(HashedString("ASFJasdf")) == 0);
 
 		// getting class that exists but was not used previously
 		test_assert(Reflection::getSingleton().findClass("Dog") != 0);

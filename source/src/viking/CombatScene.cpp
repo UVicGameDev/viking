@@ -20,14 +20,14 @@ namespace vik
 
 void CombatScene::onEnter()
 {
-	PlayerFactoryCreationParams params(hashString("artsie"), this, animationEngine, EPT_ARTSIE);
+	PlayerFactoryCreationParams params(HashedString("artsie"), this, animationEngine, EPT_ARTSIE);
 	auto pf = std::make_shared<PlayerFactory>(params);
 
 	// give away ownership to the objectEngine
 	objectEngine.addFactory(pf);
 	
 	// create one player for testing
-	std::shared_ptr<GameObject> player = objectEngine.create(hashString("artsie"));
+	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("artsie"));
 
 	// create FPS display thingy
 	auto fpsDisplay = std::make_shared<FPSDisplay>();

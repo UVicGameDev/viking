@@ -11,7 +11,7 @@ int main()
 	vik::AnimatedSpriteSequence walkSeq("walk", 1, 1, 12);
 
 	test_assert(walkSeq.getName() == "walk");
-	test_assert(walkSeq.getHashedName() == vik::hashString("walk"));
+	test_assert(walkSeq.getHashedName() == vik::HashedString("walk"));
 	test_assert(walkSeq.getStartIndex() == 1);
 	test_assert(idleSeq.getStartIndex() == 0);
 	test_assert(walkSeq.getLength() == 1);
@@ -32,13 +32,13 @@ int main()
 
 	data.addSequence(idleSeq);
 
-	const vik::AnimatedSpriteSequence* s0 = data.getSequence(vik::hashString("idle")), *s1 =0;
+	const vik::AnimatedSpriteSequence* s0 = data.getSequence(vik::HashedString("idle")), *s1 =0;
 	test_assert(s0);
 	test_assert(s0->getName() == idleSeq.getName());
 
 	data.addSequence(walkSeq);
-	s0 = data.getSequence(vik::hashString("idle"));
-	s1 = data.getSequence(vik::hashString("walk"));
+	s0 = data.getSequence(vik::HashedString("idle"));
+	s1 = data.getSequence(vik::HashedString("walk"));
 	test_assert(s0 && s1);
 	test_assert(s0->getName()== idleSeq.getName());
 	test_assert(s1->getName()== walkSeq.getName());

@@ -5,7 +5,7 @@ namespace vik
 
 AnimatedSpriteSequence::AnimatedSpriteSequence(const std::string& name, int start, int length, int FPS):
 name(name),
-hashedName(hashString(name.c_str())),
+hashedName(HashedString(name.c_str())),
 start(start),
 length(length),
 FPS(FPS)

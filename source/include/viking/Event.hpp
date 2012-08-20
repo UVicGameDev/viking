@@ -23,7 +23,7 @@ private:
 
 HashedString Event::getType() const
 {
-	return hashString("Event");
+	return HashedString("Event");
 }
 
 } // end namespace vik

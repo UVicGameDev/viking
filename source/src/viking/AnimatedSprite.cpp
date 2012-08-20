@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <cassert>
+#include <algorithm>
 #include "viking/IrrlichtStream.hpp"
 
 using namespace irr;
@@ -155,7 +156,7 @@ void AnimatedSprite::render()
 
 	view *= -1.0f;
 
-	for (s32 i=0; i<4; ++i)
+	for (s32 i = 0; i < 4; ++i)
 		vertices[i].Normal = view;
 
 	/* Vertices are:
@@ -169,15 +170,18 @@ void AnimatedSprite::render()
 	vertices[2].Pos = pos - horizontal - vertical;
 	vertices[3].Pos = pos - horizontal + vertical;
 
-	/*
-	for (int i = 0; i < 4; i++)
+	// Coordinates are swapped back into place after drawing
+	if (flipHorizontal)
 	{
-		std::cout << "v" << i << ": " << vertices[i] << std::endl;
+		std::swap(vertices[0].TCoords, vertices[3].TCoords);
+		std::swap(vertices[1].TCoords, vertices[2].TCoords);
 	}
-	*/
 
-	// std::cout << "horiz: " << horizontal << std::endl;
-	// std::cout << "verti: " << vertical << std::endl;
+	if (flipVertical)
+	{
+		std::swap(vertices[0].TCoords, vertices[1].TCoords);
+		std::swap(vertices[2].TCoords, vertices[3].TCoords);
+	}
 
 	// draw
 
@@ -195,6 +199,18 @@ void AnimatedSprite::render()
 	driver->setMaterial(material);
 
 	driver->drawIndexedTriangleList(vertices, 4, indices, 2);
+
+	if (flipVertical)
+	{
+		std::swap(vertices[0].TCoords, vertices[1].TCoords);
+		std::swap(vertices[2].TCoords, vertices[3].TCoords);
+	}
+
+	if (flipHorizontal)
+	{
+		std::swap(vertices[0].TCoords, vertices[3].TCoords);
+		std::swap(vertices[1].TCoords, vertices[2].TCoords);
+	}
 }
 
 const irr::core::aabbox3df& AnimatedSprite::getBoundingBox() const

@@ -36,10 +36,12 @@ void PlayerMobileState::onUpdate(GameTime& time)
 	if (k.isKeyDown(scheme.leftKey))
 	{
 		currVel.X -= movementModifier.X;
+		getContext().lock()->getSprite()->setFlipHorizontal(true);
 	}
 	if (k.isKeyDown(scheme.rightKey))
 	{
 		currVel.X += movementModifier.X;
+		getContext().lock()->getSprite()->setFlipHorizontal(false);
 	}
 
 	// if velocity is 0, set flag that movement is done.

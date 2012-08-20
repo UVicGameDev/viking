@@ -34,6 +34,14 @@ public:
  	const irr::core::dimension2df& getSize() const;
 	void setSize(const irr::core::dimension2df& size);
 
+	// flip texture
+	void setFlipHorizontal(bool flipped);
+	bool getFlipHorizontal() const;
+
+	// flip texture
+	void setFlipVertical(bool flipped);
+	bool getFlipVertical() const;
+
 	// inherited from ISceneNode
 	void OnRegisterSceneNode() override;
 	void render() override;
@@ -53,6 +61,9 @@ private:
 	int startFrame;
 	const AnimatedSpriteSequence* currentSequence;
 	eSpriteAnchor anchor;
+
+	bool flipHorizontal;
+	bool flipVertical;
 
 	// scene node related stuff
 	irr::core::dimension2df size;

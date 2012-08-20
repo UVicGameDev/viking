@@ -17,7 +17,9 @@ spriteData(spriteData),
 playing(false),
 startTime(0),
 startFrame(0),
-currentSequence(0)
+currentSequence(0),
+flipHorizontal(false),
+flipVertical(false)
 {
 	core::dimension2du orig = spriteData->getTexture()->getOriginalSize();
 	size.Width = orig.Width / spriteData->getWidth();
@@ -280,6 +282,26 @@ void AnimatedSprite::setAnchor(eSpriteAnchor anchor)
 eSpriteAnchor AnimatedSprite::getAnchor() const
 {
 	return anchor;
+}
+
+void AnimatedSprite::setFlipHorizontal(bool flipped)
+{
+	flipHorizontal = flipped;
+}
+
+bool AnimatedSprite::getFlipHorizontal() const
+{
+	return flipHorizontal;
+}
+
+void AnimatedSprite::setFlipVertical(bool flipped)
+{
+	flipVertical = flipped;
+}
+
+bool AnimatedSprite::getFlipVertical() const
+{
+	return flipVertical;
 }
 
 } // end namespace vik

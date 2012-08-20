@@ -1,29 +1,71 @@
-#ifndef ANIMATEDSPRITE_HPP_INCLUDED
-#define ANIMATEDSPRITE_HPP_INCLUDED
+#ifndef VIK_ANIMATEDSPRITE_HPP_INCLUDED
+#define VIK_ANIMATEDSPRITE_HPP_INCLUDED
 
 #include <irrlicht/ITexture.h>
-#include <irrlicht/IBillboardSceneNode.h>
 #include <irrlicht/vector3d.h>
+#include <irrlicht/S3DVertex.h>
+#include <irrlicht/ISceneNode.h>
+#include <memory>
 #include "viking/AnimatedSpriteData.hpp"
+#include "viking/GameTime.hpp"
 
 namespace vik
 {
 
-class AnimatedSprite
+enum eSpriteAnchor
+{
+	ESA_CENTER, // anchor is center of sprite
+	ESA_FEET, // anchor is bottom of sprite
+};
+
+class AnimatedSprite : public irr::scene::ISceneNode
 {
 public:
-	AnimatedSprite(AnimatedSpriteData* spriteData);
-	~AnimatedSprite();
+	AnimatedSprite(const std::shared_ptr<AnimatedSpriteData>& spriteData, irr::scene::ISceneNode* parent, irr::scene::ISceneManager* mgr, irr::s32 id=-1);
 
-	void setPosition(const irr::core::vector3df& pos);
-	irr::core::vector3df getPosition() const;
+	void update(GameTime& time);
+	
+	void play(HashedString animSequence, int frame=0);
+	void stop(HashedString animSequence, int frame=0);
 
-	void play(HashedString animSequence);
-	void stop(HashedString animSequence);
+	void setAnchor(eSpriteAnchor anchor);
+	eSpriteAnchor getAnchor() const;
+
+ 	const irr::core::dimension2df& getSize() const;
+	void setSize(const irr::core::dimension2df& size);
+
+	// inherited from ISceneNode
+	void OnRegisterSceneNode() override;
+	void render() override;
+	const irr::core::aabbox3df& getBoundingBox() const override;
+	irr::u32 getMaterialCount() const override;
+	irr::video::SMaterial& getMaterial(irr::u32 i) override;
+	void serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options=0) const override;
+	void deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options=0) override;
+	irr::scene::ISceneNode* clone(irr::scene::ISceneNode* newParent=0, irr::scene::ISceneManager* newManager=0) override;
 private:
-	AnimatedSpriteData* spriteData;
-	irr::scene::ISceneNode* originNode;
-	irr::scene::IBillboardSceneNode* spriteNode;
+	void setTileIndex(int index);
+
+	// animation related stuff
+	const std::shared_ptr<AnimatedSpriteData> spriteData;
+	bool playing;
+	irr::u32 startTime;
+	int startFrame;
+	const AnimatedSpriteSequence* currentSequence;
+	eSpriteAnchor anchor;
+
+	// scene node related stuff
+	irr::core::dimension2df size;
+	irr::core::aabbox3df boundingBox;
+	irr::video::SMaterial material;
+	/* Vertices are:
+	2--1
+	|\ |
+	| \|
+	3--0
+	*/
+	irr::video::S3DVertex vertices[4];
+	irr::u16 indices[6];
 };
 
 } // end namespace vik

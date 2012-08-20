@@ -3,15 +3,28 @@
 namespace vik
 {
 
-AnimatedSpriteSequence::AnimatedSpriteSequence(const irr::core::vector2di& startingTile, int length):
-startingTile(startingTile),
-length(length)
+AnimatedSpriteSequence::AnimatedSpriteSequence(const std::string& name, int start, int length, int FPS):
+name(name),
+hashedName(HashedString(name.c_str())),
+start(start),
+length(length),
+FPS(FPS)
 {
 }
 
-void AnimatedSpriteSequence::setLength(int length)
+const std::string& AnimatedSpriteSequence::getName() const
 {
-	this->length = length;
+	return name;
+}
+
+HashedString AnimatedSpriteSequence::getHashedName() const
+{
+	return hashedName;
+}
+
+int AnimatedSpriteSequence::getStartIndex() const
+{
+	return start;
 }
 
 int AnimatedSpriteSequence::getLength() const
@@ -19,15 +32,9 @@ int AnimatedSpriteSequence::getLength() const
 	return length;
 }
 
-void AnimatedSpriteSequence::setStartingTile(const irr::core::vector2di& startingTile)
+int AnimatedSpriteSequence::getFPS() const
 {
-	this->startingTile = startingTile;
+	return FPS;
 }
-
-const irr::core::vector2di& AnimatedSpriteSequence::getStartingTile() const
-{
-	return startingTile;
-}
-
 
 } // end namespace vik

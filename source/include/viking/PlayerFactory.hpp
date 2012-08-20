@@ -1,23 +1,27 @@
-#ifndef PLAYERFACTORY_HPP_INCLUDED
-#define PLAYERFACTORY_HPP_INCLUDED
+#ifndef VIK_PLAYERFACTORY_HPP_INCLUDED
+#define VIK_PLAYERFACTORY_HPP_INCLUDED
 
 #include "viking/GameObjectFactory.hpp"
+#include "viking/PlayerFactoryCreationParams.hpp"
 
 namespace vik
 {
 
 class EventSource;
+class AnimationEngine;
 
 // Creates actor decorated to be players
 class PlayerFactory : public GameObjectFactory
 {
 public:
-	PlayerFactory(HashedString factoryID, EventSource* playerEventSource);
+	PlayerFactory(const PlayerFactoryCreationParams& params);
 	std::shared_ptr<GameObject> create();
 private:
 	EventSource* playerEventSource;
+	AnimationEngine& animationEngine;
+	ePlayerType playerType;
 };
 
 } // end namespace vik
 
-#endif // PLAYERFACTORY_HPP_INCLUDED
+#endif // VIK_PLAYERFACTORY_HPP_INCLUDED

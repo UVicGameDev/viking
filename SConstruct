@@ -1,6 +1,7 @@
 # This is an scons script to build the library
 # Projects in different IDEs should make an scons call to this file
 
+import sys
 from os import path
 
 # directory info
@@ -19,14 +20,15 @@ viking_dirs = {
 
 # compiler flags
 viking_flags = {
-'common': [ '-std=c++0x', '-Wall' ],
+'common': [ '-std=c++11', '-Wall' ],
 'debug': [ '-g', '-D_DEBUG' ],
 'release': [ '-O2', '-DNDEBUG' ],
 }
 
 # libraries to link
 viking_libs = {
-'common': [ 'Irrlicht', 'GL' ]
+'common': [ 'Irrlicht', 'GL' ],
+'linux': [ 'Xxf86vm' ]
 }
 
 # will be either viking_dirs['debug'] or viking_dirs['release'] depending on script arguments
@@ -43,6 +45,13 @@ env = Environment()
 
 # add common compiler flags
 env.Append(CXXFLAGS = viking_flags['common'])
+
+# link common libraries
+env.Append(LIBS = viking_libs['common'])
+
+# link platform dependent libraries
+if sys.platform.startswith('linux'):
+	env.Append(LIBS = viking_libs['linux'])
 
 # add include directories: include folder AND src folder
 env.Append(CPPPATH = [ path.abspath(viking_dirs['include']), path.abspath(viking_dirs['src']) ] )

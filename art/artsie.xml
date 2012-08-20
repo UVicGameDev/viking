@@ -1,0 +1,6 @@
+<animatedSprite>
+	<animSequence name="idle" start="0" length="1" fps="12"/>
+	<animSequence name="walk" start="1" length="1" fps="12"/>
+	<animSequence name="attack" start="2" length="1" fps="12"/>
+	<tileSet texture="../../../art/artsie.png" width="1" height="3"/>
+</animatedSprite>

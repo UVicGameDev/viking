@@ -1,7 +1,7 @@
-#ifndef GAMEOBJECTFACTORY_HPP_INCLUDED
-#define GAMEOBJECTFACTORY_HPP_INCLUDED
+#ifndef VIK_GAMEOBJECTFACTORY_HPP_INCLUDED
+#define VIK_GAMEOBJECTFACTORY_HPP_INCLUDED
 
-#include "viking/HashString.hpp"
+#include "viking/HashedString.hpp"
 #include <memory>
 
 namespace vik
@@ -28,4 +28,4 @@ private:
 
 } // end namespace vik
 
-#endif // GAMEOBJECTFACTORY_HPP_INCLUDED
+#endif // VIK_GAMEOBJECTFACTORY_HPP_INCLUDED

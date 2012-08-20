@@ -4,9 +4,12 @@
 #include <string>
 #include <iostream>
 
+#define STRINGIZE_DETAIL(x) #x
+#define STRINGIZE(x) STRINGIZE_DETAIL(x)
+
 // public stuff of this module
 #define test_assert(cond) \
-	assertTrue("Failed assert: ##cond at line ##__LINE__ in file ##__FILE__", cond)
+	assertTrue("Failed assert: " #cond " at line " STRINGIZE(__LINE__) " in file " __FILE__, cond)
 
 static void generateReport();
 

@@ -1,5 +1,5 @@
-#ifndef GAME_OBJECT_ENGINE_TYPE_QUERY_HPP_INCLUDED
-#define GAME_OBJECT_ENGINE_TYPE_QUERY_HPP_INCLUDED
+#ifndef VIK_GAMEOBJECTENGINETYPEQUERY_HPP_INCLUDED
+#define VIK_GAMEOBJECTENGINETYPEQUERY_HPP_INCLUDED
 
 #include <vector>
 #include <memory>
@@ -39,4 +39,4 @@ std::vector<std::shared_ptr<T>> GameObjectEngineTypeQuery::getGameObjectsOfType(
 
 } // end namespace vik
 
-#endif // GAME_OBJECT_ENGINE_TYPE_QUERY_HPP_INCLUDED
+#endif // VIK_GAMEOBJECTENGINETYPEQUERY_HPP_INCLUDED

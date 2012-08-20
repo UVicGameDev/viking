@@ -15,7 +15,8 @@ scheme(scheme)
 
 void PlayerIdleState::onEnter()
 {
-	GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onEnter()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onEnter()");
+	getContext().lock()->getSprite()->play(HashedString("idle"));
 }
 
 void PlayerIdleState::onUpdate(GameTime& time)
@@ -25,12 +26,12 @@ void PlayerIdleState::onUpdate(GameTime& time)
 
 void PlayerIdleState::onLeave()
 {
-	GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onLeave()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onLeave()");
 }
 
 bool PlayerIdleState::onEvent(const Event& e)
 {
-	if (e.getType() == hashString("IrrlichtEvent"))
+	if (e.getType() == HashedString("IrrlichtEvent"))
 	{
 		const irr::SEvent& se = static_cast<const IrrlichtEvent&>(e).getEvent();
 
@@ -38,7 +39,7 @@ bool PlayerIdleState::onEvent(const Event& e)
 		{
 			if (scheme.isDirectionalKey(se.KeyInput.Key) && se.KeyInput.PressedDown)
 			{
-				getContext().lock()->switchToState(hashString("Mobile"));
+				getContext().lock()->switchToState(HashedString("Mobile"));
 				return true;
 			}
 		}

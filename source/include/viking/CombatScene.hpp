@@ -1,8 +1,9 @@
-#ifndef COMBATSCENE_HPP_INCLUDED
-#define COMBATSCENE_HPP_INCLUDED
+#ifndef VIK_COMBATSCENE_HPP_INCLUDED
+#define VIK_COMBATSCENE_HPP_INCLUDED
 
 #include "viking/Scene.hpp"
 #include "viking/GameObjectEngine.hpp"
+#include "viking/AnimationEngine.hpp"
 
 namespace vik
 {
@@ -18,8 +19,9 @@ public:
 private:
 	void updateCamera();
 	GameObjectEngine objectEngine;
+	AnimationEngine animationEngine;
 };
 
 } // end namespace vik
 
-#endif // COMBATSCENE_HPP_INCLUDED
+#endif // VIK_COMBATSCENE_HPP_INCLUDED

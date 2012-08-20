@@ -4,7 +4,7 @@
 #include "viking/EventSource.cpp"
 #include "viking/Event.hpp"
 // #include "viking/Event.cpp" INTENTIONALLY OMITTED
-#include "UnitTest.hpp"
+#include "unittest/UnitTest.hpp"
 
 class EventListenerTester : public vik::EventListener
 {

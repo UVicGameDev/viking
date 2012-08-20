@@ -1,10 +1,10 @@
-#ifndef ACTOR_HPP_INCLUDED
-#define ACTOR_HPP_INCLUDED
+#ifndef VIK_ACTOR_HPP_INCLUDED
+#define VIK_ACTOR_HPP_INCLUDED
 
 #include "viking/GameObject.hpp"
 #include "viking/AnimatedSprite.hpp"
 #include "viking/Particle.hpp"
-#include "viking/HashString.hpp"
+#include "viking/HashedString.hpp"
 #include "viking/Event.hpp"
 #include "viking/EventListener.hpp"
 #include <vector>
@@ -38,14 +38,18 @@ public:
 	bool onEvent(const Event& e);
 
 	Particle& getParticle();
+
+	void setSprite(std::shared_ptr<AnimatedSprite>& sprite);
+	std::shared_ptr<AnimatedSprite>& getSprite();
+	const std::shared_ptr<AnimatedSprite>& getSprite() const;
 private:
 	ActorState* currentState;
 	std::vector<std::pair<HashedString,ActorState*>> states;
 
 	Particle particle;
-	AnimatedSprite sprite;
+	std::shared_ptr<AnimatedSprite> sprite;
 };
 
 } // end namespace vik
 
-#endif // ACTOR_HPP_INCLUDED
+#endif // VIK_ACTOR_HPP_INCLUDED

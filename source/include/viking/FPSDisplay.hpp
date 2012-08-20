@@ -1,5 +1,5 @@
-#ifndef FPS_DISPLAY_HPP_INCLUDED
-#define FPS_DISPLAY_HPP_INCLUDED
+#ifndef VIK_FPSDISPLAY_HPP_INCLUDED
+#define VIK_FPSDISPLAY_HPP_INCLUDED
 
 #include "viking/GameObject.hpp"
 #include <irrlicht/IGUIStaticText.h>
@@ -20,4 +20,4 @@ private:
 
 } // end namespace vik
 
-#endif // FPS_DISPLAY_HPP_INCLUDED
+#endif // VIK_FPSDISPLAY_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef GAMESTATEMACHINE_HPP_INCLUDED
-#define GAMESTATEMACHINE_HPP_INCLUDED
+#ifndef VIK_GAMESTATEMACHINE_HPP_INCLUDED
+#define VIK_GAMESTATEMACHINE_HPP_INCLUDED
 
 #include "viking/GameTime.hpp"
 #include "viking/EventListener.hpp"
@@ -34,4 +34,4 @@ private:
 
 } // end namespace vik
 
-#endif // GAMESTATEMACHINE_HPP_INCLUDED
+#endif // VIK_GAMESTATEMACHINE_HPP_INCLUDED

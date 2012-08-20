@@ -1,5 +1,5 @@
-#ifndef CONTROLSCHEME_HPP_INCLUDED
-#define CONTROLSCHEME_HPP_INCLUDED
+#ifndef VIK_CONTROLSCHEME_HPP_INCLUDED
+#define VIK_CONTROLSCHEME_HPP_INCLUDED
 
 #include "viking/Serializable.hpp"
 #include <irrlicht/Keycodes.h>
@@ -33,4 +33,4 @@ public:
 
 } // end namespace vik
 
-#endif // CONTROLSCHEME_HPP_INCLUDED
+#endif // VIK_CONTROLSCHEME_HPP_INCLUDED

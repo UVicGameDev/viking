@@ -6,7 +6,7 @@ namespace vik
 
 bool KeyMap::onEvent(const Event& e)
 {
-	if (e.getType() == hashString("IrrlichtEvent"))
+	if (e.getType() == HashedString("IrrlichtEvent"))
 	{
 		const IrrlichtEvent& ie = static_cast<const IrrlichtEvent&>(e);
 

@@ -6,17 +6,20 @@ from glob import glob
 # import scons environment variables
 Import('env viking_dirs viking_libs build_configuration')
 
+env.Append(CPPPATH = [ path.abspath('include') ])
+
 # picks up all files ending with .cpp in the source folders
 viking_sources = glob('src/*.cpp')
 
 objects = [ env.Object(source = src_file,
-		       target = path.join(viking_dirs['build'], build_configuration, path.splitext( path.basename(src_file) )[0]))
+		       target = path.join(viking_dirs['build'], build_configuration, viking_dirs['obj'], path.splitext( path.basename(src_file) )[0]))
 		       for src_file in viking_sources ]
 
 # flattens list, since env.Object returns a list of items...
 objects = sum(objects, [])
 
 # build tests
-for object in objects:
-	env.Program(source = object,
+for i in range(len(objects)):
+	env.Program(source = objects[i],
+			target = path.join(viking_dirs['build'], build_configuration, viking_dirs['bin'], path.splitext( path.basename(viking_sources[i]) )[0]),
 			LIBS = viking_libs['common'])

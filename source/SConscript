@@ -4,7 +4,7 @@ from os import path
 import fnmatch
 
 # import scons environment variables
-Import('env viking_dirs viking_libs')
+Import('env viking_dirs')
 
 # picks up all files ending with .cpp in the source folders
 viking_sources = []
@@ -23,5 +23,4 @@ objects = sum(objects, [])
 
 # build program
 env.Program(target = path.join(viking_dirs['build_bin'], viking_dirs['target']),
-			source = objects,
-			LIBS = viking_libs['common'])
+			source = objects)

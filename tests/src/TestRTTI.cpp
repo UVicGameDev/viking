@@ -96,13 +96,13 @@ public:
 		}
 
 		Class* newClass = new Class(className, { &Parents::getClass()... });
-		classTable[HashedString(className)] = newClass;
+		classTable[hashString(className)] = newClass;
 
 		return newClass;
 	}
 
 	// lookup class definition from hashed name
-	const Class* findClass(const HashedString& hash)
+	const Class* findClass(const HashedString& hash) const
 	{
 		std::map<HashedString, Class*>::const_iterator it = classTable.find(hash);
 
@@ -111,7 +111,7 @@ public:
 			return 0;
 		}
 
-		return classTable[hash];
+		return (*it).second;
 	}
 
 	// lookup class definition from name
@@ -122,15 +122,16 @@ public:
 
 	// for debugging the RTTI system
 	// todo: show hierarchy as well
-	void debugPrint()
+	void debugPrint() const
 	{
-		std::cout << "address : class name" << std::endl;
+		std::cout << "<hashed name key,address> : class name : hashed name" << std::endl;
 
 		const std::map<HashedString, Class*>::const_iterator end = classTable.end();
-		for (std::map<HashedString, Class*>::iterator it = classTable.begin(); it != end; ++it)
+		for (std::map<HashedString, Class*>::const_iterator it = classTable.begin(); it != end; ++it)
 		{
-			std::cout << (*it).second << " : " << std::flush;
-			std::cout << (*it).second->getName() << std::endl;
+			std::cout << "<" << (*it).first << ", " << (*it).second << "> : "
+			<< (*it).second->getName() << " : "
+			<< hashString((*it).second->getName()) << std::endl;
 		}
 	}
 
@@ -150,20 +151,20 @@ private:
 // Declares necessary members for RTTI. To be used within the class declaration.
 // the _classInfo variable is an implementation detail. Use ::getClass() to access it instead.
 #define ClassDeclare() \
-	static const Class* _classInfo; \
+	static const Class* _classInfoDetail; \
 	virtual const Class& getInstanceClass() const \
 	{ \
-		return *_classInfo; \
+		return *_classInfoDetail; \
 	} \
 	static const Class& getClass() \
 	{ \
-		return *_classInfo; \
+		return *_classInfoDetail; \
 	} 
 
 // Defines a new Class object with the given parents and adds it to the Reflection singleton at static initialization time.
 // Watch out: ClassDefine(SomeClass::NestedClass) creates a different definition than ClassInfo(NestedClass) but both are accepted.
 #define ClassDefine(ThisClass, Parents...) \
-const Class* ThisClass::_classInfo = Reflection::getSingleton().addClass<ThisClass,##Parents>(#ThisClass);
+const Class* ThisClass::_classInfoDetail = Reflection::getSingleton().addClass<ThisClass,##Parents>(#ThisClass);
 
 } // end namespace vik
 
@@ -305,6 +306,8 @@ class UnitTest
 	void reflectionTest()
 	{
 		// getting existing class by name
+		test_assert(Reflection::getSingleton().findClass("Sailboat") != 0);
+		test_assert(&Sailboat::getClass() != 0);
 		test_assert(Reflection::getSingleton().findClass("Sailboat") == &Sailboat::getClass());
 
 		// getting nonexistant class by name

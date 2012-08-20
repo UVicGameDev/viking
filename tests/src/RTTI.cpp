@@ -2,7 +2,7 @@
 #include <iostream>
 #include <map>
 #include <cstring>
-#include "viking/HashedString.hpp"
+#include "viking/HashString.hpp"
 #include "UnitTest.hpp"
 
 // future ideas: 
@@ -117,7 +117,7 @@ public:
 	// lookup class definition from name
 	const Class* findClass(const char* className)
 	{
-		return findClass(HashedString(className));
+		return findClass(hashString(className));
 	}
 
 	// for debugging the RTTI system
@@ -309,10 +309,10 @@ class UnitTest
 		test_assert(Reflection::getSingleton().findClass("ASFJasdf") == 0);
 
 		// getting existing class by hashed name
-		test_assert(Reflection::getSingleton().findClass(HashedString("Sailboat")) == &Sailboat::getClass());
+		test_assert(Reflection::getSingleton().findClass(hashString("Sailboat")) == &Sailboat::getClass());
 
 		// getting nonexistant class by hashed name
-		test_assert(Reflection::getSingleton().findClass(HashedString("ASFJasdf")) == 0);
+		test_assert(Reflection::getSingleton().findClass(hashString("ASFJasdf")) == 0);
 
 		// getting class that exists but was not used previously
 		test_assert(Reflection::getSingleton().findClass("Dog") != 0);

@@ -9,7 +9,7 @@ context(context)
 {
 }
 
-std::weak_ptr<Actor> ActorState::getContext()
+std::weak_ptr<Actor>& ActorState::getContext()
 {
 	return context;
 }

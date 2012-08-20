@@ -25,7 +25,7 @@ public:
 	virtual void onLeave(){}
 protected:
 	// returns reference to actor this state modifies
-	std::weak_ptr<Actor> getContext();
+	std::weak_ptr<Actor>& getContext();
 private:
 	std::weak_ptr<Actor> context;
 };

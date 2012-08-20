@@ -31,11 +31,17 @@ int main()
 	test_assert(data.getHeight() == 2);
 
 	data.addSequence(idleSeq);
-	test_assert(data.getSequence(vik::hashString("idle")) == &idleSeq);
+
+	const vik::AnimatedSpriteSequence* s0 = data.getSequence(vik::hashString("idle")), *s1 =0;
+	test_assert(s0);
+	test_assert(s0->getName() == idleSeq.getName());
 
 	data.addSequence(walkSeq);
-	test_assert(data.getSequence(vik::hashString("idle")) == &idleSeq);
-	test_assert(data.getSequence(vik::hashString("walk")) == &walkSeq);
+	s0 = data.getSequence(vik::hashString("idle"));
+	s1 = data.getSequence(vik::hashString("walk"));
+	test_assert(s0 && s1);
+	test_assert(s0->getName()== idleSeq.getName());
+	test_assert(s1->getName()== walkSeq.getName());
 
 	generateReport();
 }

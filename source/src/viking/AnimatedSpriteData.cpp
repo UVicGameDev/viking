@@ -30,18 +30,18 @@ const AnimatedSpriteSequence* AnimatedSpriteData::getSequence(HashedString name)
 
 	while (lower != upper)
 	{
-		int i = (lower + upper) / 2;
+		int i = (lower + upper - 1) / 2;
 		if (sequences[i].getHashedName() == name)
 		{
 			return &sequences[i];
 		}
 		else if (sequences[i].getHashedName() < name)
 		{
-			upper = i;
+			lower = i + 1;
 		}
 		else
 		{
-			lower = i + 1;
+			upper = i;
 		}
 	}
 

@@ -41,4 +41,16 @@ void FPSDisplay::updateFPS()
 	}
 }
 
+void FPSDisplay::serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options) const
+{
+	// TODO: Figure out if I need to serialize other stuff
+	out->addInt("currFPS", currFPS);
+}
+
+void FPSDisplay::deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options)
+{
+	currFPS = in->getAttributeAsInt("currFPS");
+}
+
+
 } // end namespace vik

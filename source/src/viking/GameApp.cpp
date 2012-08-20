@@ -116,7 +116,7 @@ bool GameApp::onInit()
 
 	// draw a header with build creation date
 	std::wstringstream ss;
-	ss << L"Viking alpha. built on " << __DATE__;
+	ss << L"Viking pre-alpha. built on " << __DATE__;
 	gui::IGUIStaticText* buildText = getGUIEnvironment()->addStaticText(ss.str().c_str(), core::recti(0,0,200,100));
 	buildText->setOverrideColor(video::SColor(255,255,255,255));
 

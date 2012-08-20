@@ -1,6 +1,6 @@
 #include "viking/Actor.hpp"
 #include "viking/GameTime.hpp"
-#include "viking/ActorState.hpp"
+#include "viking/ActorStateMachine.hpp"
 #include "viking/GameApp.hpp"
 #include <cassert>
 #include <iostream>
@@ -9,67 +9,63 @@ namespace vik
 {
 
 Actor::Actor():
-currentState(0)
+stateMachine(0),
+running(false)
 {
 }
 
 Actor::~Actor()
 {
-	if (currentState)
+	if (running && stateMachine)
 	{
-		currentState->onLeave();
+		stateMachine->stop();
 	}
 
-	for (int i = static_cast<int>(states.size()) - 1; i >= 0; --i)
+	delete stateMachine;
+}
+
+void Actor::setStateMachine(ActorStateMachine* stateMachine)
+{
+	this->stateMachine = stateMachine;
+}
+
+ActorStateMachine* Actor::getStateMachine()
+{
+	return stateMachine;
+}
+
+void Actor::start()
+{
+	assert(!running);
+
+	running = true;
+
+	if (stateMachine)
 	{
-		delete states[i].second;
+		stateMachine->start();
 	}
 }
 
-void Actor::startStateMachine(HashedString initialStateName)
+void Actor::stop()
 {
-	unsigned i;
-	for (i = 0; i < states.size(); ++i)
+	assert(running);
+
+	running = false;
+
+	if (stateMachine)
 	{
-		if (states[i].first == initialStateName)
-		{
-			currentState = states[i].second;
-			break;
-		}
+		stateMachine->stop();
 	}
-	assert(i != states.size());
-
-	currentState->onEnter();
-}
-
-void Actor::addState(HashedString stateName, ActorState* state)
-{
-	states.push_back(std::pair<HashedString,ActorState*>(stateName,state));
-}
-
-void Actor::switchToState(HashedString nextState)
-{
-	currentState->onLeave();
-
-	unsigned i;
-	for (i = 0; i < states.size(); ++i)
-	{
-		if (states[i].first == nextState)
-		{
-			currentState = states[i].second;
-			break;
-		}
-	}
-	assert(i != states.size());
-
-	currentState->onEnter();
 }
 
 void Actor::update(GameTime& time)
 {
-	// std::cout << "Actor::update()" << std::endl;
+	if (!running) return;
 
-	currentState->onUpdate(time);
+	if (stateMachine)
+	{
+		stateMachine->update(time);
+	}
 
 	particle.update(time);
 
@@ -79,9 +75,14 @@ void Actor::update(GameTime& time)
 	}
 }
 
+bool Actor::isRunning() const
+{
+	return running;
+}
+
 bool Actor::onEvent(const Event& e)
 {
-	return currentState->onEvent(e);
+	return stateMachine ? stateMachine->onEvent(e) : false;
 }
 
 Particle& Actor::getParticle()
@@ -102,6 +103,18 @@ std::shared_ptr<AnimatedSprite>& Actor::getSprite()
 const std::shared_ptr<AnimatedSprite>& Actor::getSprite() const
 {
 	return sprite;
+}
+
+void Actor::serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options) const
+{
+	// TODO: Figure out serialization of other properties
+	out->addBool("running", running);
+}
+
+void Actor::deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options)
+{
+	// TODO: Figure out serialization of other properties
+	running = in->getAttributeAsBool("running");
 }
 
 } // end namespace vik

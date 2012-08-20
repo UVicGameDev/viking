@@ -4,6 +4,7 @@
 #include "viking/ControlScheme.hpp"
 #include "viking/AnimationEngine.hpp"
 #include "viking/GameApp.hpp"
+#include "viking/PlayerStateMachine.hpp"
 
 #include "viking/PlayerIdleState.hpp"
 #include "viking/PlayerMobileState.hpp"
@@ -23,10 +24,6 @@ playerType(params.playerType)
 
 std::shared_ptr<GameObject> PlayerFactory::create()
 {
-	std::shared_ptr<Actor> player = std::make_shared<Actor>();
-
-	playerEventSource->addListener(player);
-
 	irr::scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
 
 	std::string animdatapath = "../../../art/";
@@ -46,16 +43,18 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 
 	auto spr = std::make_shared<AnimatedSprite>(sprData, smgr->getRootSceneNode(), smgr);
 	spr->setAnchor(ESA_FEET);
-	player->setSprite(spr);
 	animationEngine.addSprite(spr);
 
-	PlayerIdleState* idleState = new PlayerIdleState(player, ControlScheme());
-	PlayerMobileState* mobileState = new PlayerMobileState(player, ControlScheme());
+	std::shared_ptr<Actor> player = std::make_shared<Actor>();
 
-	player->addState(HashedString("Idle"), idleState);
-	player->addState(HashedString("Mobile"), mobileState);
+	ControlScheme controlScheme(irr::KEY_UP, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_RIGHT);
 
-	player->startStateMachine(HashedString("Idle"));
+	PlayerStateMachine* stateMachine = new PlayerStateMachine(player, controlScheme);
+	player->setStateMachine(stateMachine);
+	player->setSprite(spr);
+	playerEventSource->addListener(player);
+
+	player->start();
 
 	return player;
 }

@@ -71,13 +71,6 @@ void CombatScene::updateCamera()
 {
 	core::vector3df averagePosition;
 
-	/*
-	scene::ISceneNode* rootNode = GameApp::getSingleton().getSceneManager()->getRootSceneNode();
-
-	core::aabbox3df sceneBounds = getSceneNodeCompositeBounds(rootNode);
-	std::cout << "Scene bounds: { { " << sceneBounds.MinEdge.X << ", " << sceneBounds.MinEdge.Y << " } , { " << sceneBounds.MaxEdge.X << ", " << sceneBounds.MaxEdge.Y << " } }" << std::endl;
-	*/
-
 	GameObjectEngineTypeQuery actorQuery(&objectEngine);
 	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getGameObjectsOfType<Actor>();
 

@@ -1,10 +1,11 @@
 #include "viking/PlayerMobileState.hpp"
 #include "viking/GameApp.hpp"
+#include "viking/ActorStateMachine.hpp"
 
 namespace vik
 {
 
-PlayerMobileState::PlayerMobileState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme):
+PlayerMobileState::PlayerMobileState(const std::weak_ptr<Actor>& context, ControlScheme& scheme):
 ActorState(context),
 scheme(scheme)
 {
@@ -13,7 +14,7 @@ scheme(scheme)
 void PlayerMobileState::onEnter()
 {
 	// GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onEnter()");
-	getContext().lock()->getSprite()->play(HashedString("walk"));
+	getContext().lock()->getSprite()->play(HashedString("mobile"));
 }
 
 void PlayerMobileState::onUpdate(GameTime& time)
@@ -24,19 +25,19 @@ void PlayerMobileState::onUpdate(GameTime& time)
 	const KeyMap& k = GameApp::getSingleton().getKeyMap();
 	irr::core::vector3df currVel;
 
-	if (k.isKeyDown(scheme.up))
+	if (k.isKeyDown(scheme.upKey))
 	{
 		currVel.Y -= movementModifier.Y;
 	}
-	if (k.isKeyDown(scheme.down))
+	if (k.isKeyDown(scheme.downKey))
 	{
 		currVel.Y += movementModifier.Y;
 	}
-	if (k.isKeyDown(scheme.left))
+	if (k.isKeyDown(scheme.leftKey))
 	{
 		currVel.X -= movementModifier.X;
 	}
-	if (k.isKeyDown(scheme.right))
+	if (k.isKeyDown(scheme.rightKey))
 	{
 		currVel.X += movementModifier.X;
 	}
@@ -44,7 +45,7 @@ void PlayerMobileState::onUpdate(GameTime& time)
 	// if velocity is 0, set flag that movement is done.
 	if (currVel == irr::core::vector3df())
 	{
-		getContext().lock()->switchToState(HashedString("Idle"));
+		getContext().lock()->getStateMachine()->switchToState(HashedString("idle"));
 	}
 	else
 	{
@@ -55,7 +56,7 @@ void PlayerMobileState::onUpdate(GameTime& time)
 void PlayerMobileState::onLeave()
 {
 	// GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onLeave()");
-	getContext().lock()->getParticle().setVelocity(irr::core::vector3df());
+	// getContext().lock()->getParticle().setVelocity(irr::core::vector3df());
 }
 
 bool PlayerMobileState::onEvent(const Event& e)

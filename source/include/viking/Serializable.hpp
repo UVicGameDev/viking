@@ -2,6 +2,7 @@
 #define VIK_SERIALIZABLE_HPP_INCLUDED
 
 #include <irrlicht/IAttributeExchangingObject.h>
+#include <irrlicht/IAttributes.h>
 
 namespace vik
 {
@@ -13,8 +14,8 @@ namespace vik
 class Serializable
 {
 public:
-	virtual void serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options=0) const {}
-	virtual void deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options=0){}
+	virtual void serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options=0) const = 0;
+	virtual void deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options=0) = 0;
 };
 
 } // end namespace vik

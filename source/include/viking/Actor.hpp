@@ -7,44 +7,53 @@
 #include "viking/HashedString.hpp"
 #include "viking/Event.hpp"
 #include "viking/EventListener.hpp"
-#include <vector>
-#include <utility>
+#include <memory>
 
 namespace vik
 {
 
-class ActorState;
+class ActorStateMachine;
 
 class Actor : public GameObject, public EventListener
 {
 public:
+	// takes single strong ownership of the stateMachine
 	Actor();
 	~Actor();
-	
-	// sets the current state to the given state and enters it
-	void startStateMachine(HashedString initialStateName);
 
-	// Adds a state to the list of possible states.
-	// Actor claims ownership of state, always.
-	void addState(HashedString stateName, ActorState* state);
+	// takes unique, strong ownership of stateMachine
+	// Actors do not need a state machine to operate
+	// However, setting up a state machine is recommended...
+	void setStateMachine(ActorStateMachine* stateMachine);
+	ActorStateMachine* getStateMachine();
 
-	// leaves the current state and enters the next state
-	void switchToState(HashedString nextState);
+	// starts all subsystems
+	void start();
+
+	// stops all subsystems
+	void stop();
 
 	// updates the current state
 	void update(GameTime& time);
 
-	// Passes on events to the current state
+	// returns whether subsystems are running or not
+	bool isRunning() const;
+
+	// Passes on events to the state machine
 	bool onEvent(const Event& e);
 
 	Particle& getParticle();
 
 	void setSprite(std::shared_ptr<AnimatedSprite>& sprite);
+
 	std::shared_ptr<AnimatedSprite>& getSprite();
 	const std::shared_ptr<AnimatedSprite>& getSprite() const;
+
+	void serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options=0) const override;
+	void deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options=0) override;
 private:
-	ActorState* currentState;
-	std::vector<std::pair<HashedString,ActorState*>> states;
+	ActorStateMachine* stateMachine;
+	bool running;
 
 	Particle particle;
 	std::shared_ptr<AnimatedSprite> sprite;

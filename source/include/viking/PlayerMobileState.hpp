@@ -10,14 +10,15 @@ namespace vik
 class PlayerMobileState : public ActorState
 {
 public:
-	PlayerMobileState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme);
+	PlayerMobileState(const std::weak_ptr<Actor>& context, ControlScheme& scheme);
 
 	void onEnter();
 	void onUpdate(GameTime& time);
 	void onLeave();
+
 	bool onEvent(const Event& e);
 private:
-	ControlScheme scheme;
+	ControlScheme& scheme;
 };
 
 } // end namespace vik

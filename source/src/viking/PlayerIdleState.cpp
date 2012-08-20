@@ -2,12 +2,13 @@
 #include "viking/GameApp.hpp"
 #include "viking/Event.hpp"
 #include "viking/IrrlichtEvent.hpp"
+#include "viking/ActorStateMachine.hpp"
 #include <iostream>
 
 namespace vik
 {
 
-PlayerIdleState::PlayerIdleState(const std::weak_ptr<Actor>& context, const ControlScheme& scheme):
+PlayerIdleState::PlayerIdleState(const std::weak_ptr<Actor>& context, ControlScheme& scheme):
 ActorState(context),
 scheme(scheme)
 {
@@ -16,6 +17,7 @@ scheme(scheme)
 void PlayerIdleState::onEnter()
 {
 	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onEnter()");
+	getContext().lock()->getParticle().setVelocity(irr::core::vector3df());
 	getContext().lock()->getSprite()->play(HashedString("idle"));
 }
 
@@ -39,7 +41,7 @@ bool PlayerIdleState::onEvent(const Event& e)
 		{
 			if (scheme.isDirectionalKey(se.KeyInput.Key) && se.KeyInput.PressedDown)
 			{
-				getContext().lock()->switchToState(HashedString("Mobile"));
+				getContext().lock()->getStateMachine()->switchToState(HashedString("mobile"));
 				return true;
 			}
 		}

@@ -1,5 +1,5 @@
-#ifndef EVENTSOURCE_HPP_INCLUDED
-#define EVENTSOURCE_HPP_INCLUDED
+#ifndef VIK_EVENTSOURCE_HPP_INCLUDED
+#define VIK_EVENTSOURCE_HPP_INCLUDED
 
 #include <list>
 #include <memory>
@@ -28,4 +28,4 @@ private:
 
 } // end namespace vik
 
-#endif // EVENTSOURCE_HPP_INCLUDED
+#endif // VIK_EVENTSOURCE_HPP_INCLUDED

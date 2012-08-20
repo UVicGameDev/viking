@@ -1,8 +1,8 @@
-#ifndef EVENT_HPP_INCLUDED
-#define EVENT_HPP_INCLUDED
+#ifndef VIK_EVENT_HPP_INCLUDED
+#define VIK_EVENT_HPP_INCLUDED
 
 #include <irrlicht/irrTypes.h>
-#include "viking/HashString.hpp"
+#include "viking/HashedString.hpp"
 
 namespace vik
 {
@@ -28,4 +28,4 @@ HashedString Event::getType() const
 
 } // end namespace vik
 
-#endif // EVENT_HPP_INCLUDED
+#endif // VIK_EVENT_HPP_INCLUDED

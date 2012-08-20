@@ -1,5 +1,5 @@
-#ifndef KEYMAP_HPP_INCLUDED
-#define KEYMAP_HPP_INCLUDED
+#ifndef VIK_KEYMAP_HPP_INCLUDED
+#define VIK_KEYMAP_HPP_INCLUDED
 
 #include "viking/EventListener.hpp"
 #include <irrlicht/Keycodes.h>

@@ -2,8 +2,8 @@
 #include <iostream>
 #include <map>
 #include <cstring>
-#include "viking/HashString.hpp"
-#include "UnitTest.hpp"
+#include "viking/HashedString.hpp"
+#include "unittest/UnitTest.hpp"
 
 // future ideas: 
 // constructing classes from Class objects
@@ -174,6 +174,7 @@ using namespace vik;
 class StaffMember
 {
 public:
+	virtual ~StaffMember(){}
 	ClassDeclare();
 };
 
@@ -198,6 +199,7 @@ public:
 class Sailboat
 {
 public:
+	virtual ~Sailboat(){}
 	ClassDeclare();
 };
 

@@ -1,5 +1,5 @@
-#ifndef SCENE_HPP_INCLUDED
-#define SCENE_HPP_INCLUDED
+#ifndef VIK_SCENE_HPP_INCLUDED
+#define VIK_SCENE_HPP_INCLUDED
 
 #include "viking/GameTime.hpp"
 #include "viking/EventSource.hpp"
@@ -20,4 +20,4 @@ public:
 
 } // end namespace vik
 
-#endif // SCENE_HPP_INCLUDED
+#endif // VIK_SCENE_HPP_INCLUDED

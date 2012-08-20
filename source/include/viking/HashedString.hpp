@@ -1,5 +1,5 @@
-#ifndef HASHSTRING_HPP_INCLUDED
-#define HASHSTRING_HPP_INCLUDED
+#ifndef VIK_HASHSTRING_HPP_INCLUDED
+#define VIK_HASHSTRING_HPP_INCLUDED
 
 #include <irrlicht/irrTypes.h>
 
@@ -25,4 +25,4 @@ constexpr HashedString hashString(const char* str)
 
 } // end namespace vik
 
-#endif // HASHSTRING_HPP_INCLUDED
+#endif // VIK_HASHSTRING_HPP_INCLUDED

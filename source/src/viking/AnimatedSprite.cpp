@@ -2,6 +2,7 @@
 #include "viking/GameApp.hpp"
 #include <iostream>
 #include <cmath>
+#include <cassert>
 #include "viking/IrrlichtStream.hpp"
 
 using namespace irr;
@@ -66,6 +67,7 @@ void AnimatedSprite::update(GameTime& time)
 void AnimatedSprite::play(HashedString animSequence, int frame)
 {
 	currentSequence = spriteData->getSequence(animSequence);
+	assert(currentSequence);
 	startTime = GameApp::getSingleton().getTimer()->getTime();
 	startFrame = frame;
 	playing = true;
@@ -75,6 +77,7 @@ void AnimatedSprite::play(HashedString animSequence, int frame)
 void AnimatedSprite::stop(HashedString animSequence, int frame)
 {
 	currentSequence = spriteData->getSequence(animSequence);
+	assert(currentSequence);
 	startTime = GameApp::getSingleton().getTimer()->getTime();
 	startFrame = frame;
 	playing = false;

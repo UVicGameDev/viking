@@ -1,5 +1,5 @@
-#ifndef SERIALIZABLE_HPP_INCLUDED
-#define SERIALIZABLE_HPP_INCLUDED
+#ifndef VIK_SERIALIZABLE_HPP_INCLUDED
+#define VIK_SERIALIZABLE_HPP_INCLUDED
 
 #include <irrlicht/IAttributeExchangingObject.h>
 
@@ -19,4 +19,4 @@ public:
 
 } // end namespace vik
 
-#endif // SERIALIZABLE_HPP_INCLUDED
+#endif // VIK_SERIALIZABLE_HPP_INCLUDED

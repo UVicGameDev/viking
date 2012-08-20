@@ -1,5 +1,5 @@
-#ifndef GAMEOBJECT_HPP_INCLUDED
-#define GAMEOBJECT_HPP_INCLUDED
+#ifndef VIK_GAMEOBJECT_HPP_INCLUDED
+#define VIK_GAMEOBJECT_HPP_INCLUDED
 
 #include "viking/GameTime.hpp"
 #include "viking/Serializable.hpp"
@@ -23,4 +23,4 @@ public:
 
 } // end namespace vik
 
-#endif // GAMEOBJECT_HPP_INCLUDED
+#endif // VIK_GAMEOBJECT_HPP_INCLUDED

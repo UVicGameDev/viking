@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "viking/AnimatedSpriteSequence.hpp"
-#include "viking/HashString.hpp"
+#include "viking/HashedString.hpp"
 #include <irrlicht/ITexture.h>
 #include <irrlicht/dimension2d.h>
 

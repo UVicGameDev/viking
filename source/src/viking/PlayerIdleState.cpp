@@ -15,7 +15,8 @@ scheme(scheme)
 
 void PlayerIdleState::onEnter()
 {
-	GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onEnter()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onEnter()");
+	getContext().lock()->getSprite()->play(hashString("idle"));
 }
 
 void PlayerIdleState::onUpdate(GameTime& time)
@@ -25,7 +26,7 @@ void PlayerIdleState::onUpdate(GameTime& time)
 
 void PlayerIdleState::onLeave()
 {
-	GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onLeave()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onLeave()");
 }
 
 bool PlayerIdleState::onEvent(const Event& e)

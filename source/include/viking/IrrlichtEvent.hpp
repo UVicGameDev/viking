@@ -1,5 +1,5 @@
-#ifndef IRRLICHTEVENT_HPP_INCLUDED
-#define IRRLICHTEVENT_HPP_INCLUDED
+#ifndef VIK_IRRLICHTEVENT_HPP_INCLUDED
+#define VIK_IRRLICHTEVENT_HPP_INCLUDED
 
 #include <irrlicht/IEventReceiver.h>
 #include "viking/Event.hpp"
@@ -23,4 +23,4 @@ private:
 
 } // end namespace vik
 
-#endif // IRRLICHTEVENT_HPP_INCLUDED
+#endif // VIK_IRRLICHTEVENT_HPP_INCLUDED

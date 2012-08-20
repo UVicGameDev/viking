@@ -1,5 +1,5 @@
-#ifndef PARTICLE_ANIMATOR_HPP_INCLUDED
-#define PARTICLE_ANIMATOR_HPP_INCLUDED
+#ifndef VIK_PARTICLEANIMATOR_HPP_INCLUDED
+#define VIK_PARTICLEANIMATOR_HPP_INCLUDED
 
 #include <memory>
 #include "viking/GameTime.hpp"
@@ -27,4 +27,4 @@ private:
 
 } // end namespace vik
 
-#endif // PARTICLE_ANIMATOR_HPP_INCLUDED
+#endif // VIK_PARTICLE_ANIMATOR_HPP_INCLUDED

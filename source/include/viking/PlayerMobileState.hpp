@@ -1,5 +1,5 @@
-#ifndef PLAYERMOBILESTATE_HPP_INCLUDED
-#define PLAYERMOBILESTATE_HPP_INCLUDED
+#ifndef VIK_PLAYERMOBILESTATE_HPP_INCLUDED
+#define VIK_PLAYERMOBILESTATE_HPP_INCLUDED
 
 #include "viking/ActorState.hpp"
 #include "viking/ControlScheme.hpp"
@@ -22,4 +22,4 @@ private:
 
 } // end namespace vik
 
-#endif // PLAYERMOBILESTATE_HPP_INCLUDED
+#endif // VIK_PLAYERMOBILESTATE_HPP_INCLUDED

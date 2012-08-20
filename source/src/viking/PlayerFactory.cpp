@@ -8,26 +8,17 @@
 #include "viking/PlayerIdleState.hpp"
 #include "viking/PlayerMobileState.hpp"
 
-#include <iostream>
+#include <cassert>
 
 namespace vik
 {
 
-PlayerFactory::PlayerFactory(HashedString factoryID, EventSource* playerEventSource, AnimationEngine& animationEngine):
-GameObjectFactory(factoryID),
-playerEventSource(playerEventSource),
-animationEngine(animationEngine)
+PlayerFactory::PlayerFactory(const PlayerFactoryCreationParams& params):
+GameObjectFactory(params.factoryID),
+playerEventSource(params.playerEventSource),
+animationEngine(params.animationEngine),
+playerType(params.playerType)
 {
-}
-
-static int nodeTreeSize(irr::scene::ISceneNode* node)
-{
-	int numChildren = 1;
-	for (auto it = node->getChildren().begin(); it != node->getChildren().end(); ++it)
-	{
-		numChildren += nodeTreeSize(*it);
-	}
-	return numChildren;
 }
 
 std::shared_ptr<GameObject> PlayerFactory::create()
@@ -36,6 +27,28 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 
 	playerEventSource->addListener(player);
 
+	irr::scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
+
+	std::string animdatapath = "../../../art/";
+
+	if (playerType == EPT_ARTSIE)
+	{
+		animdatapath += "artsie.xml";
+	}
+	else
+	{
+		assert(false);
+	}
+
+	auto sprData = animationEngine.load(animdatapath.c_str());
+
+	assert(sprData);
+
+	auto spr = std::make_shared<AnimatedSprite>(sprData, smgr->getRootSceneNode(), smgr);
+	spr->setAnchor(ESA_FEET);
+	player->setSprite(spr);
+	animationEngine.addSprite(spr);
+
 	PlayerIdleState* idleState = new PlayerIdleState(player, ControlScheme());
 	PlayerMobileState* mobileState = new PlayerMobileState(player, ControlScheme());
 
@@ -43,19 +56,6 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 	player->addState(hashString("Mobile"), mobileState);
 
 	player->startStateMachine(hashString("Idle"));
-
-	irr::scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
-
-	// std::cout << "Before creating sprite: " << nodeTreeSize(smgr->getRootSceneNode()) << std::endl;;
-
-	auto sprData = animationEngine.load("../../../art/player.xml");
-	auto spr = std::make_shared<AnimatedSprite>(sprData, smgr->getRootSceneNode(), smgr);
-	spr->setAnchor(ESA_FEET);
-	animationEngine.addSprite(spr);
-	player->setSprite(spr);
-	player->getSprite()->play(hashString("walk"));
-
-	// std::cout << "After creating sprite: " << nodeTreeSize(smgr->getRootSceneNode()) << std::endl;;
 
 	return player;
 }

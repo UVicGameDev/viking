@@ -1,5 +1,5 @@
-#ifndef COMBATSCENE_HPP_INCLUDED
-#define COMBATSCENE_HPP_INCLUDED
+#ifndef VIK_COMBATSCENE_HPP_INCLUDED
+#define VIK_COMBATSCENE_HPP_INCLUDED
 
 #include "viking/Scene.hpp"
 #include "viking/GameObjectEngine.hpp"
@@ -24,4 +24,4 @@ private:
 
 } // end namespace vik
 
-#endif // COMBATSCENE_HPP_INCLUDED
+#endif // VIK_COMBATSCENE_HPP_INCLUDED

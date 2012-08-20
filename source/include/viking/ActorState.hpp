@@ -1,5 +1,5 @@
-#ifndef ACTORSTATE_HPP_INCLUDED
-#define ACTORSTATE_HPP_INCLUDED
+#ifndef VIK_ACTORSTATE_HPP_INCLUDED
+#define VIK_ACTORSTATE_HPP_INCLUDED
 
 #include "viking/EventListener.hpp"
 #include "viking/Actor.hpp"
@@ -32,4 +32,4 @@ private:
 
 } // end namespace vik
 
-#endif // ACTORSTATE_HPP_INCLUDED
+#endif // VIK_ACTORSTATE_HPP_INCLUDED

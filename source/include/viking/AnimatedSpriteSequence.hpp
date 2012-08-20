@@ -1,7 +1,7 @@
 #ifndef VIK_ANIMATEDSPRITESEQUENCE_HPP_INCLUDED
 #define VIK_ANIMATEDSPRITESEQUENCE_HPP_INCLUDED
 
-#include "viking/HashString.hpp"
+#include "viking/HashedString.hpp"
 #include <string>
 
 namespace vik

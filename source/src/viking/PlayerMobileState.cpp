@@ -12,7 +12,8 @@ scheme(scheme)
 
 void PlayerMobileState::onEnter()
 {
-	GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onEnter()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onEnter()");
+	getContext().lock()->getSprite()->play(hashString("walk"));
 }
 
 void PlayerMobileState::onUpdate(GameTime& time)
@@ -53,7 +54,7 @@ void PlayerMobileState::onUpdate(GameTime& time)
 
 void PlayerMobileState::onLeave()
 {
-	GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onLeave()");
+	// GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onLeave()");
 	getContext().lock()->getParticle().setVelocity(irr::core::vector3df());
 }
 

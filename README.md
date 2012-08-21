@@ -11,4 +11,5 @@ See github's issue tracker: [https://github.com/nguillemot/viking/issues](https:
 The wiki
 =================
 
-Read it: [https://github.com/nguillemot/viking/wiki](https://github.com/nguillemot/viking/wiki)
+For installation instructions, game design documentation, coding standards, check the wiki:
+[https://github.com/nguillemot/viking/wiki](https://github.com/nguillemot/viking/wiki)

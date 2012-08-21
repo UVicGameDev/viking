@@ -17,19 +17,16 @@ struct PlayerFactoryCreationParams
 	PlayerFactoryCreationParams(
 			HashedString factoryID,
 			EventSource* playerEventSource,
-			AnimationEngine& animationEngine,
-			ePlayerType playerType):
+			AnimationEngine& animationEngine):
 	factoryID(factoryID),
 	playerEventSource(playerEventSource),
-	animationEngine(animationEngine),
-	playerType(playerType)
+	animationEngine(animationEngine)
 	{
 	}
 
 	HashedString factoryID;
 	EventSource* playerEventSource;
 	AnimationEngine& animationEngine;
-	ePlayerType playerType;
 };
 
 } // end namespace vik

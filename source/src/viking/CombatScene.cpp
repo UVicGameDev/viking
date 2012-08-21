@@ -1,5 +1,6 @@
 #include "viking/CombatScene.hpp"
 #include "viking/PlayerFactory.hpp"
+#include "viking/AIFactory.hpp"
 #include "viking/GameApp.hpp"
 #include "viking/PaperSceneNodeFactory.hpp"
 #include "viking/GameObjectEngineTypeQuery.hpp"
@@ -17,17 +18,34 @@ using namespace irr;
 namespace vik
 {
 
+CombatScene::CombatScene()
+{
+	ControlScheme p1controlScheme(
+			irr::KEY_UP,
+			irr::KEY_DOWN,
+			irr::KEY_LEFT,
+			irr::KEY_RIGHT,
+			irr::KEY_KEY_Z);
+
+	PlayerFactoryCreationParams pfParams(HashedString("artsie"), this, animationEngine);
+	PlayerFactoryConfiguration pfConfig("artsie", p1controlScheme);
+	artsieFactory = new PlayerFactory(pfParams, pfConfig);
+
+	aiFactory = new AIFactory(HashedString("ai"), this, animationEngine);
+}
+
+CombatScene::~CombatScene()
+{
+	delete aiFactory;
+	delete artsieFactory;
+}
 
 void CombatScene::onEnter()
 {
-	PlayerFactoryCreationParams params(HashedString("artsie"), this, animationEngine, EPT_ARTSIE);
-	auto pf = std::make_shared<PlayerFactory>(params);
-
-	// give away ownership to the objectEngine
-	objectEngine.addFactory(pf);
-	
 	// create one player for testing
-	std::shared_ptr<GameObject> player = objectEngine.create(HashedString("artsie"));
+	std::shared_ptr<GameObject> player = artsieFactory->create();
+
+	objectEngine.addObject(player);
 
 	// create FPS display thingy
 	auto fpsDisplay = std::make_shared<FPSDisplay>();
@@ -37,8 +55,8 @@ void CombatScene::onEnter()
 	video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();
 
 	PaperSceneNodeFactory paperFactory(smgr);
-	scene::ISceneNode* floor = paperFactory.create(driver->getTexture("../../../art/ground.png"));
-	core::aabbox3df bbox = floor->getTransformedBoundingBox();
+	scene::ISceneNode* floorNode = paperFactory.create(driver->getTexture("../../../art/ground.png"));
+	core::aabbox3df bbox = floorNode->getTransformedBoundingBox();
 
 	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setPosition(core::vector3df(bbox.getExtent().X/2, 1.2 * bbox.getExtent().Y , bbox.getExtent().Y));
 }
@@ -59,7 +77,7 @@ void CombatScene::onLeave()
 
 void CombatScene::onRedraw()
 {
-	drawRGBAxis(GameApp::getSingleton().getVideoDriver());
+	drawRGBAxis();
 }
 
 bool CombatScene::onEvent(const Event& e)

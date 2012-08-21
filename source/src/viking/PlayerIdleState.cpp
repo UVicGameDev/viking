@@ -26,6 +26,15 @@ void PlayerIdleState::onEnter()
 void PlayerIdleState::onUpdate(GameTime& time)
 {
 	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onUpdate()");
+	//
+	const std::shared_ptr<KeyMap>& k = GameApp::getSingleton().getKeyMap();
+
+	// example: won't switch to mobile state if you're pressing both left and right at the same time.
+	if ((k->isKeyDown(scheme.upKey) != k->isKeyDown(scheme.downKey) ||
+		(k->isKeyDown(scheme.leftKey) != k->isKeyDown(scheme.rightKey))))
+	{
+		getContext().lock()->getStateMachine()->switchToState(HashedString("mobile"));
+	}
 }
 
 void PlayerIdleState::onLeave()
@@ -43,12 +52,7 @@ bool PlayerIdleState::onEvent(const Event& e)
 		{
 			if (se.KeyInput.PressedDown)
 			{
-				if (scheme.isDirectionalKey(se.KeyInput.Key))
-				{
-					getContext().lock()->getStateMachine()->switchToState(HashedString("mobile"));
-					return true;
-				}
-				else if (scheme.getActionKeyIndex(se.KeyInput.Key) == 0)
+				if (scheme.getActionKeyIndex(se.KeyInput.Key) == 0)
 				{
 					getContext().lock()->getStateMachine()->switchToState(HashedString("attacking"));
 					return true;

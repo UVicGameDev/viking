@@ -17,7 +17,7 @@ namespace vik
 {
 
 // draws red green blue arrows to help know how the X Y Z coordinates work
-void drawRGBAxis(irr::video::IVideoDriver* driver);
+void drawRGBAxis();
 
 } // end namespace vik
 

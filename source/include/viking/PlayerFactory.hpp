@@ -3,6 +3,7 @@
 
 #include "viking/GameObjectFactory.hpp"
 #include "viking/PlayerFactoryCreationParams.hpp"
+#include "viking/PlayerFactoryConfiguration.hpp"
 
 namespace vik
 {
@@ -14,12 +15,15 @@ class AnimationEngine;
 class PlayerFactory : public GameObjectFactory
 {
 public:
-	PlayerFactory(const PlayerFactoryCreationParams& params);
-	std::shared_ptr<GameObject> create();
+	PlayerFactory(const PlayerFactoryCreationParams& params, const PlayerFactoryConfiguration& defaultConfiguration);
+
+	void setConfiguration(const PlayerFactoryConfiguration& config);
+	const PlayerFactoryConfiguration& getConfiguration() const;
+	std::shared_ptr<GameObject> create() override;
 private:
 	EventSource* playerEventSource;
 	AnimationEngine& animationEngine;
-	ePlayerType playerType;
+	PlayerFactoryConfiguration configuration;
 };
 
 } // end namespace vik

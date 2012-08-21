@@ -9,12 +9,10 @@ namespace vik
 
 class GameObject;
 
-// interface for defining how game objects are created
 class GameObjectFactory
 {
 public:
-	// factoryID is used to make calls to this factory at runtime
-	// Each factory in a GameObjectEngine should have a unique ID
+	// factoryID is used to identify factories in polymorphic contexts
 	GameObjectFactory(HashedString factoryID);
 	virtual ~GameObjectFactory(){}
 

@@ -23,18 +23,37 @@ public:
 
 	// main loop of game
 	void main();
+
 	// distributes irrlicht callback for events
 	bool OnEvent(const irr::SEvent& event);
 
 	static GameApp& getSingleton();
 
+	// top level irrlicht structure
 	irr::IrrlichtDevice* getDevice();
+
+	// used for low level rendering and changing video settings
 	irr::video::IVideoDriver* getVideoDriver();
+
+	// used to create and manage ISceneNodes
 	irr::scene::ISceneManager* getSceneManager();
+
+	// used to create and manage IGUIElements
 	irr::gui::IGUIEnvironment* getGUIEnvironment();
+
+	// used to log messages, which can be displayed on the console and saved to a file.
 	irr::ILogger* getLogger();
+
+	// used to know information about the global timeline
+	// note that GameTime is a wrapper around this information.
+	// GameTime should be preferred over using this.
 	irr::ITimer* getTimer();
-	KeyMap& getKeyMap();
+	
+	// used to check the current state of keys without needing events
+	std::shared_ptr<KeyMap>& getKeyMap();
+
+	// used to manage scene transitions
+	std::shared_ptr<GameStateMachine>& getGameStateMachine();
 private:
 	// forced trivial constructor because it's a singleton.
 	// Put code in onInit() instead.

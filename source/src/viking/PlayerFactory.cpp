@@ -14,30 +14,33 @@
 namespace vik
 {
 
-PlayerFactory::PlayerFactory(const PlayerFactoryCreationParams& params):
+PlayerFactory::PlayerFactory(const PlayerFactoryCreationParams& params, const PlayerFactoryConfiguration& defaultConfiguration):
 GameObjectFactory(params.factoryID),
 playerEventSource(params.playerEventSource),
 animationEngine(params.animationEngine),
-playerType(params.playerType)
+configuration(defaultConfiguration)
 {
+}
+
+void PlayerFactory::setConfiguration(const PlayerFactoryConfiguration& config)
+{
+	configuration = config;
+}
+
+const PlayerFactoryConfiguration& PlayerFactory::getConfiguration() const
+{
+	return configuration;
 }
 
 std::shared_ptr<GameObject> PlayerFactory::create()
 {
 	irr::scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
 
-	std::string animdatapath = "../../../art/";
+	std::string animDataPath = "../../../art/"
+	+ configuration.playerType
+	+ ".xml";
 
-	if (playerType == EPT_ARTSIE)
-	{
-		animdatapath += "artsie.xml";
-	}
-	else
-	{
-		assert(false);
-	}
-
-	auto sprData = animationEngine.load(animdatapath.c_str());
+	auto sprData = animationEngine.load(animDataPath.c_str());
 
 	assert(sprData);
 
@@ -47,14 +50,7 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 
 	std::shared_ptr<Actor> player = std::make_shared<Actor>();
 
-	ControlScheme controlScheme(
-			irr::KEY_UP,
-			irr::KEY_DOWN,
-			irr::KEY_LEFT,
-			irr::KEY_RIGHT,
-			irr::KEY_KEY_Z);
-
-	PlayerStateMachine* stateMachine = new PlayerStateMachine(player, controlScheme);
+	PlayerStateMachine* stateMachine = new PlayerStateMachine(player, configuration.controlScheme);
 	player->setStateMachine(stateMachine);
 	player->setSprite(spr);
 	playerEventSource->addListener(player);

@@ -27,6 +27,7 @@ public:
 	// called at the start of each draw
 	void onRedraw();
 
+	// called when events are received
 	bool onEvent(const Event& e);
 private:
 	std::shared_ptr<Scene> currentScene;

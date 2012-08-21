@@ -16,10 +16,13 @@ GameApp* GameApp::singleton;
 
 void GameApp::main()
 {
-	if(!onInit())
+	if (!onInit())
 	{
 		return;
 	}
+
+	// define initial scene of game
+	gameStateMachine->startWithScene(std::make_shared<CombatScene>());
 
 	// start root clock for duration of main loop
 	rootTime.start();
@@ -34,6 +37,7 @@ void GameApp::main()
 		if (getDevice()->isWindowActive())
 		{
 			getVideoDriver()->beginScene(true, true, video::SColor(255,0,0,0));
+
 			gameStateMachine->onRedraw();
 
 			getSceneManager()->drawAll();
@@ -127,9 +131,6 @@ bool GameApp::onInit()
 	gameStateMachine = std::make_shared<GameStateMachine>();
 	rootEventSource.addListener(gameStateMachine);
 
-	// define initial scene of game
-	gameStateMachine->startWithScene(std::make_shared<CombatScene>());
-
 	return true;
 }
 
@@ -177,9 +178,14 @@ irr::ITimer* GameApp::getTimer()
 	return getDevice()->getTimer();
 }
 
-KeyMap& GameApp::getKeyMap()
+std::shared_ptr<KeyMap>& GameApp::getKeyMap()
 {
-	return *(keyMap.get());
+	return keyMap;
+}
+
+std::shared_ptr<GameStateMachine>& GameApp::getGameStateMachine()
+{
+	return gameStateMachine;
 }
 
 } // end namespace vik

@@ -8,9 +8,15 @@
 namespace vik
 {
 
+class PlayerFactory;
+class AIFactory;
+
 class CombatScene : public Scene
 {
 public:
+	CombatScene();
+	~CombatScene();
+
 	void onEnter();
 	void onUpdate(GameTime& time);
 	void onLeave();
@@ -20,6 +26,8 @@ private:
 	void updateCamera();
 	GameObjectEngine objectEngine;
 	AnimationEngine animationEngine;
+	PlayerFactory* artsieFactory;
+	AIFactory* aiFactory;
 };
 
 } // end namespace vik

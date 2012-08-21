@@ -1,11 +1,15 @@
 #include "viking/DebugRender.hpp"
 
-#include <irrlicht/irrlicht.h> 
+#include <irrlicht/IVideoDriver.h> 
+#include "viking/GameApp.hpp"
+
 namespace vik
 {
 
-void drawRGBAxis(irr::video::IVideoDriver* driver)
+void drawRGBAxis()
 {
+	irr::video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();
+
 	using namespace irr;
 
 	const float axisLength = 100.0f;

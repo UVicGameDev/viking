@@ -25,11 +25,11 @@ void PlayerAttackingState::onUpdate(GameTime& time)
 	auto spr = getContext().lock()->getSprite();
 	if (!spr->getPlaying())
 	{
-		const KeyMap& k = GameApp::getSingleton().getKeyMap();
-		if (k.isKeyDown(scheme.upKey) ||
-				k.isKeyDown(scheme.downKey) ||
-				k.isKeyDown(scheme.leftKey) ||
-				k.isKeyDown(scheme.rightKey))
+		const std::shared_ptr<KeyMap>& k = GameApp::getSingleton().getKeyMap();
+		if (k->isKeyDown(scheme.upKey) ||
+				k->isKeyDown(scheme.downKey) ||
+				k->isKeyDown(scheme.leftKey) ||
+				k->isKeyDown(scheme.rightKey))
 		{
 			getContext().lock()->getStateMachine()->switchToState(HashedString("mobile"));
 		}

@@ -58,22 +58,22 @@ const irr::video::ITexture* AnimatedSpriteData::getTexture() const
 	return texture;
 }
 
-void AnimatedSpriteData::setWidth(int width)
+void AnimatedSpriteData::setWidth(irr::u32 width)
 {
 	this->width = width;
 }
 
-void AnimatedSpriteData::setHeight(int height)
+void AnimatedSpriteData::setHeight(irr::u32 height)
 {
 	this->height = height;
 }
 
-int AnimatedSpriteData::getWidth() const
+irr::u32 AnimatedSpriteData::getWidth() const
 {
 	return width;
 }
 
-int AnimatedSpriteData::getHeight() const
+irr::u32 AnimatedSpriteData::getHeight() const
 {
 	return height;
 }

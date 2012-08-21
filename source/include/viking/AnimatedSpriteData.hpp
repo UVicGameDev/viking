@@ -6,6 +6,7 @@
 #include "viking/HashedString.hpp"
 #include <irrlicht/ITexture.h>
 #include <irrlicht/dimension2d.h>
+#include <irrlicht/irrTypes.h>
 
 namespace vik
 {
@@ -21,14 +22,14 @@ public:
 	const irr::video::ITexture* getTexture() const;
 
 	// in number of tiles
-	void setWidth(int width);
-	void setHeight(int height);
+	void setWidth(irr::u32 width);
+	void setHeight(irr::u32 height);
 
-	int getWidth() const;
-	int getHeight() const;
+	irr::u32 getWidth() const;
+	irr::u32 getHeight() const;
 private:
-	int width;
-	int height;
+	irr::u32 width;
+	irr::u32 height;
 	std::vector<AnimatedSpriteSequence> sequences;
 	irr::video::ITexture* texture;
 };

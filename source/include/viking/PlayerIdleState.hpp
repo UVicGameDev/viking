@@ -12,7 +12,6 @@ class PlayerIdleState : public ActorState
 {
 public:
 	PlayerIdleState(const std::weak_ptr<Actor>& context, ControlScheme& scheme);
-
 	void onEnter();
 	void onUpdate(GameTime& time);
 	void onLeave();

@@ -9,6 +9,7 @@ ActorStateMachine(context),
 controlScheme(controlScheme),
 idleState(context, this->controlScheme),
 mobileState(context, this->controlScheme),
+attackingState(context, this->controlScheme),
 currentState(0)
 {
 }
@@ -47,6 +48,10 @@ void PlayerStateMachine::switchToState(const HashedString& stateName)
 	else if (stateName == HashedString("mobile"))
 	{
 		currentState = &mobileState;
+	}
+	else if (stateName == HashedString("attacking"))
+	{
+		currentState = &attackingState;
 	}
 	else
 	{

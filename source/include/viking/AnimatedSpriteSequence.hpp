@@ -3,6 +3,7 @@
 
 #include "viking/HashedString.hpp"
 #include <string>
+#include <irrlicht/irrTypes.h>
 
 namespace vik
 {
@@ -10,21 +11,21 @@ namespace vik
 class AnimatedSpriteSequence
 {
 public:
-	AnimatedSpriteSequence(const std::string& name, int start, int length, int FPS);
+	AnimatedSpriteSequence(const std::string& name, irr::u32 start, irr::u32 length, irr::u32 FPS);
 	const std::string& getName() const;
 	HashedString getHashedName() const;
-	int getStartIndex() const;
-	int getLength() const;
-	int getFPS() const;
+	irr::u32 getStartIndex() const;
+	irr::u32 getLength() const;
+	irr::u32 getFPS() const;
 private:
 	// name used to refer to this sequence
 	std::string name;
 	HashedString hashedName;
 	// tile index at which this sequence starts
-	int start;
+	irr::u32 start;
 	// number of tiles this sequence lasts
-	int length;
-	int FPS;
+	irr::u32 length;
+	irr::u32 FPS;
 };
 
 } // end namesapce vik

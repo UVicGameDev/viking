@@ -28,6 +28,12 @@ public:
 	void play(HashedString animSequence, int frame=0);
 	void stop(HashedString animSequence, int frame=0);
 
+	// true if the animation is playing and hasn't stopped because of not looping
+	bool getPlaying() const;
+
+	void setLooping(bool loop);
+	bool getLooping() const;
+
 	void setAnchor(eSpriteAnchor anchor);
 	eSpriteAnchor getAnchor() const;
 
@@ -51,6 +57,7 @@ public:
 	void serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options=0) const override;
 	void deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options=0) override;
 	irr::scene::ISceneNode* clone(irr::scene::ISceneNode* newParent=0, irr::scene::ISceneManager* newManager=0) override;
+
 private:
 	void setTileIndex(int index);
 
@@ -60,6 +67,9 @@ private:
 	irr::u32 startTime;
 	int startFrame;
 	const AnimatedSpriteSequence* currentSequence;
+
+	bool looping;
+
 	eSpriteAnchor anchor;
 
 	bool flipHorizontal;

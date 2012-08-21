@@ -47,7 +47,12 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 
 	std::shared_ptr<Actor> player = std::make_shared<Actor>();
 
-	ControlScheme controlScheme(irr::KEY_UP, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_RIGHT);
+	ControlScheme controlScheme(
+			irr::KEY_UP,
+			irr::KEY_DOWN,
+			irr::KEY_LEFT,
+			irr::KEY_RIGHT,
+			irr::KEY_KEY_Z);
 
 	PlayerStateMachine* stateMachine = new PlayerStateMachine(player, controlScheme);
 	player->setStateMachine(stateMachine);

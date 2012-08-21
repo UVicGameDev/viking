@@ -3,7 +3,7 @@
 namespace vik
 {
 
-AnimatedSpriteSequence::AnimatedSpriteSequence(const std::string& name, int start, int length, int FPS):
+AnimatedSpriteSequence::AnimatedSpriteSequence(const std::string& name, irr::u32 start, irr::u32 length, irr::u32 FPS):
 name(name),
 hashedName(HashedString(name.c_str())),
 start(start),
@@ -22,17 +22,17 @@ HashedString AnimatedSpriteSequence::getHashedName() const
 	return hashedName;
 }
 
-int AnimatedSpriteSequence::getStartIndex() const
+irr::u32 AnimatedSpriteSequence::getStartIndex() const
 {
 	return start;
 }
 
-int AnimatedSpriteSequence::getLength() const
+irr::u32 AnimatedSpriteSequence::getLength() const
 {
 	return length;
 }
 
-int AnimatedSpriteSequence::getFPS() const
+irr::u32 AnimatedSpriteSequence::getFPS() const
 {
 	return FPS;
 }

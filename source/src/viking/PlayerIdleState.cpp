@@ -18,7 +18,9 @@ void PlayerIdleState::onEnter()
 {
 	// GameApp::getSingleton().getLogger()->log("void PlayerIdleState::onEnter()");
 	getContext().lock()->getParticle().setVelocity(irr::core::vector3df());
-	getContext().lock()->getSprite()->play(HashedString("idle"));
+	auto spr = getContext().lock()->getSprite();
+	spr->setLooping(true);
+	spr->play(HashedString("idle"));
 }
 
 void PlayerIdleState::onUpdate(GameTime& time)
@@ -39,10 +41,18 @@ bool PlayerIdleState::onEvent(const Event& e)
 
 		if (se.EventType == irr::EET_KEY_INPUT_EVENT)
 		{
-			if (scheme.isDirectionalKey(se.KeyInput.Key) && se.KeyInput.PressedDown)
+			if (se.KeyInput.PressedDown)
 			{
-				getContext().lock()->getStateMachine()->switchToState(HashedString("mobile"));
-				return true;
+				if (scheme.isDirectionalKey(se.KeyInput.Key))
+				{
+					getContext().lock()->getStateMachine()->switchToState(HashedString("mobile"));
+					return true;
+				}
+				else if (scheme.getActionKeyIndex(se.KeyInput.Key) == 0)
+				{
+					getContext().lock()->getStateMachine()->switchToState(HashedString("attacking"));
+					return true;
+				}
 			}
 		}
 	}

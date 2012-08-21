@@ -19,6 +19,7 @@ playing(false),
 startTime(0),
 startFrame(0),
 currentSequence(0),
+looping(false),
 flipHorizontal(false),
 flipVertical(false)
 {
@@ -61,6 +62,14 @@ void AnimatedSprite::update(GameTime& time)
 			u32 deltaTime = currentTime - startTime;
 			u32 currentFrame = deltaTime*currentSequence->getFPS()/1000.0;
 			currentFrame += startFrame;
+
+			// if looping is disabled, it will stop animating at the last frame.
+			if (!looping && currentFrame >= currentSequence->getLength())
+			{
+				playing = false;
+				return;
+			}
+
 			currentFrame %= currentSequence->getLength();
 			setTileIndex(currentSequence->getStartIndex() + currentFrame);
 		}
@@ -200,6 +209,7 @@ void AnimatedSprite::render()
 
 	driver->drawIndexedTriangleList(vertices, 4, indices, 2);
 
+	// swap back coordinates after swapping them to draw the image flipped
 	if (flipVertical)
 	{
 		std::swap(vertices[0].TCoords, vertices[1].TCoords);
@@ -318,6 +328,21 @@ void AnimatedSprite::setFlipVertical(bool flipped)
 bool AnimatedSprite::getFlipVertical() const
 {
 	return flipVertical;
+}
+
+void AnimatedSprite::setLooping(bool loop)
+{
+	looping = loop;
+}
+
+bool AnimatedSprite::getLooping() const
+{
+	return looping;
+}
+
+bool AnimatedSprite::getPlaying() const
+{
+	return playing;
 }
 
 } // end namespace vik

@@ -1,6 +1,7 @@
 #include "viking/PlayerMobileState.hpp"
 #include "viking/GameApp.hpp"
 #include "viking/ActorStateMachine.hpp"
+#include "viking/IrrlichtEvent.hpp"
 
 namespace vik
 {
@@ -14,7 +15,9 @@ scheme(scheme)
 void PlayerMobileState::onEnter()
 {
 	// GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onEnter()");
-	getContext().lock()->getSprite()->play(HashedString("mobile"));
+	auto spr = getContext().lock()->getSprite();
+	spr->setLooping(true);
+	spr->play(HashedString("mobile"));
 }
 
 void PlayerMobileState::onUpdate(GameTime& time)
@@ -63,6 +66,23 @@ void PlayerMobileState::onLeave()
 
 bool PlayerMobileState::onEvent(const Event& e)
 {
+	if (e.getType() == HashedString("IrrlichtEvent"))
+	{
+		const irr::SEvent& se = static_cast<const IrrlichtEvent&>(e).getEvent();
+
+		if (se.EventType == irr::EET_KEY_INPUT_EVENT)
+		{
+			if (se.KeyInput.PressedDown)
+			{
+				if (scheme.getActionKeyIndex(se.KeyInput.Key) == 0)
+				{
+					getContext().lock()->getStateMachine()->switchToState(HashedString("attacking"));
+					return true;
+				}
+			}
+		}
+	}
+
 	return false;
 }
 

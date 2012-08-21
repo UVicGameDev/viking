@@ -5,6 +5,7 @@
 #include "viking/ControlScheme.hpp"
 #include "viking/PlayerIdleState.hpp"
 #include "viking/PlayerMobileState.hpp"
+#include "viking/PlayerAttackingState.hpp"
 
 namespace vik
 {
@@ -26,6 +27,7 @@ private:
 
 	PlayerIdleState idleState;
 	PlayerMobileState mobileState;
+	PlayerAttackingState attackingState;
 
 	ActorState* currentState;
 };

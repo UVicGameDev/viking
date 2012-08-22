@@ -12,6 +12,8 @@ namespace vik
 class ControlScheme : public Serializable
 {
 public:
+	ControlScheme() = default;
+
 	ControlScheme(
 		irr::EKEY_CODE up,
 		irr::EKEY_CODE down,

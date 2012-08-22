@@ -20,16 +20,8 @@ namespace vik
 
 CombatScene::CombatScene()
 {
-	ControlScheme p1controlScheme(
-			irr::KEY_UP,
-			irr::KEY_DOWN,
-			irr::KEY_LEFT,
-			irr::KEY_RIGHT,
-			irr::KEY_KEY_Z);
-
-	PlayerFactoryCreationParams pfParams(HashedString("artsie"), this, animationEngine);
-	PlayerFactoryConfiguration pfConfig("artsie", p1controlScheme);
-	artsieFactory = new PlayerFactory(pfParams, pfConfig);
+	PlayerFactoryCreationParams pfParams(HashedString("player"), this, animationEngine);
+	playerFactory = new PlayerFactory(pfParams);
 
 	aiFactory = new AIFactory(HashedString("ai"), this, animationEngine);
 }
@@ -37,16 +29,37 @@ CombatScene::CombatScene()
 CombatScene::~CombatScene()
 {
 	delete aiFactory;
-	delete artsieFactory;
+	delete playerFactory;
 }
 
 void CombatScene::onEnter()
 {
-	// create one player for testing
-	auto player = artsieFactory->create();
-	auto sandbag = aiFactory->create();
+	ControlScheme p1controlScheme(
+			irr::KEY_UP,
+			irr::KEY_DOWN,
+			irr::KEY_LEFT,
+			irr::KEY_RIGHT,
+			irr::KEY_DELETE);
 
-	objectEngine.addObject(player);
+	ControlScheme p2controlScheme(
+			irr::KEY_KEY_W,
+			irr::KEY_KEY_S,
+			irr::KEY_KEY_A,
+			irr::KEY_KEY_D,
+			irr::KEY_KEY_G);
+
+	// create players for testing
+	PlayerFactoryConfiguration p1config("artsie", p1controlScheme);
+	playerFactory->setConfiguration(p1config);
+	auto artsie = playerFactory->create();
+	objectEngine.addObject(artsie);
+
+	PlayerFactoryConfiguration p2config("player", p2controlScheme);
+	playerFactory->setConfiguration(p2config);
+	auto engie = playerFactory->create();
+	objectEngine.addObject(engie);
+
+	auto sandbag = aiFactory->create();
 	objectEngine.addObject(sandbag);
 
 	// create FPS display thingy

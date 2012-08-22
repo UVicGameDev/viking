@@ -91,6 +91,7 @@ std::shared_ptr<AnimatedSpriteData> AnimationEngine::load(const std::string& fil
 	}
 
 	irr::video::ITexture* tex = GameApp::getSingleton().getVideoDriver()->getTexture(textureFileName.c_str());
+	assert(tex);
 	auto spr = std::make_shared<AnimatedSpriteData>(tex);
 	spr->setWidth(tileSetWidth);
 	spr->setHeight(tileSetHeight);

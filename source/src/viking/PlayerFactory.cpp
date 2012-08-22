@@ -14,11 +14,11 @@
 namespace vik
 {
 
-PlayerFactory::PlayerFactory(const PlayerFactoryCreationParams& params, const PlayerFactoryConfiguration& defaultConfiguration):
+PlayerFactory::PlayerFactory(const PlayerFactoryCreationParams& params):
 GameObjectFactory(params.factoryID),
 playerEventSource(params.playerEventSource),
 animationEngine(params.animationEngine),
-configuration(defaultConfiguration)
+configuration("",ControlScheme())
 {
 }
 

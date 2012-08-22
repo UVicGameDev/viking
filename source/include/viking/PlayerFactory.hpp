@@ -15,7 +15,7 @@ class AnimationEngine;
 class PlayerFactory : public GameObjectFactory
 {
 public:
-	PlayerFactory(const PlayerFactoryCreationParams& params, const PlayerFactoryConfiguration& defaultConfiguration);
+	PlayerFactory(const PlayerFactoryCreationParams& params);
 
 	void setConfiguration(const PlayerFactoryConfiguration& config);
 	const PlayerFactoryConfiguration& getConfiguration() const;

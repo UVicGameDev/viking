@@ -26,7 +26,7 @@ private:
 	void updateCamera();
 	GameObjectEngine objectEngine;
 	AnimationEngine animationEngine;
-	PlayerFactory* artsieFactory;
+	PlayerFactory* playerFactory;
 	AIFactory* aiFactory;
 };
 

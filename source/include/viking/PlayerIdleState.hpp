@@ -12,10 +12,10 @@ class PlayerIdleState : public ActorState
 {
 public:
 	PlayerIdleState(const std::weak_ptr<Actor>& context, ControlScheme& scheme);
-	void onEnter();
-	void onUpdate(GameTime& time);
-	void onLeave();
-	bool onEvent(const Event& e);
+	void onEnter() override;
+	void onUpdate(GameTime& time) override;
+	void onLeave() override;
+	bool onEvent(const Event& e) override;
 private:
 	ControlScheme& scheme;
 };

@@ -43,9 +43,11 @@ CombatScene::~CombatScene()
 void CombatScene::onEnter()
 {
 	// create one player for testing
-	std::shared_ptr<GameObject> player = artsieFactory->create();
+	auto player = artsieFactory->create();
+	auto sandbag = aiFactory->create();
 
 	objectEngine.addObject(player);
+	objectEngine.addObject(sandbag);
 
 	// create FPS display thingy
 	auto fpsDisplay = std::make_shared<FPSDisplay>();

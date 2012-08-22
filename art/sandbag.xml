@@ -1,0 +1,4 @@
+<animatedSprite>
+	<tileSet texture="../../../art/sandbag.png" width="1" height="1"/>
+	<animSequence name="idle" start="0" length="1" fps="12"/>
+</animatedSprite>

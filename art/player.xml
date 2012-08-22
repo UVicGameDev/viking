@@ -1,4 +1,6 @@
 <animatedSprite>
-	<animSequence name="mobile" start="0" length="6" fps="12"/>
 	<tileSet texture="../../../art/player.png" width="2" height="3"/>
+	<animSequence name="idle" start="0" length="2" fps="12"/>
+	<animSequence name="mobile" start="2" length="2" fps="12"/>
+	<animSequence name="attacking" start="4" length="2" fps="12"/>
 </animatedSprite>

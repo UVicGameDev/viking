@@ -17,7 +17,7 @@ void PlayerAttackingState::onEnter()
 	getContext().lock()->getParticle().setVelocity(irr::core::vector3df());
 	auto spr = getContext().lock()->getSprite();
 	spr->setLooping(false);
-	spr->play(HashedString("attack"));
+	spr->play(HashedString("attacking"));
 }
 
 void PlayerAttackingState::onUpdate(GameTime& time)
@@ -26,10 +26,8 @@ void PlayerAttackingState::onUpdate(GameTime& time)
 	if (!spr->getPlaying())
 	{
 		const std::shared_ptr<KeyMap>& k = GameApp::getSingleton().getKeyMap();
-		if (k->isKeyDown(scheme.upKey) ||
-				k->isKeyDown(scheme.downKey) ||
-				k->isKeyDown(scheme.leftKey) ||
-				k->isKeyDown(scheme.rightKey))
+		if ((k->isKeyDown(scheme.upKey) != k->isKeyDown(scheme.downKey) ||
+			(k->isKeyDown(scheme.leftKey) != k->isKeyDown(scheme.rightKey))))
 		{
 			getContext().lock()->getStateMachine()->switchToState(HashedString("mobile"));
 		}

@@ -24,7 +24,8 @@ void PlayerMobileState::onUpdate(GameTime& time)
 {
 	// GameApp::getSingleton().getLogger()->log("void PlayerMobileState::onUpdate()");
 
-	const irr::core::vector3df movementModifier(100.0f, 100.0f, 100.0f);
+	irr::core::vector3df movementDirection;
+	const float velocityMagnitude = 225.f;
 	const std::shared_ptr<KeyMap>& k = GameApp::getSingleton().getKeyMap();
 	irr::core::vector3df currVel;
 
@@ -32,11 +33,11 @@ void PlayerMobileState::onUpdate(GameTime& time)
 	{
 		if (k->isKeyDown(scheme.upKey))
 		{
-			currVel.Y -= movementModifier.Y;
+			movementDirection.Y -= 1.0f;
 		}
 		if (k->isKeyDown(scheme.downKey))
 		{
-			currVel.Y += movementModifier.Y;
+			movementDirection.Y += 1.0f;
 		}
 	}
 
@@ -44,24 +45,26 @@ void PlayerMobileState::onUpdate(GameTime& time)
 	{
 		if (k->isKeyDown(scheme.leftKey))
 		{
-			currVel.X -= movementModifier.X;
+			movementDirection.X -= 1.0f;
 			getContext().lock()->getSprite()->setFlipHorizontal(true);
 		}
 		if (k->isKeyDown(scheme.rightKey))
 		{
-			currVel.X += movementModifier.X;
+			movementDirection.X += 1.0f;
 			getContext().lock()->getSprite()->setFlipHorizontal(false);
 		}
 	}
 
 	// if velocity is 0, set flag that movement is done.
-	if (currVel == irr::core::vector3df())
+	if (movementDirection == irr::core::vector3df())
 	{
 		getContext().lock()->getStateMachine()->switchToState(HashedString("idle"));
 	}
 	else
 	{
-		getContext().lock()->getParticle().setVelocity(currVel);
+		movementDirection.normalize();
+		movementDirection *= velocityMagnitude;
+		getContext().lock()->getParticle().setVelocity(movementDirection);
 	}
 }
 

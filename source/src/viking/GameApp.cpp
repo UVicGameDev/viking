@@ -78,7 +78,7 @@ bool GameApp::OnEvent(const irr::SEvent& event)
 	}
 
 	// distribute event to all listeners
-	return rootEventSource.onEvent(IrrlichtEvent(event));
+	return rootEventSource->onEvent(IrrlichtEvent(rootEventSource, event));
 }
 
 bool GameApp::onInit()
@@ -108,6 +108,7 @@ bool GameApp::onInit()
 	// otherwise, will crash while trying to access
 	// the device's timer while creating event time stamps.
 	device->setEventReceiver(this);
+	rootEventSource = std::make_shared<EventSource>();
 
 	device->setWindowCaption(L"Viking");
 
@@ -125,11 +126,11 @@ bool GameApp::onInit()
 	buildText->setOverrideColor(video::SColor(255,255,255,255));
 
 	// hook up keyMap to its source of keyboard press events
-	rootEventSource.addListener(keyMap);
+	rootEventSource->addListener(keyMap);
 
 	// create the game state machine and hook it up for events
 	gameStateMachine = std::make_shared<GameStateMachine>();
-	rootEventSource.addListener(gameStateMachine);
+	rootEventSource->addListener(gameStateMachine);
 
 	return true;
 }

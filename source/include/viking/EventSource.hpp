@@ -10,7 +10,7 @@ namespace vik
 
 class Event;
 
-// Forwards events to a list of EventListeners
+// Forwards events received to a list of EventListeners
 class EventSource : public EventListener
 {
 public:

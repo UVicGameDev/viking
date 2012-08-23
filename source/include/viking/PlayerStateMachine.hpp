@@ -13,23 +13,10 @@ namespace vik
 class PlayerStateMachine : public ActorStateMachine
 {
 public:
-	PlayerStateMachine(const std::weak_ptr<Actor>& context, const ControlScheme& controlScheme);
-
-	void onStart() override;
-	void onStop() override;
-	void onUpdate(GameTime& time) override;
-
-	void switchToState(const HashedString& stateName) override;
-
-	bool onEvent(const Event& e) override;
+	PlayerStateMachine(const std::weak_ptr<Actor>& context, const HashedString& initialState, const ControlScheme& controlScheme);
+	void initStates();
 private:
 	ControlScheme controlScheme;
-
-	PlayerIdleState idleState;
-	PlayerMobileState mobileState;
-	PlayerAttackingState attackingState;
-
-	ActorState* currentState;
 };
 
 } // end namespace vik

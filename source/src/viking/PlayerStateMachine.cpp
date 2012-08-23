@@ -4,66 +4,20 @@
 namespace vik
 {
 
-PlayerStateMachine::PlayerStateMachine(const std::weak_ptr<Actor>& context, const ControlScheme& controlScheme):
-ActorStateMachine(context),
-controlScheme(controlScheme),
-idleState(context, this->controlScheme),
-mobileState(context, this->controlScheme),
-attackingState(context, this->controlScheme),
-currentState(0)
+PlayerStateMachine::PlayerStateMachine(const std::weak_ptr<Actor>& context, const HashedString& initialState, const ControlScheme& controlScheme):
+ActorStateMachine(context, initialState),
+controlScheme(controlScheme)
 {
 }
 
-void PlayerStateMachine::onStart()
+void PlayerStateMachine::initStates()
 {
-	assert(!currentState);
-
-	currentState = &idleState;
-	currentState->onEnter();
-}
-
-void PlayerStateMachine::onStop()
-{
-	assert(currentState);
-
-	currentState->onLeave();
-	currentState = 0;
-}
-
-void PlayerStateMachine::onUpdate(GameTime& time)
-{
-	currentState->onUpdate(time);
-}
-
-void PlayerStateMachine::switchToState(const HashedString& stateName)
-{
-	assert(currentState);
-
-	currentState->onLeave();
-
-	if (stateName == HashedString("idle"))
-	{
-		currentState = &idleState;
-	}
-	else if (stateName == HashedString("mobile"))
-	{
-		currentState = &mobileState;
-	}
-	else if (stateName == HashedString("attacking"))
-	{
-		currentState = &attackingState;
-	}
-	else
-	{
-		assert(false);
-	}
-
-	currentState->onEnter();
-}
-
-bool PlayerStateMachine::onEvent(const Event& e)
-{
-	return currentState ? currentState->onEvent(e) : false;
+	addState(HashedString("idle"),
+			std::make_shared<PlayerIdleState>(getContext(), controlScheme));
+	addState(HashedString("mobile"),
+			std::make_shared<PlayerMobileState>(getContext(), controlScheme));
+	addState(HashedString("attacking"),
+			std::make_shared<PlayerAttackingState>(getContext(), controlScheme));
 }
 
 } // end namespace vik

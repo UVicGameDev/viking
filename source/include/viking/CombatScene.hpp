@@ -4,6 +4,7 @@
 #include "viking/Scene.hpp"
 #include "viking/GameObjectEngine.hpp"
 #include "viking/AnimationEngine.hpp"
+#include <memory>
 
 namespace vik
 {
@@ -11,7 +12,7 @@ namespace vik
 class PlayerFactory;
 class AIFactory;
 
-class CombatScene : public Scene
+class CombatScene : public Scene, public std::enable_shared_from_this<CombatScene>
 {
 public:
 	CombatScene();
@@ -28,6 +29,7 @@ private:
 	AnimationEngine animationEngine;
 	PlayerFactory* playerFactory;
 	AIFactory* aiFactory;
+	irr::u32 timeOnLastEventReceived;
 };
 
 } // end namespace vik

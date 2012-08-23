@@ -6,7 +6,7 @@
 #include "viking/Particle.hpp"
 #include "viking/HashedString.hpp"
 #include "viking/Event.hpp"
-#include "viking/EventListener.hpp"
+#include "viking/EventSource.hpp"
 #include <memory>
 
 namespace vik
@@ -14,18 +14,15 @@ namespace vik
 
 class ActorStateMachine;
 
-class Actor : public GameObject, public EventListener
+class Actor : public GameObject, public EventSource, public std::enable_shared_from_this<Actor>
 {
 public:
-	// takes single strong ownership of the stateMachine
 	Actor();
-	~Actor();
 
-	// takes unique, strong ownership of stateMachine
 	// Actors do not need a state machine to operate
 	// However, setting up a state machine is recommended...
-	void setStateMachine(ActorStateMachine* stateMachine);
-	ActorStateMachine* getStateMachine();
+	void setStateMachine(const std::shared_ptr<ActorStateMachine>& stateMachine);
+	std::shared_ptr<ActorStateMachine>& getStateMachine();
 
 	// starts all subsystems
 	void start();
@@ -52,7 +49,7 @@ public:
 	void serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options=0) const override;
 	void deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options=0) override;
 private:
-	ActorStateMachine* stateMachine;
+	std::shared_ptr<ActorStateMachine> stateMachine;
 	bool running;
 
 	Particle particle;

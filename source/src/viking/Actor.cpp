@@ -14,22 +14,13 @@ running(false)
 {
 }
 
-Actor::~Actor()
-{
-	if (running && stateMachine)
-	{
-		stateMachine->stop();
-	}
-
-	delete stateMachine;
-}
-
-void Actor::setStateMachine(ActorStateMachine* stateMachine)
+void Actor::setStateMachine(const std::shared_ptr<ActorStateMachine>& stateMachine)
 {
 	this->stateMachine = stateMachine;
+	stateMachine->addListener(shared_from_this());
 }
 
-ActorStateMachine* Actor::getStateMachine()
+std::shared_ptr<ActorStateMachine>& Actor::getStateMachine()
 {
 	return stateMachine;
 }

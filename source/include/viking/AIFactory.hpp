@@ -1,7 +1,7 @@
 #ifndef VIK_AIFACTORY_HPP_INCLUDED
 #define VIK_AIFACTORY_HPP_INCLUDED
 
-#include "viking/GameObjectFactory.hpp"
+#include "viking/ActorFactory.hpp"
 
 namespace vik
 {
@@ -9,14 +9,14 @@ namespace vik
 class EventSource;
 class AnimationEngine;
 
-class AIFactory : public GameObjectFactory
+class AIFactory : public ActorFactory
 {
 public:
 	AIFactory(HashedString factoryID, EventSource* aiEventSource, AnimationEngine& animationEngine);
 
 	void setConfiguration(const std::string& aiName);
 
-	std::shared_ptr<GameObject> create() override;
+	std::shared_ptr<Actor> create() override;
 private:
 	EventSource* aiEventSource;
 	AnimationEngine& animationEngine;

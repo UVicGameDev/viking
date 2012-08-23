@@ -15,7 +15,7 @@ namespace vik
 {
 
 PlayerFactory::PlayerFactory(const PlayerFactoryCreationParams& params):
-GameObjectFactory(params.factoryID),
+ActorFactory(params.factoryID),
 playerEventSource(params.playerEventSource),
 animationEngine(params.animationEngine),
 configuration("",ControlScheme())
@@ -32,7 +32,7 @@ const PlayerFactoryConfiguration& PlayerFactory::getConfiguration() const
 	return configuration;
 }
 
-std::shared_ptr<GameObject> PlayerFactory::create()
+std::shared_ptr<Actor> PlayerFactory::create()
 {
 	irr::scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
 
@@ -48,9 +48,11 @@ std::shared_ptr<GameObject> PlayerFactory::create()
 	spr->setAnchor(ESA_FEET);
 	animationEngine.addSprite(spr);
 
-	std::shared_ptr<Actor> player = std::make_shared<Actor>();
+	auto player = std::make_shared<Actor>();
 
-	PlayerStateMachine* stateMachine = new PlayerStateMachine(player, configuration.controlScheme);
+	// std::shared_ptr<PlayerStateMachine> stateMachine = std::shared_ptr<PlayerStateMachine>(new PlayerStateMachine(player, HashedString("idle"), configuration.controlScheme));
+	auto stateMachine = std::make_shared<PlayerStateMachine>(player, HashedString("idle"), configuration.controlScheme);
+	stateMachine->initStates();
 	player->setStateMachine(stateMachine);
 	player->setSprite(spr);
 	playerEventSource->addListener(player);

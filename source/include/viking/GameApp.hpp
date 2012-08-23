@@ -72,7 +72,7 @@ private:
 	std::shared_ptr<GameStateMachine> gameStateMachine;
 
 	// distributes events to event listeners at the highest level
-	EventSource rootEventSource;
+	std::shared_ptr<EventSource> rootEventSource;
 
 	// remembers the current state of all keys
 	std::shared_ptr<KeyMap> keyMap;

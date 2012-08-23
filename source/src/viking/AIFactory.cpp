@@ -9,13 +9,13 @@ namespace vik
 {
 
 AIFactory::AIFactory(HashedString factoryID, EventSource* aiEventSource, AnimationEngine& animationEngine):
-GameObjectFactory(factoryID),
+ActorFactory(factoryID),
 aiEventSource(aiEventSource),
 animationEngine(animationEngine)
 {
 }
 
-std::shared_ptr<GameObject> AIFactory::create()
+std::shared_ptr<Actor> AIFactory::create()
 {
 	irr::scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
 
@@ -31,7 +31,8 @@ std::shared_ptr<GameObject> AIFactory::create()
 
 	std::shared_ptr<Actor> ai = std::make_shared<Actor>();
 
-	AIStateMachine* stateMachine = new AIStateMachine(ai);
+	auto stateMachine = std::make_shared<AIStateMachine>(ai, HashedString("idle"));
+	stateMachine->initStates();
 	ai->setStateMachine(stateMachine);
 	ai->setSprite(spr);
 	aiEventSource->addListener(ai);

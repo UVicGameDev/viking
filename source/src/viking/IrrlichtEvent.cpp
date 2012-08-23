@@ -3,7 +3,8 @@
 namespace vik
 {
 
-IrrlichtEvent::IrrlichtEvent(const irr::SEvent& e):
+IrrlichtEvent::IrrlichtEvent(const std::shared_ptr<EventSource>& sender, const irr::SEvent& e):
+Event(sender),
 ievent(e)
 {
 }

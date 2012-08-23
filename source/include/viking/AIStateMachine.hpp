@@ -10,19 +10,9 @@ namespace vik
 class AIStateMachine : public ActorStateMachine
 {
 public:
-	AIStateMachine(const std::weak_ptr<Actor>& context);
+	AIStateMachine(const std::weak_ptr<Actor>& context, const HashedString& initialState);
 
-	void onStart() override;
-	void onStop() override;
-	void onUpdate(GameTime& time) override;
-
-	void switchToState(const HashedString& stateName) override;
-
-	bool onEvent(const Event& e) override;
-private:
-	AIIdleState idleState;
-
-	ActorState* currentState;
+	void initStates();
 };
 
 } // end namespace vik

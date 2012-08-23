@@ -11,12 +11,12 @@ namespace vik
 class IrrlichtEvent : public Event
 {
 public:
-	IrrlichtEvent(const irr::SEvent& e);
+	IrrlichtEvent(const std::shared_ptr<EventSource>& sender, const irr::SEvent& e);
 
 	// returns reference to original irrlicht event
 	const irr::SEvent& getEvent() const;
 
-	HashedString getType() const;
+	HashedString getType() const override;
 private:
 	const irr::SEvent& ievent;
 };

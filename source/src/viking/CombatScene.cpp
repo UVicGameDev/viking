@@ -12,13 +12,15 @@
 #include "viking/PlayerFactoryCreationParams.hpp"
 #include <irrlicht/irrlicht.h>
 #include <iostream>
+#include <cassert>
 
 using namespace irr;
 
 namespace vik
 {
 
-CombatScene::CombatScene()
+CombatScene::CombatScene():
+timeOnLastEventReceived(0)
 {
 	PlayerFactoryCreationParams pfParams(HashedString("player"), this, animationEngine);
 	playerFactory = new PlayerFactory(pfParams);
@@ -53,14 +55,17 @@ void CombatScene::onEnter()
 	playerFactory->setConfiguration(p1config);
 	auto artsie = playerFactory->create();
 	objectEngine.addObject(artsie);
+	artsie->addListener(shared_from_this());
 
 	PlayerFactoryConfiguration p2config("player", p2controlScheme);
 	playerFactory->setConfiguration(p2config);
 	auto engie = playerFactory->create();
 	objectEngine.addObject(engie);
+	engie->addListener(shared_from_this());
 
 	auto sandbag = aiFactory->create();
 	objectEngine.addObject(sandbag);
+	sandbag->addListener(shared_from_this());
 
 	// create FPS display thingy
 	auto fpsDisplay = std::make_shared<FPSDisplay>();
@@ -97,24 +102,33 @@ void CombatScene::onRedraw()
 
 bool CombatScene::onEvent(const Event& e)
 {
+	// attempt at protection from circular event messaging
+	// between the combat scene and its entities.
+	irr::u32 timeStamp = e.getTimeStamp();
+	if (timeStamp == timeOnLastEventReceived)
+	{
+		assert(false);
+	}
+	timeOnLastEventReceived = timeStamp;
+
 	return distributeEvent(e);
 }
 
 void CombatScene::updateCamera()
 {
-	core::vector3df averagePosition;
-
 	GameObjectEngineTypeQuery actorQuery(&objectEngine);
 	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getGameObjectsOfType<Actor>();
+	core::aabbox3df actorViewBounds(core::vector3df(0,0,0));
 
 	for (auto it = actorList.begin(); it != actorList.end(); ++it)
 	{
-		averagePosition += (*it)->getParticle().getPosition();
+		core::vector3df newpt = (*it)->getParticle().getPosition();
+		actorViewBounds.addInternalPoint(newpt);
 	}
 
 	if (actorList.size() != 0)
 	{
-		averagePosition /= actorList.size();
+		core::vector3df averagePosition = actorViewBounds.getCenter();
 		scene::ICameraSceneNode* cam = GameApp::getSingleton().getSceneManager()->getActiveCamera();
 		const core::vector3df& oldpos(cam->getPosition());
 		cam->setPosition(core::vector3df(averagePosition.X, oldpos.Y, oldpos.Z));

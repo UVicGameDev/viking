@@ -11,7 +11,7 @@ namespace vik
 class Event;
 
 // Forwards events received to a list of EventListeners
-class EventSource : public EventListener
+class EventSource : public EventListener, public std::enable_shared_from_this<EventSource>
 {
 public:
 	// Distributes Event to all listeners using distributeEvent() function.

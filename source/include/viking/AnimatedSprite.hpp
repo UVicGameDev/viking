@@ -12,12 +12,6 @@
 namespace vik
 {
 
-enum eSpriteAnchor
-{
-	ESA_CENTER, // anchor is center of sprite
-	ESA_FEET, // anchor is bottom of sprite
-};
-
 class AnimatedSprite : public irr::scene::ISceneNode
 {
 public:
@@ -34,8 +28,8 @@ public:
 	void setLooping(bool loop);
 	bool getLooping() const;
 
-	void setAnchor(eSpriteAnchor anchor);
-	eSpriteAnchor getAnchor() const;
+	void setAnchor(const irr::core::vector3df& anchor);
+	const irr::core::vector3df& getAnchor() const;
 
  	const irr::core::dimension2df& getSize() const;
 	void setSize(const irr::core::dimension2df& size);
@@ -52,8 +46,11 @@ public:
 	void OnRegisterSceneNode() override;
 	void render() override;
 	const irr::core::aabbox3df& getBoundingBox() const override;
+	irr::core::matrix4 getRelativeTransformation() const override;
+
 	irr::u32 getMaterialCount() const override;
 	irr::video::SMaterial& getMaterial(irr::u32 i) override;
+
 	void serializeAttributes(irr::io::IAttributes* out, irr::io::SAttributeReadWriteOptions* options=0) const override;
 	void deserializeAttributes(irr::io::IAttributes* in, irr::io::SAttributeReadWriteOptions* options=0) override;
 	irr::scene::ISceneNode* clone(irr::scene::ISceneNode* newParent=0, irr::scene::ISceneManager* newManager=0) override;
@@ -70,7 +67,7 @@ private:
 
 	bool looping;
 
-	eSpriteAnchor anchor;
+	irr::core::vector3df anchor;
 
 	bool flipHorizontal;
 	bool flipVertical;

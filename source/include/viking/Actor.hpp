@@ -14,7 +14,7 @@ namespace vik
 
 class ActorStateMachine;
 
-class Actor : public GameObject, public EventSource, public std::enable_shared_from_this<Actor>
+class Actor : public GameObject, public EventSource
 {
 public:
 	Actor();

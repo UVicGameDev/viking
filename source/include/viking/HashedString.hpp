@@ -34,7 +34,7 @@ public:
 
 	explicit constexpr HashedString(const char *str):
 	hash(hashStringDetail(str))
-#ifdef DEBUG
+#ifdef _DEBUG
 	,reverseHash(str)
 #endif
 	{
@@ -47,7 +47,7 @@ public:
 
 	const char* getReverseHash() const
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		return reverseHash;
 #else
 		return 0;
@@ -86,7 +86,7 @@ public:
 
 private:
 	HashTypeDetail hash;
-#ifdef DEBUG
+#ifdef _DEBUG
 	const char *reverseHash;
 #endif
 };

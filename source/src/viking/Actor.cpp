@@ -1,6 +1,7 @@
 #include "viking/Actor.hpp"
 #include "viking/GameTime.hpp"
 #include "viking/ActorStateMachine.hpp"
+#include "viking/ActorState.hpp"
 #include "viking/GameApp.hpp"
 #include <cassert>
 #include <iostream>
@@ -73,7 +74,32 @@ bool Actor::isRunning() const
 
 bool Actor::onEvent(const Event& e)
 {
-	return stateMachine ? stateMachine->onEvent(e) : false;
+	// check if upstream event
+	bool isUpstream = false;
+	if (stateMachine)
+	{
+		if (e.getSender() == stateMachine)
+		{
+			isUpstream = true;
+		}
+		else
+		{
+			auto currState = stateMachine->getCurrentState();
+			if (currState && e.getSender() == currState)
+			{
+				isUpstream = true;
+			}
+		}
+	}
+
+	if (isUpstream)
+	{
+		return distributeEvent(e);
+	}
+	else
+	{
+		return stateMachine ? stateMachine->onEvent(e) : false;
+	}
 }
 
 Particle& Actor::getParticle()

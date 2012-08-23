@@ -26,7 +26,7 @@ std::shared_ptr<Actor> AIFactory::create()
 	assert(sprData);
 
 	auto spr = std::make_shared<AnimatedSprite>(sprData, smgr->getRootSceneNode(), smgr);
-	spr->setAnchor(ESA_FEET);
+	spr->setAnchor(irr::core::vector3df(spr->getSize().Width/2, 0.f, spr->getSize().Height));
 	animationEngine.addSprite(spr);
 
 	std::shared_ptr<Actor> ai = std::make_shared<Actor>();

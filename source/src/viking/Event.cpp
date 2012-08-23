@@ -16,11 +16,6 @@ irr::u32 Event::getTimeStamp() const
 	return timeStamp;
 }
 
-HashedString Event::getType() const
-{
-	return HashedString("Event");
-}
-
 const std::shared_ptr<EventSource>& Event::getSender() const
 {
 	return sender;

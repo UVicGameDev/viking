@@ -19,7 +19,7 @@ public:
 	// return creation time of event 
 	irr::u32 getTimeStamp() const;
 	// return type name of event as a hashed string
-	virtual HashedString getType() const;
+	virtual HashedString getType() const = 0;
 	const std::shared_ptr<EventSource>& getSender() const;
 private:
 	irr::u32 timeStamp;

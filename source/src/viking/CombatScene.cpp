@@ -10,6 +10,7 @@
 #include "viking/DebugRender.hpp"
 #include "viking/FPSDisplay.hpp"
 #include "viking/PlayerFactoryCreationParams.hpp"
+#include "viking/DamageZoneCreationEvent.hpp"
 #include <irrlicht/irrlicht.h>
 #include <iostream>
 #include <cassert>
@@ -19,8 +20,7 @@ using namespace irr;
 namespace vik
 {
 
-CombatScene::CombatScene():
-timeOnLastEventReceived(0)
+CombatScene::CombatScene()
 {
 	PlayerFactoryCreationParams pfParams(HashedString("player"), this, animationEngine);
 	playerFactory = new PlayerFactory(pfParams);
@@ -98,20 +98,53 @@ void CombatScene::onLeave()
 void CombatScene::onRedraw()
 {
 	drawRGBAxis();
+
+	GameObjectEngineTypeQuery actorQuery(&objectEngine);
+	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getGameObjectsOfType<Actor>();
+
+	video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();
+
+	for (auto it = actorList.begin(); it != actorList.end(); ++it)
+	{
+		driver->draw3DBox((*it)->getSprite()->getTransformedBoundingBox());
+	}
+
+	for (size_t i = 0; i < renderBoxOnceDebugQueue.size(); ++i)
+	{
+		driver->draw3DBox(renderBoxOnceDebugQueue[i], video::SColor(0xFFFF0000));
+	}
+	renderBoxOnceDebugQueue.clear();
 }
 
 bool CombatScene::onEvent(const Event& e)
 {
-	// attempt at protection from circular event messaging
-	// between the combat scene and its entities.
-	irr::u32 timeStamp = e.getTimeStamp();
-	if (timeStamp == timeOnLastEventReceived)
+	if (e.getType() == HashedString("DamageZoneCreationEvent"))
 	{
-		assert(false);
+		handleDamageZoneCreation(static_cast<const DamageZoneCreationEvent&>(e));
+		return true;
 	}
-	timeOnLastEventReceived = timeStamp;
 
 	return distributeEvent(e);
+}
+
+void CombatScene::handleDamageZoneCreation(const DamageZoneCreationEvent& e)
+{
+	renderBoxOnceDebugQueue.push_back(e.getDamageZoneBounds());
+
+	GameObjectEngineTypeQuery actorQuery(&objectEngine);
+	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getGameObjectsOfType<Actor>();
+
+	for (auto it = actorList.begin(); it != actorList.end(); ++it)
+	{
+		const core::aabbox3df& sprbox = (*it)->getSprite()->getTransformedBoundingBox();
+		const core::aabbox3df& dmgbox = e.getDamageZoneBounds();
+		if (sprbox.intersectsWithBox(dmgbox))
+		{
+			std::cout << "Collision!" << std::endl
+			<< "Sprite: " << sprbox << std::endl
+			<< "Damage: " << dmgbox << std::endl;
+		}
+	}
 }
 
 void CombatScene::updateCamera()

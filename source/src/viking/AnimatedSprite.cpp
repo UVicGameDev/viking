@@ -24,9 +24,7 @@ flipHorizontal(false),
 flipVertical(false)
 {
 	core::dimension2du orig = spriteData->getTexture()->getOriginalSize();
-	size.Width = orig.Width / spriteData->getWidth();
-	size.Height = orig.Height / spriteData->getHeight();
-	// std::cout << "W: " << size.Width << " H: " << size.Height << std::endl;
+	setSize(core::dimension2df(orig.Width / spriteData->getWidth(), size.Height = orig.Height / spriteData->getHeight()));
 
 	// initialize vertices
 	material.Lighting = false;
@@ -139,11 +137,6 @@ void AnimatedSprite::render()
 
 	core::vector3df pos = getAbsolutePosition();
 	
-	if (anchor == ESA_FEET)
-	{
-		pos += core::vector3df(0.0f, 0.0f, size.Height/2);
-	}
-
 	core::vector3df campos = camera->getAbsolutePosition();
 	core::vector3df target = camera->getTarget();
 	core::vector3df up = camera->getUpVector();
@@ -228,6 +221,21 @@ const irr::core::aabbox3df& AnimatedSprite::getBoundingBox() const
 	return boundingBox;
 }
 
+core::matrix4 AnimatedSprite::getRelativeTransformation() const
+{
+	core::matrix4 mat;
+	mat.setRotationDegrees(RelativeRotation);
+	mat.setTranslation(RelativeTranslation + (anchor/2));
+	if (RelativeScale != core::vector3df(1.f,1.f,1.f))
+	{
+		core::matrix4 smat;
+		smat.setScale(RelativeScale);
+		mat *= smat;
+	}
+
+	return mat;
+}
+
 irr::u32 AnimatedSprite::getMaterialCount() const
 {
 	return 1;
@@ -295,17 +303,21 @@ void AnimatedSprite::setSize(const irr::core::dimension2df& size)
 		this->size.Height = 1.0f;
 
 	// copy and pasted this nonsense from CBillboardSceneNode
-	const f32 avg = (this->size.Width + this->size.Height)/6;
+	// const f32 avg = (this->size.Width + this->size.Height)/6;
+	boundingBox.MinEdge.set(-this->size.Width/2, -2.5f, -this->size.Height/2);
+	boundingBox.MaxEdge.set(this->size.Width/2, 2.5f, this->size.Height/2);
+	/*
 	boundingBox.MinEdge.set(-avg,-avg,-avg);
 	boundingBox.MaxEdge.set(avg,avg,avg);
+	*/
 }
 
-void AnimatedSprite::setAnchor(eSpriteAnchor anchor)
+void AnimatedSprite::setAnchor(const irr::core::vector3df& anchor)
 {
 	this->anchor = anchor;
 }
 
-eSpriteAnchor AnimatedSprite::getAnchor() const
+const irr::core::vector3df& AnimatedSprite::getAnchor() const
 {
 	return anchor;
 }

@@ -1,5 +1,4 @@
 #include "viking/DamageZoneCreationEvent.hpp"
-#include <irrlicht/aabbox3d.h>
 
 namespace vik
 {
@@ -24,5 +23,9 @@ irr::u32 DamageZoneCreationEvent::getDamageToInflict() const
 	return damageToInflict;
 }
 
+HashedString DamageZoneCreationEvent::getType() const
+{
+	return HashedString("DamageZoneCreationEvent");
+}
 
 } // end namespace vik

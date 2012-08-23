@@ -14,7 +14,7 @@ namespace vik
 class Actor;
 class ActorState;
 
-class ActorStateMachine : public EventSource, public Serializable, public std::enable_shared_from_this<ActorStateMachine>
+class ActorStateMachine : public EventSource, public Serializable
 {
 public:
 	ActorStateMachine(const std::weak_ptr<Actor>& context, const HashedString& initialState);

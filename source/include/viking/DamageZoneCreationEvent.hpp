@@ -16,6 +16,7 @@ public:
 
 	const irr::core::aabbox3df& getDamageZoneBounds() const;
 	irr::u32 getDamageToInflict() const;
+	HashedString getType() const override;
 private:
 	irr::core::aabbox3df damageZoneBounds;
 	irr::u32 damageToInflict;

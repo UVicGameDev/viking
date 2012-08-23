@@ -5,14 +5,16 @@
 #include "viking/GameObjectEngine.hpp"
 #include "viking/AnimationEngine.hpp"
 #include <memory>
+#include <vector>
 
 namespace vik
 {
 
 class PlayerFactory;
 class AIFactory;
+class DamageZoneCreationEvent;
 
-class CombatScene : public Scene, public std::enable_shared_from_this<CombatScene>
+class CombatScene : public Scene
 {
 public:
 	CombatScene();
@@ -24,12 +26,14 @@ public:
 	bool onEvent(const Event& e);
 	void onRedraw();
 private:
+	void handleDamageZoneCreation(const DamageZoneCreationEvent& e);
 	void updateCamera();
 	GameObjectEngine objectEngine;
 	AnimationEngine animationEngine;
 	PlayerFactory* playerFactory;
 	AIFactory* aiFactory;
-	irr::u32 timeOnLastEventReceived;
+
+	std::vector<irr::core::aabbox3df> renderBoxOnceDebugQueue;
 };
 
 } // end namespace vik

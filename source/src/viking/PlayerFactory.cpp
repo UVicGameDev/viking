@@ -18,7 +18,7 @@ PlayerFactory::PlayerFactory(const PlayerFactoryCreationParams& params):
 ActorFactory(params.factoryID),
 playerEventSource(params.playerEventSource),
 animationEngine(params.animationEngine),
-configuration("",ControlScheme())
+configuration("",ControlScheme(),0)
 {
 }
 
@@ -50,9 +50,11 @@ std::shared_ptr<Actor> PlayerFactory::create()
 
 	auto player = std::make_shared<Actor>();
 
-	// std::shared_ptr<PlayerStateMachine> stateMachine = std::shared_ptr<PlayerStateMachine>(new PlayerStateMachine(player, HashedString("idle"), configuration.controlScheme));
+	// initialize state machine
 	auto stateMachine = std::make_shared<PlayerStateMachine>(player, HashedString("idle"), configuration.controlScheme);
+	stateMachine->setTeamMembership(configuration.membershipSupplier->requestMembership());
 	stateMachine->initStates();
+
 	player->setStateMachine(stateMachine);
 	player->setSprite(spr);
 	playerEventSource->addListener(player);

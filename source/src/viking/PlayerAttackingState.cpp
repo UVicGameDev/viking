@@ -27,8 +27,8 @@ void PlayerAttackingState::onEnter()
 	distributeEvent(
 			DamageZoneCreationEvent(
 				damageBox,
-				100));
-
+				100,
+				nullptr)); 
 }
 
 void PlayerAttackingState::onUpdate(GameTime& time)

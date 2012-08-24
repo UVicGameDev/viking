@@ -26,10 +26,19 @@ CombatScene::CombatScene()
 	playerFactory = new PlayerFactory(pfParams);
 
 	aiFactory = new AIFactory(HashedString("ai"), this, animationEngine);
+
+	TeamProperties playerTeamProperties(1, "players");
+	playerTeam = new Team(playerTeamProperties);
+
+	TeamProperties enemyTeamProperties(2, "enemies");
+	enemyTeam = new Team(enemyTeamProperties);
 }
 
 CombatScene::~CombatScene()
 {
+	delete enemyTeam;
+	delete playerTeam;
+
 	delete aiFactory;
 	delete playerFactory;
 }
@@ -51,18 +60,19 @@ void CombatScene::onEnter()
 			irr::KEY_KEY_G);
 
 	// create players for testing
-	PlayerFactoryConfiguration p1config("artsie", p1controlScheme);
+	PlayerFactoryConfiguration p1config("artsie", p1controlScheme, playerTeam);
 	playerFactory->setConfiguration(p1config);
 	auto artsie = playerFactory->create();
 	objectEngine.addObject(artsie);
 	artsie->addListener(shared_from_this());
 
-	PlayerFactoryConfiguration p2config("player", p2controlScheme);
+	PlayerFactoryConfiguration p2config("player", p2controlScheme, playerTeam);
 	playerFactory->setConfiguration(p2config);
 	auto engie = playerFactory->create();
 	objectEngine.addObject(engie);
 	engie->addListener(shared_from_this());
 
+	aiFactory->setConfiguration("sandbag", enemyTeam);
 	auto sandbag = aiFactory->create();
 	objectEngine.addObject(sandbag);
 	sandbag->addListener(shared_from_this());
@@ -123,14 +133,20 @@ bool CombatScene::onEvent(const Event& e)
 		handleDamageZoneCreation(static_cast<const DamageZoneCreationEvent&>(e));
 		return true;
 	}
-
-	return distributeEvent(e);
+	else
+	{
+		return distributeEvent(e);
+	}
 }
 
 void CombatScene::handleDamageZoneCreation(const DamageZoneCreationEvent& e)
 {
 	renderBoxOnceDebugQueue.push_back(e.getDamageZoneBounds());
 
+	// send event back downstream so everybody can react to the damage zone
+	distributeEvent(e);
+
+	/*
 	GameObjectEngineTypeQuery actorQuery(&objectEngine);
 	std::vector<std::shared_ptr<Actor>> actorList = actorQuery.getGameObjectsOfType<Actor>();
 
@@ -145,6 +161,7 @@ void CombatScene::handleDamageZoneCreation(const DamageZoneCreationEvent& e)
 			<< "Damage: " << dmgbox << std::endl;
 		}
 	}
+	*/
 }
 
 void CombatScene::updateCamera()

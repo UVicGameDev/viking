@@ -13,6 +13,7 @@ namespace vik
 class PlayerFactory;
 class AIFactory;
 class DamageZoneCreationEvent;
+class Team;
 
 class CombatScene : public Scene
 {
@@ -32,6 +33,9 @@ private:
 	AnimationEngine animationEngine;
 	PlayerFactory* playerFactory;
 	AIFactory* aiFactory;
+
+	Team* playerTeam;
+	Team* enemyTeam;
 
 	std::vector<irr::core::aabbox3df> renderBoxOnceDebugQueue;
 };

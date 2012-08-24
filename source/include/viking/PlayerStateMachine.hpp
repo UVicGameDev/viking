@@ -10,13 +10,22 @@
 namespace vik
 {
 
+class TeamMembership;
+
 class PlayerStateMachine : public ActorStateMachine
 {
 public:
 	PlayerStateMachine(const std::weak_ptr<Actor>& context, const HashedString& initialState, const ControlScheme& controlScheme);
 	void initStates();
+
+	void setTeamMembership(const TeamMembership* teamMembership);
+
 private:
+	bool onPreUpstreamEvent(const Event& e) override;
+	bool onPreDownstreamEvent(const Event& e) override;
+
 	ControlScheme controlScheme;
+	const TeamMembership* teamMembership;
 };
 
 } // end namespace vik

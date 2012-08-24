@@ -3,6 +3,7 @@
 #include "viking/AnimationEngine.hpp"
 #include "viking/AIStateMachine.hpp"
 #include "viking/GameApp.hpp"
+#include "viking/Team.hpp"
 #include <cassert>
 
 namespace vik
@@ -15,11 +16,19 @@ animationEngine(animationEngine)
 {
 }
 
+void AIFactory::setConfiguration(const std::string& aiName, Team* membershipSupplier)
+{
+	this->aiName = aiName;
+	this->membershipSupplier = membershipSupplier;
+}
+
 std::shared_ptr<Actor> AIFactory::create()
 {
 	irr::scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
 
-	std::string animDataPath = "../../../art/sandbag.xml";
+	std::string animDataPath = "../../../art/"
+	+ aiName
+	+ ".xml";
 
 	auto sprData = animationEngine.load(animDataPath.c_str());
 
@@ -31,8 +40,11 @@ std::shared_ptr<Actor> AIFactory::create()
 
 	std::shared_ptr<Actor> ai = std::make_shared<Actor>();
 
+	// initialize state machine
 	auto stateMachine = std::make_shared<AIStateMachine>(ai, HashedString("idle"));
+	stateMachine->setTeamMembership(membershipSupplier->requestMembership());
 	stateMachine->initStates();
+
 	ai->setStateMachine(stateMachine);
 	ai->setSprite(spr);
 	aiEventSource->addListener(ai);

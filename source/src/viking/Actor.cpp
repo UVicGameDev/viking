@@ -76,20 +76,9 @@ bool Actor::onEvent(const Event& e)
 {
 	// check if upstream event
 	bool isUpstream = false;
-	if (stateMachine)
+	if (stateMachine && e.getSender() == stateMachine)
 	{
-		if (e.getSender() == stateMachine)
-		{
-			isUpstream = true;
-		}
-		else
-		{
-			auto currState = stateMachine->getCurrentState();
-			if (currState && e.getSender() == currState)
-			{
-				isUpstream = true;
-			}
-		}
+		isUpstream = true;
 	}
 
 	if (isUpstream)

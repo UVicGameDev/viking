@@ -5,9 +5,8 @@
 namespace vik
 {
 
-Event::Event(const std::shared_ptr<EventSource>& sender):
-timeStamp(GameApp::getSingleton().getTimer()->getRealTime()),
-sender(sender)
+Event::Event():
+timeStamp(GameApp::getSingleton().getTimer()->getRealTime())
 {
 }
 
@@ -19,6 +18,11 @@ irr::u32 Event::getTimeStamp() const
 const std::shared_ptr<EventSource>& Event::getSender() const
 {
 	return sender;
+}
+
+void Event::setSender(const std::shared_ptr<EventSource>& sender) const
+{
+	this->sender = sender;
 }
 
 } // end namespace vik

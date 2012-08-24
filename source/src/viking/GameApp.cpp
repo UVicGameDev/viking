@@ -78,7 +78,7 @@ bool GameApp::OnEvent(const irr::SEvent& event)
 	}
 
 	// distribute event to all listeners
-	return rootEventSource->onEvent(IrrlichtEvent(rootEventSource, event));
+	return rootEventSource->onEvent(IrrlichtEvent(event));
 }
 
 bool GameApp::onInit()

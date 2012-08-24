@@ -26,7 +26,6 @@ void PlayerAttackingState::onEnter()
 	damageBox.MaxEdge.Y += 10 * (damageBox.MinEdge.Y < damageBox.MaxEdge.Y ? 1 : -1);
 	distributeEvent(
 			DamageZoneCreationEvent(
-				shared_from_this(),
 				damageBox,
 				100));
 

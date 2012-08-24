@@ -4,10 +4,8 @@ namespace vik
 {
 
 DamageZoneCreationEvent::DamageZoneCreationEvent(
-		const std::shared_ptr<EventSource>& sender,
 		const irr::core::aabbox3df& damageZoneBounds,
 		irr::u32 damageToInflict):
-Event(sender),
 damageZoneBounds(damageZoneBounds),
 damageToInflict(damageToInflict)
 {

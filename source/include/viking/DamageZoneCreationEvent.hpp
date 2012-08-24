@@ -10,8 +10,7 @@ namespace vik
 class DamageZoneCreationEvent : public Event
 {
 public:
-	DamageZoneCreationEvent(const std::shared_ptr<EventSource>& sender,
-			const irr::core::aabbox3df& damageZoneBounds,
+	DamageZoneCreationEvent(const irr::core::aabbox3df& damageZoneBounds,
 			irr::u32 damageToInflict);
 
 	const irr::core::aabbox3df& getDamageZoneBounds() const;

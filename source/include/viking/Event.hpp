@@ -15,15 +15,18 @@ class EventSource;
 class Event
 {
 public:
-	Event(const std::shared_ptr<EventSource>& sender);
+	friend class EventSource;
+
+	Event();
 	// return creation time of event 
 	irr::u32 getTimeStamp() const;
 	// return type name of event as a hashed string
 	virtual HashedString getType() const = 0;
 	const std::shared_ptr<EventSource>& getSender() const;
 private:
+	void setSender(const std::shared_ptr<EventSource>& sender) const;
 	irr::u32 timeStamp;
-	const std::shared_ptr<EventSource> sender;
+	mutable std::shared_ptr<EventSource> sender;
 };
 
 } // end namespace vik

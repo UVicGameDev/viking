@@ -22,6 +22,7 @@ public:
 	irr::u32 getTimeStamp() const;
 	// return type name of event as a hashed string
 	virtual HashedString getType() const = 0;
+	// returns reference to last EventSource that called distributeEvent with this event
 	const std::shared_ptr<EventSource>& getSender() const;
 private:
 	void setSender(const std::shared_ptr<EventSource>& sender) const;

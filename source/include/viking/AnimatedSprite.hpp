@@ -37,10 +37,14 @@ public:
 	// flip texture
 	void setFlipHorizontal(bool flipped);
 	bool getFlipHorizontal() const;
+	// returns new state
+	bool toggleFlipHorizontal();
 
 	// flip texture
 	void setFlipVertical(bool flipped);
 	bool getFlipVertical() const;
+	// returns new state
+	bool toggleFlipVertical();
 
 	// inherited from ISceneNode
 	void OnRegisterSceneNode() override;

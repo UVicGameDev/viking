@@ -46,7 +46,7 @@ bool PlayerStateMachine::onPreDownstreamEvent(const Event& e)
 	if (e.getType() == HashedString("DamageZoneCreationEvent"))
 	{
 		const DamageZoneCreationEvent& dzce = static_cast<const DamageZoneCreationEvent&>(e);
-		return handleDownstreamDamageZoneCreationEvent(dzce, teamMembership, getContext().lock()->getSprite()->getTransformedBoundingBox());
+		return handleDownstreamDamageZoneCreationEvent(dzce, teamMembership, getContext().lock()->getSprite()->getTransformedBoundingBox(), *getContext().lock()->getSprite());
 	}
 	else
 	{

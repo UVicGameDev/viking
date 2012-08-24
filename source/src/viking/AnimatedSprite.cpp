@@ -332,6 +332,12 @@ bool AnimatedSprite::getFlipHorizontal() const
 	return flipHorizontal;
 }
 
+bool AnimatedSprite::toggleFlipHorizontal()
+{
+	flipHorizontal = !flipHorizontal;
+	return flipHorizontal;
+}
+
 void AnimatedSprite::setFlipVertical(bool flipped)
 {
 	flipVertical = flipped;
@@ -339,6 +345,12 @@ void AnimatedSprite::setFlipVertical(bool flipped)
 
 bool AnimatedSprite::getFlipVertical() const
 {
+	return flipVertical;
+}
+
+bool AnimatedSprite::toggleFlipVertical()
+{
+	flipVertical = !flipVertical;
 	return flipVertical;
 }
 

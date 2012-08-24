@@ -2,6 +2,8 @@
 #include "viking/DamageZoneCreationEvent.hpp"
 #include "viking/TeamMembership.hpp"
 #include "viking/ActorStateMachine.hpp"
+#include "viking/GameApp.hpp"
+#include "viking/AnimatedSprite.hpp"
 #include <iostream>
 
 namespace vik
@@ -21,14 +23,17 @@ bool handleUpstreamDamageZoneCreationEvent(
 bool handleDownstreamDamageZoneCreationEvent(
 		const DamageZoneCreationEvent& e,
 		const TeamMembership* actorTeamMembership,
-		const irr::core::aabbox3df& actorHitBox)
+		const irr::core::aabbox3df& actorHitBox,
+		AnimatedSprite& actorSprite)
 {
 	// damage only happens if you're on different teams
 	if (actorTeamMembership->getTeam() != e.getInflictorMembership()->getTeam())
 	{
 		if (actorHitBox.intersectsWithBox(e.getDamageZoneBounds()))
 		{
-			std::cout << "Ouch!" << std::endl;
+
+			GameApp::getSingleton().getSoundEngine()->play2D("../../../art/punch.wav");
+			actorSprite.toggleFlipHorizontal();
 			return true;
 		}
 		else

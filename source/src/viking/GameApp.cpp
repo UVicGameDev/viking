@@ -91,15 +91,37 @@ bool GameApp::onInit()
 		video::EDT_SOFTWARE
 	};
 
+
+
+	video::E_DRIVER_TYPE chosenDriver;
+	device = 0;
 	// init device
-	for (unsigned i = 0; (!device) && i < supportedDrivers.size(); ++i)
+	for (size_t i = 0; i < supportedDrivers.size(); ++i)
 	{
-		device = createDevice(video::EDT_OPENGL, core::dimension2du(640, 480), 32, false, false, true);
+		chosenDriver = supportedDrivers[i];
+		if (IrrlichtDevice::isDriverSupported(chosenDriver))
+		{
+			device = createDevice(chosenDriver, core::dimension2du(640, 480), 32, false, false, true);
+			break;
+		}
 	}
 	if (!device)
 	{
-		return false;
 		std::cout << "Failed to create device." << std::endl;
+		return false;
+	}
+
+	if (chosenDriver == video::EDT_BURNINGSVIDEO || chosenDriver == video::EDT_SOFTWARE)
+	{
+		std::cout << "Warning: Could not find compatible version of Direct3D or OpenGL." << std::endl
+		<< "Fell back to using a software device. Performance may be impacted." << std::endl;
+	}
+
+	sengine = irrklang::createIrrKlangDevice();
+	if (!sengine)
+	{
+		std::cout << "Failed to create sound engine." << std::endl;
+		return false;
 	}
 
 	rootTime.setTimer(getTimer());
@@ -152,6 +174,11 @@ GameApp& GameApp::getSingleton()
 irr::IrrlichtDevice* GameApp::getDevice()
 {
 	return device;
+}
+
+irrklang::ISoundEngine* GameApp::getSoundEngine()
+{
+	return sengine;
 }
 
 irr::video::IVideoDriver* GameApp::getVideoDriver()

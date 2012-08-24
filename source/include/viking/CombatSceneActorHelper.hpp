@@ -9,11 +9,13 @@ namespace vik
 class DamageZoneCreationEvent;
 class TeamMembership;
 class ActorStateMachine;
+class AnimatedSprite;
 
 bool handleDownstreamDamageZoneCreationEvent(
 		const DamageZoneCreationEvent& e,
 		const TeamMembership* actorTeamMembership,
-		const irr::core::aabbox3df& actorHitBox);
+		const irr::core::aabbox3df& actorHitBox,
+		AnimatedSprite& actorSprite);
 
 bool handleUpstreamDamageZoneCreationEvent(
 		const DamageZoneCreationEvent& e,

@@ -2,6 +2,7 @@
 #define VIK_GAMEAPP_HPP_INCLUDED
 
 #include <irrlicht/irrlicht.h>
+#include <irrklang/irrKlang.h>
 #include "viking/EventSource.hpp"
 #include "viking/GameObjectEngine.hpp"
 #include "viking/GameTime.hpp"
@@ -31,6 +32,9 @@ public:
 
 	// top level irrlicht structure
 	irr::IrrlichtDevice* getDevice();
+
+	// irrklang sound engine
+	irrklang::ISoundEngine* getSoundEngine();
 
 	// used for low level rendering and changing video settings
 	irr::video::IVideoDriver* getVideoDriver();
@@ -64,6 +68,9 @@ private:
 
 	// interface for the irrlicht library
 	irr::IrrlichtDevice* device;
+	
+	// interface for the irrklang library
+	irrklang::ISoundEngine* sengine;
 
 	bool onInit();
 	void onDestroy();

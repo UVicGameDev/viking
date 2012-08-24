@@ -27,7 +27,7 @@ viking_flags = {
 
 # libraries to link
 viking_libs = {
-'common': [ 'Irrlicht', 'GL' ],
+'common': [ 'IrrKlang', 'Irrlicht', 'GL' ],
 'linux': [ 'Xxf86vm' ]
 }
 

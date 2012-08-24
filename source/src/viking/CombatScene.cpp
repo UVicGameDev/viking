@@ -45,6 +45,19 @@ CombatScene::~CombatScene()
 
 void CombatScene::onEnter()
 {
+	// create FPS display thingy
+	auto fpsDisplay = std::make_shared<FPSDisplay>();
+	objectEngine.addObject(fpsDisplay);
+
+	scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
+	video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();
+
+	PaperSceneNodeFactory paperFactory(smgr);
+	scene::ISceneNode* floorNode = paperFactory.create(driver->getTexture("../../../art/ground.png"));
+	core::aabbox3df floorbbox = floorNode->getTransformedBoundingBox();
+
+	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setPosition(core::vector3df(floorbbox.getExtent().X/2, 1.2 * floorbbox.getExtent().Y , floorbbox.getExtent().Y));
+
 	ControlScheme p1controlScheme(
 			irr::KEY_UP,
 			irr::KEY_DOWN,
@@ -76,19 +89,8 @@ void CombatScene::onEnter()
 	auto sandbag = aiFactory->create();
 	objectEngine.addObject(sandbag);
 	sandbag->addListener(shared_from_this());
-
-	// create FPS display thingy
-	auto fpsDisplay = std::make_shared<FPSDisplay>();
-	objectEngine.addObject(fpsDisplay);
-
-	scene::ISceneManager* smgr = GameApp::getSingleton().getSceneManager();
-	video::IVideoDriver* driver = GameApp::getSingleton().getVideoDriver();
-
-	PaperSceneNodeFactory paperFactory(smgr);
-	scene::ISceneNode* floorNode = paperFactory.create(driver->getTexture("../../../art/ground.png"));
-	core::aabbox3df bbox = floorNode->getTransformedBoundingBox();
-
-	GameApp::getSingleton().getSceneManager()->getActiveCamera()->setPosition(core::vector3df(bbox.getExtent().X/2, 1.2 * bbox.getExtent().Y , bbox.getExtent().Y));
+	std::cout << "Set sandbag position to " << floorbbox.getCenter() << std::endl;
+	sandbag->getParticle().setPosition(floorbbox.getCenter());
 }
 
 void CombatScene::onUpdate(GameTime& time)
